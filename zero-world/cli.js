@@ -8,6 +8,8 @@
  *   node zero-world/cli.js 24x    --checkpoint arq.json             (1 dia virtual por hora real, até ser interrompido)
  *   node zero-world/cli.js dia    --checkpoint arq.json --dia 12    (replay de um dia já simulado)
  *   node zero-world/cli.js rodada --semente 20261104 --dias 240 --rodadas 5 --saida zero-world/runs/R20261104
+ *   node zero-world/cli.js digital-agora                            (estado atual da rodada digital ao vivo)
+ *   node zero-world/cli.js digital-24x [--uma-vez]                  (fica ligado: avança a rodada ao vivo e grava o diário)
  */
 'use strict';
 const fs = require('fs');
@@ -21,6 +23,7 @@ const AO_VIVO = require('./ao-vivo.json');
 
 const args = process.argv.slice(2);
 const cmd = args[0];
+const agoraMs = () => (process.env.ZW_AGORA ? Date.parse(process.env.ZW_AGORA) : Date.now()); // ZW_AGORA só para testes
 const opt = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : d; };
 
 function carregar(arq) { return ZW.desserializar(fs.readFileSync(arq, 'utf8')); }
@@ -128,7 +131,7 @@ if (cmd === 'criar') {
   console.log((Date.now() - t0) + ' ms');
 } else if (cmd === 'digital-agora') {
   // Calcula o dia virtual pelo relógio real e reproduz a rodada ao vivo até lá (determinístico).
-  const agora = Date.now(), inicio = Date.parse(AO_VIVO.inicioReal);
+  const agora = agoraMs(), inicio = Date.parse(AO_VIVO.inicioReal);
   if (agora < inicio) { console.log('A rodada ao vivo começa em ' + AO_VIVO.inicioReal + ' (faltam ' + Math.ceil((inicio - agora) / 60000) + ' min).'); process.exit(0); }
   const diaAtual = Math.min(AO_VIVO.horizonte, Math.floor((agora - inicio) / 3600000) + 1);
   const concluidos = Math.max(0, diaAtual - 1);
@@ -141,6 +144,90 @@ if (cmd === 'criar') {
   fs.writeFileSync(path.join(saida, 'estado-agora.json'), JSON.stringify(estado, null, 1));
   console.log('ao vivo · dia virtual', diaAtual, '(' + concluidos + ' concluídos) · hora virtual', estado.horaVirtual);
   for (const m of estado.agentes) console.log(m.id, m.carreira.padEnd(12), ZW.brl(m.patrimonio));
+} else if (cmd === 'digital-24x') {
+  // Fica ligado na máquina do usuário. A cada minuto confere o relógio; quando um dia virtual
+  // termina (1 hora real), simula esse dia nos 10 mundos e grava o diário. Sem tokens, sem IA.
+  const pasta = opt('saida', path.join(__dirname, 'runs', 'AO-VIVO'));
+  const pastaDiario = path.join(pasta, 'diario');
+  const arqCk = path.join(pasta, 'checkpoint.json');
+  fs.mkdirSync(pastaDiario, { recursive: true });
+  const inicio = Date.parse(AO_VIVO.inicioReal);
+  const hh = (h) => String(Math.floor(h)).padStart(2, '0') + ':' + String(Math.round((h % 1) * 60)).padStart(2, '0');
+  const sinal = (t) => (t.direcao === 'ENTRADA' ? '+' : '−') + ZW.brl(t.valor);
+
+  let mundos = null;
+  if (fs.existsSync(arqCk)) {
+    try {
+      const ck = JSON.parse(fs.readFileSync(arqCk, 'utf8'));
+      if (ck.semente === AO_VIVO.semente && ck.inicioReal === AO_VIVO.inicioReal) {
+        mundos = ck.mundos;
+        const ok = mundos.every((w) => ZW.auditar(w).ok && w.dia === mundos[0].dia);
+        if (!ok) { console.log('checkpoint inválido: recalculando a partir da semente'); mundos = null; }
+      }
+    } catch (e) { console.log('checkpoint ilegível (' + e.message + '): recalculando a partir da semente'); mundos = null; }
+  }
+  if (!mundos) mundos = Exp.criarRodadaDigital(AO_VIVO.semente, { dataInicio: AO_VIVO.dataInicioVirtual });
+
+  function salvarCheckpoint() {
+    const tmp = arqCk + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify({ semente: AO_VIVO.semente, inicioReal: AO_VIVO.inicioReal, mundos }));
+    fs.renameSync(tmp, arqCk);
+  }
+  function diarioDoDia(w, dia, atraso) {
+    const d = ZW.diaRegistrado(w, dia);
+    const dec = w.logs.decisoes.find((x) => x.dia === dia);
+    const decSeq = dec ? dec.seq : Infinity;
+    const linhas = [];
+    linhas.push(`## Dia ${dia} · ${d.data}` + (atraso ? ` · calculado com atraso (máquina estava desligada); resultado idêntico, pois é determinístico` : ''));
+    linhas.push(`Caixa ${ZW.brl(d.caixaInicio)} → ${ZW.brl(d.caixaFim)} · patrimônio ${ZW.brl(d.patrimonio)} · dormiu: ${d.noite} · ${d.estrategia}` + (d.internado ? ' · INTERNADO' : ''));
+    for (const t of d.transacoes.filter((x) => x.seq < decSeq)) linhas.push(`- 00:00 ${sinal(t)} ${t.justificativa}`);
+    for (const e of d.eventos.filter((x) => x.seq < decSeq)) linhas.push(`- 00:00 ${e.texto}`);
+    let t = 7, ultimo = decSeq;
+    for (const r of d.resultados) {
+      const ini = r.acao === 'DORMIR' ? Math.max(t, 22) : t;
+      const txs = d.transacoes.filter((x) => x.seq > ultimo && x.seq < r.seq); ultimo = r.seq;
+      linhas.push(`- ${hh(ini)} ${r.ok ? '' : '✗ '}${r.acao.replace(/_/g, ' ').toLowerCase()} — ${r.resultado}` + (txs.length ? ' (' + txs.map(sinal).join(', ') + ')' : ''));
+      if (r.acao !== 'DORMIR') t += r.horas;
+    }
+    for (const x of d.transacoes.filter((y) => y.seq > ultimo)) linhas.push(`- fim do dia ${sinal(x)} ${x.justificativa}`);
+    for (const e of d.eventos.filter((x) => x.seq > decSeq)) linhas.push(`- evento: ${e.texto}`);
+    return linhas.join('\n') + '\n\n';
+  }
+  function gravarResumo() {
+    const ms = mundos.map((w) => Object.assign(Exp.metricas(w), { carreira: w.carreira }));
+    const tab = ['| Agente | Carreira | Patrimônio | Ganho líquido | Receita | 1ª receita | Moradia | Estratégia |', '|---|---|---|---|---|---|---|---|']
+      .concat(ms.map((m) => `| ${m.id} | ${m.carreira} | ${ZW.brl(m.patrimonio)} | ${ZW.brl(m.ganhoLiquido)} | ${ZW.brl(m.receita)} | ${m.diaPrimeiraReceita ? 'D' + m.diaPrimeiraReceita : '—'} | ${m.moradia} | ${m.estrategiaFinal} |`));
+    fs.writeFileSync(path.join(pasta, 'RESUMO.md'), `# Rodada ao vivo · ${mundos[0].dia} dia(s) concluído(s)\n\nAtualizado em ${new Date(agoraMs()).toLocaleString('pt-BR')}. Resultado simulado (política programada, não é IA).\n\n` + tab.join('\n') + '\n');
+    fs.writeFileSync(path.join(pasta, 'estado-agora.json'), JSON.stringify({ atualizadoEm: new Date(agoraMs()).toISOString(), diasConcluidos: mundos[0].dia, aoVivo: AO_VIVO, agentes: ms }, null, 1));
+  }
+  function passo() {
+    const agora = agoraMs();
+    if (agora < inicio) { console.log('aguardando o início em ' + AO_VIVO.inicioReal); return; }
+    const alvo = Math.min(AO_VIVO.horizonte, Math.floor((agora - inicio) / 3600000)); // dias concluídos
+    let n = 0;
+    while (mundos[0].dia < alvo) {
+      const dia = mundos[0].dia + 1;
+      const fimReal = inicio + dia * 3600000;
+      const atraso = agora - fimReal > 5 * 60000;
+      for (const w of mundos) {
+        const r = ZW.avancarDia(w, PoliticaDigital);
+        if (!r.ok) { console.error(w.meta.id + ' falhou no dia ' + dia + ': ' + r.erro + ' (estado preservado)'); process.exitCode = 1; return; }
+        fs.appendFileSync(path.join(pastaDiario, w.meta.id + '-' + w.carreira + '.md'), diarioDoDia(w, dia, atraso));
+      }
+      n++;
+    }
+    if (n) {
+      salvarCheckpoint(); gravarResumo();
+      console.log(new Date(agora).toLocaleString('pt-BR') + ' · ' + n + ' dia(s) processado(s) · ' + mundos[0].dia + ' concluído(s) · ' + mundos.map((w) => w.meta.id.slice(-2) + ' ' + ZW.brl(w.ledger.saldo)).join(' | '));
+    }
+    if (mundos[0].dia >= AO_VIVO.horizonte) { console.log('Rodada concluída (' + AO_VIVO.horizonte + ' dias).'); process.exit(0); }
+  }
+  console.log('Zero World digital · 24x · 1 hora real = 1 dia virtual · início ' + AO_VIVO.inicioReal + ' · diário em ' + pastaDiario);
+  passo();
+  if (!opt('uma-vez', null) && !args.includes('--uma-vez')) {
+    setInterval(passo, 60 * 1000);
+    process.on('SIGINT', () => { salvarCheckpoint(); console.log('\nparado; checkpoint salvo no dia ' + mundos[0].dia); process.exit(0); });
+  }
 } else {
-  console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(2, 12).join('\n'));
+  console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(2, 15).join('\n'));
 }

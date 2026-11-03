@@ -157,3 +157,24 @@ node zero-world/build-dashboard.js                              # regenera o pai
 `node zero-world/cli.js digital-rodada --semente 20261104 --dias 240` grava `runs/D20261104/`. No navegador (modo Laboratório, mesma semente, Turbo 240), os 10 hashes são iguais aos do Node.
 
 Testes: `node --test zero-world/test.js` → **15/15** (os 10 obrigatórios + D1 a D5 do cenário digital, incluindo a regressão do cenário clássico).
+
+## Rodar na sua máquina (sem tokens, sem IA)
+
+Requisitos: Node.js 18 ou mais novo e Git.
+
+```bash
+git clone https://github.com/jefersonp7/funkbrdrumkit.git
+cd funkbrdrumkit
+git checkout claude/agente-sobrevivencia-brasil-eeqz9b
+node zero-world/cli.js digital-24x
+```
+
+Deixe o terminal aberto. A cada minuto o programa confere o relógio. Quando um dia virtual termina (1 hora real), ele simula esse dia nos 10 mundos e grava:
+
+- `zero-world/runs/AO-VIVO/diario/DIGI-XX-<carreira>.md`: o diário de cada agente, com horário de cada atividade, entradas e saídas;
+- `zero-world/runs/AO-VIVO/RESUMO.md`: a tabela geral atualizada;
+- `zero-world/runs/AO-VIVO/checkpoint.json`: onde parou.
+
+**Ctrl+C** para; rodar de novo retoma de onde estava. Se o computador ficar desligado, os dias perdidos são calculados ao religar, com resultado idêntico (é determinístico), e o diário marca esses dias como "calculado com atraso". A rodada termina sozinha no dia 365.
+
+O painel também abre direto do arquivo: `zero-world/dashboard-digital.html`.
