@@ -34,6 +34,7 @@ hora real de início e a hora atual para fazer a conta.
 
 | Você diz | O que acontece |
 |---|---|
+| _(modo autônomo)_ | uma tarefa agendada avança o mundo a cada hora sem você fazer nada; no fim sai o `relatorio-final.md` |
 | `como tá?` / `e aí, Rafael?` | ele confere o relógio, conta os dias que passaram e narra o dia atual |
 | `vai pra Ceasa`, `compra um celular usado`… | você dá a ideia, ele decide e reage |
 | `modo plano` | plano de 7 / 30 / 90 dias com metas de renda |

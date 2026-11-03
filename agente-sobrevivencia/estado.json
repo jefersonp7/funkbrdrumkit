@@ -47,5 +47,53 @@
   "D9: UAI, pedido da 2ª via do RG grátis; descanso, ombro doendo -R$10. Saldo R$437",
   "D10: Ceasa, combinado R$90 e recebeu R$60; SINE marcou entrevista no D12. Saldo R$475"
  ],
- "dia_em_andamento": "D11 05h: na Ceasa; cobrou o Geraldo, ele prometeu os R$30 no fim do turno junto com a diária, via Pix"
+ "dia_em_andamento": "D11 05h: na Ceasa; cobrou o Geraldo, ele prometeu os R$30 no fim do turno junto com a diária, via Pix",
+ "modo": "autonomo",
+ "dia_final": 30,
+ "oportunidades": [
+  {
+   "nome": "Carga e descarga na CeasaMinas (chapa)",
+   "capital_inicial": "R$0 + ônibus",
+   "renda_por_dia": "R$60–110",
+   "dias_ate_primeiro_real": 1,
+   "risco": "médio (calote, lesão)",
+   "escala": "chefe de equipe/CLT em atacadista",
+   "dias_testados": 6,
+   "veredito": "vale",
+   "evidencia": "6 madrugadas, média ~R$82; 1 calote parcial de R$30"
+  },
+  {
+   "nome": "Montar/desmontar barraca na Feira Hippie",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "R$80 (só domingo)",
+   "dias_ate_primeiro_real": 1,
+   "risco": "baixo",
+   "escala": "virar ajudante fixo ou ter barraca própria",
+   "dias_testados": 1,
+   "veredito": "promissora",
+   "evidencia": "1 domingo, R$80 + contato de barraqueiro"
+  },
+  {
+   "nome": "Centro POP / CadÚnico / RG gratuito",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "indireta (endereço, documentos, benefícios)",
+   "dias_ate_primeiro_real": 0,
+   "risco": "baixo",
+   "escala": "porta para Bolsa Família, cursos e CLT",
+   "dias_testados": 3,
+   "veredito": "vale",
+   "evidencia": "endereço de referência no D1, CadÚnico no D8, RG pedido grátis no D9"
+  },
+  {
+   "nome": "Celular usado + conta digital como ferramenta",
+   "capital_inicial": "R$235",
+   "renda_por_dia": "multiplicador (bicos pelo zap, Pix, vagas)",
+   "dias_ate_primeiro_real": 1,
+   "risco": "baixo",
+   "escala": "base para tudo",
+   "dias_testados": 5,
+   "veredito": "vale",
+   "evidencia": "Geraldo passou a chamar pelo zap; SINE marcou entrevista"
+  }
+ ]
 }
