@@ -63,3 +63,35 @@ Experimento autônomo: a IA decidiu tudo sozinha, sem nenhuma interferência do 
 - [Credenciamento de ambulantes no Carnaval](https://prefeitura.pbh.gov.br/noticias/pbh-credencia-11528-ambulantes-para-o-carnaval-de-2026)
 - [Entregas de bike](https://diariodopara.com.br/concursos-e-empregos/vale-a-pena-fazer-entregas-de-bike-descubra-como-comecar-e-quanto-da-pra-ganhar)
 - [Temporários em BH](https://diariodocomercio.com.br/economia/contratacao-temporarios-comercio-bh/)
+
+---
+
+# Fase 2 (D121–D240, 21/02 a 20/06/2027): de ajudante a eletricista autônomo
+
+| | Valor |
+|---|---|
+| Saldo no D120 | R$4.394 |
+| **Saldo no D240** | **R$12.410** |
+| Ganhou na fase 2 | R$14.605 |
+| Gastou na fase 2 | R$6.589 |
+| Renda do MEI no mês 8 | ~R$3.200/mês (contra ~R$1.495 + VA na CLT) |
+
+**Decisão principal:** ele manteve a CLT até que a renda do MEI passasse o salário por 2 meses seguidos e houvesse 5 meses de reserva. Aí pediu demissão (D205).
+
+**Novas oportunidades:**
+1. **Perfil da Empresa no Google + pedir avaliação a cada cliente.** Custo zero, e virou o melhor canal: metade dos clientes novos veio daí.
+2. **Contrato de manutenção mensal com síndico.** R$400 fixos por prédio. Foi a primeira renda recorrente.
+3. **Parceria com a loja de material elétrico do bairro.** Indicações toda semana.
+4. **NR-10 (R$185).** O síndico exigiu o certificado antes de fechar o contrato.
+5. **GetNinjas.** Ajudou no começo (R$120 em créditos viraram 2 serviços), depois não fez falta.
+
+**O que deu errado:** um calote de R$200 (desde então ele cobra sinal de 50%) e uma bike roubada na porta de um cliente.
+
+**Lição sazonal:** no inverno de BH, os chuveiros queimam mais. A agenda encheu justo no mês em que ele virou autônomo.
+
+**Fontes da fase 2:**
+- [Preços de eletricista 2026](https://catracalivre.com.br/noticias/quanto-custa-instalar-um-chuveiro-eletrico-qual-o-preco-de-um-eletricista-para-fazer-o-servico-em-2026/)
+- [Valor/hora em BH](https://www.freelasemcrise.com.br/quanto-cobra/eletricista/belo-horizonte)
+- [Tomadas e interruptores](https://catracalivre.com.br/noticias/quanto-custa-instalar-tomadas-e-interruptores-qual-o-preco-de-um-eletricista-para-fazer-o-servico-em-2026/)
+- [NR-10 em BH](https://engehall.com.br/curso-de-nr-10/)
+- [Nova NR-10 (Portaria MTE 737/2026)](https://www.osetoreletrico.com.br/?p=168014)

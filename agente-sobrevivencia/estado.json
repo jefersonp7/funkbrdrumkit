@@ -1,23 +1,26 @@
 {
  "inicio_real": "2026-11-02T19:32:55+00:00",
  "cidade": "Belo Horizonte, MG",
- "ultimo_dia_registrado": 120,
- "saldo": 4394.0,
- "dinheiro_onde": "conta digital (R$4.200) + R$194 em espécie",
+ "ultimo_dia_registrado": 240,
+ "saldo": 12410.0,
+ "dinheiro_onde": "conta digital; reserva separada em caixinha com rendimento diário",
  "corpo": {
   "fome": 2,
-  "cansaco": 6,
-  "moral": 8,
+  "cansaco": 5,
+  "moral": 9,
   "seguranca": 8
  },
- "onde_dorme": "quarto alugado em Contagem (R$650/mês)",
+ "onde_dorme": "mesmo quarto em Contagem (R$650)",
  "itens": [
   "roupa do corpo",
   "mochila",
   "celular",
   "botina e roupa de trabalho",
   "isopor",
-  "ferramentas básicas de eletricista"
+  "ferramentas básicas de eletricista",
+  "kit de ferramentas",
+  "escada de alumínio",
+  "bike (2ª)"
  ],
  "documentos": {
   "CPF": "ok",
@@ -25,9 +28,10 @@
   "CadUnico": "cadastrado",
   "conta": "conta digital",
   "celular": "sim",
-  "CTPS": "CLT efetivado",
+  "CTPS": "pediu demissão no D205 (agora autônomo)",
   "MEI": "aberto no D116",
-  "certificado": "eletricista predial (PMQER)"
+  "certificado": "eletricista predial (PMQER)",
+  "NR10": "válido até 2029"
  },
  "contatos": [
   "Seu Geraldo (chefe de equipe na CeasaMinas, me chama no zap)",
@@ -38,11 +42,11 @@
   "Ceasa carga/descarga": "R$60–110 por madrugada, a melhor até agora",
   "Feira Hippie montar/desmontar": "R$80 no domingo"
  },
- "renda_total": 9262,
+ "renda_total": 23867,
  "metas": [
-  "juntar 3 meses de reserva",
-  "comprar bike própria",
-  "fazer serviço elétrico 2 folgas por semana"
+  "3 contratos de manutenção predial",
+  "pagar INSS em dia pelo DAS",
+  "curso técnico de eletrotécnica (SENAI/IF) no 2º semestre"
  ],
  "historico": [
   "Sem 1 (D1–D7): +R$400, -R$533 (inclui celular R$235 e pensão R$180), saldo R$359; endereço de referência no Centro POP, perdeu vaga no albergue por causa do horário da Ceasa, conseguiu celular e conta digital. Ceasa paga mais que qualquer outra coisa.",
@@ -61,12 +65,16 @@
   "Sem 14 (D92–D98): +R$120, -R$85, saldo R$2419; D92–D97 trabalho + curso; Bolsa Moradia: saiu da fila (não está mais em situação de rua — saiu por conta própria); D98 folga: 1º servicinho elétrico próprio (troca de chuveiro e tomadas pra vizinha), indicação boca a boca",
   "Sem 15 (D99–D105): +R$1045, -R$500, saldo R$2964; D104 salário de janeiro; D99–D104 trabalho; credencial de ambulante retirada; comprou estoque do Carnaval no atacado (desconto de funcionário); D105 folga: troca de 2 resistências de chuveiro + 1 disjuntor",
   "Sem 16 (D106–D112) — CARNAVAL: +R$1420, -R$760, saldo R$3624; D106 sábado de Carnaval (folga trocada): bebida no bloco, vendeu tudo; D109 terça de Carnaval (folga): 2º dia de bloco + latinhas no fim; D107–D112 trabalho (atacadista lotado pós-Carnaval); D111 aluguel",
-  "Sem 17 (D113–D120): +R$860, -R$90, saldo R$4394; D113–D119 trabalho + fim do curso; conclusão do PMQER — certificado de eletricista predial; D116 abriu MEI (grátis no gov.br), DAS de serviços ~R$86/mês; D118 folga: 2 serviços elétricos por indicação no zap; D119 vale 40%; D120 efetivado no atacadista após 90 dias"
+  "Sem 17 (D113–D120): +R$860, -R$90, saldo R$4394; D113–D119 trabalho + fim do curso; conclusão do PMQER — certificado de eletricista predial; D116 abriu MEI (grátis no gov.br), DAS de serviços ~R$86/mês; D118 folga: 2 serviços elétricos por indicação no zap; D119 vale 40%; D120 efetivado no atacadista após 90 dias",
+  "Mês 5 (D121–D150, 21/02–22/03): +R$2215, -R$2111, saldo R$4498; salário de fevereiro + vale; NR-10 básico (40h) — R$185; kit de ferramentas (alicate amperímetro, chaves, fita, teste); bike usada pra ir aos serviços; 100 cartões de visita + panfletos na loja de material elétrico do bairro; serviços elétricos nas folgas (4 folgas); aluguel + DAS MEI + vida",
+  "Mês 6 (D151–D180, 23/03–21/04): +R$2945, -R$1276, saldo R$6167; salário + vale; criou o Perfil da Empresa no Google (grátis) e pediu avaliação a cada cliente: 15 avaliações 5★; testou GetNinjas (créditos pra desbloquear pedidos); serviços: folgas + 3 noites por semana; calote de cliente: R$200 de mão de obra não pagos (aprendeu: sinal de 50% antes); aluguel + DAS + vida",
+  "Mês 7 (D181–D210, 22/04–21/05): +R$3595, -R$1166, saldo R$8596; salário + vale; D195: contrato de manutenção mensal com síndico de um prédio (R$400/mês); serviços avulsos (indicações do Google e da loja de material); aluguel + DAS + vida; D205: renda do MEI passou o salário por 2 meses e já tinha 5 meses de reserva → pediu demissão; empresa dispensou o aviso",
+  "Mês 8 (D211–D240, 22/05–20/06) — inverno: +R$5850, -R$2036, saldo R$12410; saldo de salário de maio; rescisão (férias proporcionais + 1/3 + 13º proporcional; sem FGTS por ser pedido de demissão); eletricista em tempo integral: inverno = chuveiro queimando, agenda cheia; contrato do prédio; escada de alumínio; bike roubada na porta de um cliente; comprou outra usada + cadeado bom; aluguel + DAS + vida (sem VA e refeitório agora)"
  ],
  "dias_detalhe": [],
  "dia_em_andamento": null,
  "modo": "concluido",
- "dia_final": 120,
+ "dia_final": 240,
  "oportunidades": [
   {
    "nome": "Emprego CLT via SINE (ajudante de carga em atacadista)",
@@ -221,9 +229,64 @@
    "dias_testados": 115,
    "veredito": "vale — melhor compra do experimento",
    "evidencia": "todos os bicos, a vaga e os serviços elétricos vieram pelo zap"
+  },
+  {
+   "nome": "Perfil da Empresa no Google + avaliações dos clientes",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "maior fonte de clientes novos",
+   "dias_ate_primeiro_real": 7,
+   "risco": "baixo",
+   "escala": "alta",
+   "dias_testados": 90,
+   "veredito": "vale — melhor canal de clientes",
+   "evidencia": "15 avaliações 5★ no mês 6; metade dos serviços do mês 7–8 veio de busca no Google"
+  },
+  {
+   "nome": "Contrato de manutenção mensal com síndico",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "R$400/mês fixo por prédio",
+   "dias_ate_primeiro_real": 30,
+   "risco": "baixo",
+   "escala": "alta (1 síndico cuida de vários prédios)",
+   "dias_testados": 45,
+   "veredito": "vale — renda recorrente",
+   "evidencia": "fechado no D195 por indicação de um cliente"
+  },
+  {
+   "nome": "Parceria com loja de material elétrico do bairro",
+   "capital_inicial": "R$40 (cartões)",
+   "renda_por_dia": "indicações semanais",
+   "dias_ate_primeiro_real": 10,
+   "risco": "baixo",
+   "escala": "média",
+   "dias_testados": 120,
+   "veredito": "vale",
+   "evidencia": "balconista indica quando o cliente pergunta 'conhece um eletricista?'"
+  },
+  {
+   "nome": "GetNinjas (pagar pra desbloquear pedidos)",
+   "capital_inicial": "R$120",
+   "renda_por_dia": "2 serviços pelos créditos",
+   "dias_ate_primeiro_real": 3,
+   "risco": "médio (concorrência por preço)",
+   "escala": "média",
+   "dias_testados": 30,
+   "veredito": "ok no começo, depois não precisa",
+   "evidencia": "R$120 em créditos → 2 serviços (~R$330)"
+  },
+  {
+   "nome": "NR-10 (curso pago)",
+   "capital_inicial": "R$185",
+   "renda_por_dia": "abre portas de empresas e condomínios",
+   "dias_ate_primeiro_real": null,
+   "risco": "baixo",
+   "escala": "—",
+   "dias_testados": 0,
+   "veredito": "vale",
+   "evidencia": "síndico pediu o certificado antes de fechar o contrato"
   }
  ],
- "gastos_totais": 5368,
+ "gastos_totais": 11957,
  "serie_saldo": [
   [
    "D10",
@@ -292,6 +355,22 @@
   [
    "17",
    4394
+  ],
+  [
+   "D150",
+   4498
+  ],
+  [
+   "D180",
+   6167
+  ],
+  [
+   "D210",
+   8596
+  ],
+  [
+   "D240",
+   12410
   ]
  ]
 }
