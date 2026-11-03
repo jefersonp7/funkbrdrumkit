@@ -1,27 +1,33 @@
 {
  "inicio_real": "2026-11-02T19:32:55+00:00",
  "cidade": "Belo Horizonte, MG",
- "ultimo_dia_registrado": 10,
- "saldo": 475,
- "dinheiro_onde": "R$250 na conta digital, R$200 escondidos no quarto da pensão, R$25 no bolso",
+ "ultimo_dia_registrado": 120,
+ "saldo": 4394.0,
+ "dinheiro_onde": "conta digital (R$4.200) + R$194 em espécie",
  "corpo": {
-  "fome": 4,
-  "cansaco": 7,
-  "moral": 6,
-  "seguranca": 7
+  "fome": 2,
+  "cansaco": 6,
+  "moral": 8,
+  "seguranca": 8
  },
- "onde_dorme": "pensão no Centro, quarto dividido, pago até o D13",
+ "onde_dorme": "quarto alugado em Contagem (R$650/mês)",
  "itens": [
   "roupa do corpo",
   "mochila",
-  "celular usado com chip"
+  "celular",
+  "botina e roupa de trabalho",
+  "isopor",
+  "ferramentas básicas de eletricista"
  ],
  "documentos": {
   "CPF": "ok",
-  "RG": "2ª via pedida na UAI (gratuidade), aguardando",
-  "CadUnico": "entrevista feita no D8, aguardando",
-  "conta": "conta digital aberta",
-  "celular": "sim"
+  "RG": "CIN pronta (D30)",
+  "CadUnico": "cadastrado",
+  "conta": "conta digital",
+  "celular": "sim",
+  "CTPS": "CLT efetivado",
+  "MEI": "aberto no D116",
+  "certificado": "eletricista predial (PMQER)"
  },
  "contatos": [
   "Seu Geraldo (chefe de equipe na CeasaMinas, me chama no zap)",
@@ -32,68 +38,260 @@
   "Ceasa carga/descarga": "R$60–110 por madrugada, a melhor até agora",
   "Feira Hippie montar/desmontar": "R$80 no domingo"
  },
- "renda_total": 570,
+ "renda_total": 9262,
  "metas": [
-  "entrevista p/ ajudante de carga CLT no atacadista (D12)",
-  "cobrar os R$30 do Geraldo",
-  "renovar pensão no D14",
-  "retirar RG quando sair"
+  "juntar 3 meses de reserva",
+  "comprar bike própria",
+  "fazer serviço elétrico 2 folgas por semana"
  ],
  "historico": [
-  "Sem 1 (D1–D7): +R$400, -R$533 (inclui celular R$235 e pensão R$180), saldo R$359; endereço de referência no Centro POP, perdeu vaga no albergue por causa do horário da Ceasa, conseguiu celular e conta digital. Ceasa paga mais que qualquer outra coisa."
+  "Sem 1 (D1–D7): +R$400, -R$533 (inclui celular R$235 e pensão R$180), saldo R$359; endereço de referência no Centro POP, perdeu vaga no albergue por causa do horário da Ceasa, conseguiu celular e conta digital. Ceasa paga mais que qualquer outra coisa.",
+  "Sem 2 (D11–D14): +R$120, -R$249, saldo R$346; D11 Ceasa; cobrou o Geraldo e recebeu R$90 + os R$30 atrasados por Pix; D12 entrevista no atacadista (vaga do SINE): aprovado p/ ajudante de carga CLT, R$1.750 + VA + VT, escala 6x1; D13 exame admissional; Centro POP: pediu inscrição no Bolsa Moradia (fila de espera); D14 renovou pensão 1 semana",
+  "Sem 3 (D15–D21): +R$90, -R$392, saldo R$44; D15–D20 começou no atacadista; refeitório na empresa resolve o almoço; D21 trocou a pensão semanal por quarto mensal em Contagem (R$650/mês); só tinha R$300 — negociou o resto pro dia do vale. Semana mais perigosa: sobrou R$44; D21 folga: Ceasa de madrugada com o Geraldo",
+  "Sem 4 (D22–D28): +R$562, -R$406, saldo R$200; D22–D27 trabalho; cartão VA chegou (R$300/mês) = compras do mês; D28 vale de 40% do salário (adiantamento); pagou os R$350 do quarto; D28 folga: testou latinha depois de jogo no Mineirão: 7kg em 5h",
+  "Sem 5 (D29–D35): +R$310, -R$93, saldo R$417; D29–D34 trabalho; Black Friday (D35) com hora extra; D30 RG (CIN) pronto na UAI, de graça; D33 folga: alugou e-bike de entrega por 1 dia e testou app de entrega (6h)",
+  "Sem 6 (D36–D42): +R$80, -R$88, saldo R$409; D36–D41 trabalho; inscrição no PMQER (curso grátis de eletricista predial, noturno, começa em janeiro) com o endereço novo; D42 folga: Feira Hippie montando barracas; D42 celular: plano pré-pago do mês",
+  "Sem 7 (D43–D49): +R$800, -R$188, saldo R$1021; D45 1º salário (saldo de novembro); D43–D48 trabalho; comprou botina e calça (roupa de trabalho própria); D49 folga: Ceasa em semana de Natal paga mais",
+  "Sem 8 (D50–D56): +R$220, -R$713, saldo R$528; D50–D55 trabalho; hora extra de Natal; D51 aluguel do quarto; D56 folga: descanso (cansaço 9/10 — escolheu não trabalhar)",
+  "Sem 9 (D57–D63): +R$1000, -R$113, saldo R$1415; D58 vale de 40% + 1ª/2ª parcela do 13º proporcional; D57–D62 trabalho; ceia de Natal com colegas (vaquinha); D63 folga (Natal): lavou carros na rua do bairro com balde e pano próprios",
+  "Sem 10 (D64–D70): +R$290, -R$228, saldo R$1477; D64–D69 trabalho; Réveillon de folga: vendeu água e refrigerante em festa de bairro em Contagem (isopor R$60 + estoque R$120); D70 contrato de experiência renovado (45+45) — bom sinal de efetivação",
+  "Sem 11 (D71–D77): +R$985, -R$68, saldo R$2394; D74 salário de dezembro; D71–D76 trabalho; começou o curso de eletricista (noite, 3x/semana); D77 folga: Ceasa; D72 inscrição pra credencial de ambulante do Carnaval de BH (fica de olho no edital da PBH/Belotur)",
+  "Sem 12 (D78–D84): +R$100, -R$720, saldo R$1774; D78–D83 trabalho + curso; D81 aluguel; D84 folga: ajudou o professor do curso num serviço de fiação (aprendizado pago)",
+  "Sem 13 (D85–D91): +R$690, -R$80, saldo R$2384; D89 vale 40%; D85–D90 trabalho + curso; D91 folga: Ceasa",
+  "Sem 14 (D92–D98): +R$120, -R$85, saldo R$2419; D92–D97 trabalho + curso; Bolsa Moradia: saiu da fila (não está mais em situação de rua — saiu por conta própria); D98 folga: 1º servicinho elétrico próprio (troca de chuveiro e tomadas pra vizinha), indicação boca a boca",
+  "Sem 15 (D99–D105): +R$1045, -R$500, saldo R$2964; D104 salário de janeiro; D99–D104 trabalho; credencial de ambulante retirada; comprou estoque do Carnaval no atacado (desconto de funcionário); D105 folga: troca de 2 resistências de chuveiro + 1 disjuntor",
+  "Sem 16 (D106–D112) — CARNAVAL: +R$1420, -R$760, saldo R$3624; D106 sábado de Carnaval (folga trocada): bebida no bloco, vendeu tudo; D109 terça de Carnaval (folga): 2º dia de bloco + latinhas no fim; D107–D112 trabalho (atacadista lotado pós-Carnaval); D111 aluguel",
+  "Sem 17 (D113–D120): +R$860, -R$90, saldo R$4394; D113–D119 trabalho + fim do curso; conclusão do PMQER — certificado de eletricista predial; D116 abriu MEI (grátis no gov.br), DAS de serviços ~R$86/mês; D118 folga: 2 serviços elétricos por indicação no zap; D119 vale 40%; D120 efetivado no atacadista após 90 dias"
  ],
- "dias_detalhe": [
-  "D8: Ceasa com o Geraldo +R$110; entrevista do CadÚnico no CRAS. Saldo R$447",
-  "D9: UAI, pedido da 2ª via do RG grátis; descanso, ombro doendo -R$10. Saldo R$437",
-  "D10: Ceasa, combinado R$90 e recebeu R$60; SINE marcou entrevista no D12. Saldo R$475"
- ],
- "dia_em_andamento": "D11 05h: na Ceasa; cobrou o Geraldo, ele prometeu os R$30 no fim do turno junto com a diária, via Pix",
- "modo": "autonomo",
- "dia_final": 30,
+ "dias_detalhe": [],
+ "dia_em_andamento": null,
+ "modo": "concluido",
+ "dia_final": 120,
  "oportunidades": [
+  {
+   "nome": "Emprego CLT via SINE (ajudante de carga em atacadista)",
+   "capital_inicial": "R$0 (precisa de endereço e roupa limpa)",
+   "renda_por_dia": "~R$50 líquido + VA R$300/mês + refeitório + 13º + hora extra",
+   "dias_ate_primeiro_real": 13,
+   "risco": "baixo",
+   "escala": "efetivação, hora extra, promoção a conferente",
+   "dias_testados": 106,
+   "veredito": "vale — a base de tudo",
+   "evidencia": "entrevista no D12, vale no D28, efetivado no D120"
+  },
+  {
+   "nome": "Ambulante credenciado no Carnaval de BH",
+   "capital_inicial": "R$480 (estoque + isopor)",
+   "renda_por_dia": "lucro de ~R$465 por dia de bloco",
+   "dias_ate_primeiro_real": 1,
+   "risco": "médio (calor, roubo, sobra de estoque)",
+   "escala": "sazonal: Carnaval, Réveillon, jogos e shows",
+   "dias_testados": 2,
+   "veredito": "vale — maior lucro por dia do experimento",
+   "evidencia": "D106 +R$780, D109 +R$640 em vendas; credencial grátis da PBH; estoque com desconto de funcionário"
+  },
+  {
+   "nome": "Eletricista predial (curso grátis PMQER) + MEI",
+   "capital_inicial": "R$0 (curso) + ferramentas básicas",
+   "renda_por_dia": "R$120–260 por folga",
+   "dias_ate_primeiro_real": 27,
+   "risco": "baixo/médio (segurança elétrica exige formação)",
+   "escala": "alta: vira profissão, dá pra largar a CLT depois",
+   "dias_testados": 4,
+   "veredito": "promissora — melhor caminho de longo prazo",
+   "evidencia": "curso começou no D71, 1º serviço próprio no D98, MEI no D116 (DAS ~R$86)"
+  },
   {
    "nome": "Carga e descarga na CeasaMinas (chapa)",
    "capital_inicial": "R$0 + ônibus",
-   "renda_por_dia": "R$60–110",
+   "renda_por_dia": "R$60–120 por madrugada",
    "dias_ate_primeiro_real": 1,
    "risco": "médio (calote, lesão)",
-   "escala": "chefe de equipe/CLT em atacadista",
-   "dias_testados": 6,
+   "escala": "baixa; bom pra começar e pra folgas",
+   "dias_testados": 12,
+   "veredito": "vale no começo",
+   "evidencia": "12 madrugadas, média ~R$90; 1 calote de R$30 recuperado cobrando com jeito"
+  },
+  {
+   "nome": "Entrega por app com e-bike alugada",
+   "capital_inicial": "aluguel da bike (~R$45/dia no teste)",
+   "renda_por_dia": "R$130 bruto em 6h → ~R$85 líquido",
+   "dias_ate_primeiro_real": 1,
+   "risco": "médio (trânsito, chuva)",
+   "escala": "melhora muito com bike própria",
+   "dias_testados": 1,
+   "veredito": "promissora como complemento",
+   "evidencia": "teste no D33; pesquisa: ~R$20–25/h em BH, R$7 mínimo por entrega de bike"
+  },
+  {
+   "nome": "Venda de bebidas em festa (Réveillon de bairro)",
+   "capital_inicial": "R$180",
+   "renda_por_dia": "lucro ~R$110",
+   "dias_ate_primeiro_real": 1,
+   "risco": "médio",
+   "escala": "treino pro Carnaval",
+   "dias_testados": 1,
    "veredito": "vale",
-   "evidencia": "6 madrugadas, média ~R$82; 1 calote parcial de R$30"
+   "evidencia": "D64: vendeu R$290 com estoque de R$120 + isopor de R$60 (o isopor ficou)"
+  },
+  {
+   "nome": "Lavar carro na rua",
+   "capital_inicial": "R$25 (balde, pano, sabão)",
+   "renda_por_dia": "~R$85",
+   "dias_ate_primeiro_real": 1,
+   "risco": "baixo",
+   "escala": "baixa",
+   "dias_testados": 1,
+   "veredito": "ok pra feriado",
+   "evidencia": "D63, Natal: R$110 bruto"
   },
   {
    "nome": "Montar/desmontar barraca na Feira Hippie",
    "capital_inicial": "R$0",
-   "renda_por_dia": "R$80 (só domingo)",
+   "renda_por_dia": "R$70–80 (só domingo)",
    "dias_ate_primeiro_real": 1,
    "risco": "baixo",
-   "escala": "virar ajudante fixo ou ter barraca própria",
-   "dias_testados": 1,
-   "veredito": "promissora",
-   "evidencia": "1 domingo, R$80 + contato de barraqueiro"
+   "escala": "baixa",
+   "dias_testados": 2,
+   "veredito": "ok, complemento",
+   "evidencia": "D7 e D42"
   },
   {
-   "nome": "Centro POP / CadÚnico / RG gratuito",
+   "nome": "Latinha depois de jogo no Mineirão",
    "capital_inicial": "R$0",
-   "renda_por_dia": "indireta (endereço, documentos, benefícios)",
+   "renda_por_dia": "~R$34 líquido em 5h",
+   "dias_ate_primeiro_real": 1,
+   "risco": "baixo",
+   "escala": "só em evento gigante (Carnaval)",
+   "dias_testados": 1,
+   "veredito": "não vale fora do Carnaval",
+   "evidencia": "D28: 7kg; pesquisa: ~R$5–9/kg"
+  },
+  {
+   "nome": "Rede pública de entrada (Centro POP, Restaurante Popular, RG grátis, CadÚnico)",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "indireta: banho, endereço, documento e refeição a R$3 (grátis pra quem está na rua)",
    "dias_ate_primeiro_real": 0,
    "risco": "baixo",
-   "escala": "porta para Bolsa Família, cursos e CLT",
-   "dias_testados": 3,
-   "veredito": "vale",
-   "evidencia": "endereço de referência no D1, CadÚnico no D8, RG pedido grátis no D9"
+   "escala": "porta pra SINE, cursos e programas",
+   "dias_testados": 5,
+   "veredito": "vale — primeiro lugar a ir",
+   "evidencia": "endereço no D1, RG pronto no D30"
   },
   {
-   "nome": "Celular usado + conta digital como ferramenta",
+   "nome": "Bolsa Família",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "R$600/mês (mínimo por família)",
+   "dias_ate_primeiro_real": null,
+   "risco": "—",
+   "escala": "—",
+   "dias_testados": 0,
+   "veredito": "não serve pra quem já tem renda",
+   "evidencia": "limite de R$218 por pessoa; com renda de chapa e CLT ele não se enquadra"
+  },
+  {
+   "nome": "Bolsa Moradia BH (R$800/mês)",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "R$800/mês pro aluguel",
+   "dias_ate_primeiro_real": null,
+   "risco": "baixo",
+   "escala": "—",
+   "dias_testados": 0,
+   "veredito": "promissora pra quem ainda está na rua",
+   "evidencia": "entrou na fila no D13 pelo Centro POP; saiu no D92 porque já tinha quarto próprio. Exige contrato formal e vistoria"
+  },
+  {
+   "nome": "Estamos Juntos (PBH + Rede Cidadã)",
+   "capital_inicial": "R$0",
+   "renda_por_dia": "bolsa de R$540/mês + frente de trabalho por ~6 meses",
+   "dias_ate_primeiro_real": null,
+   "risco": "baixo",
+   "escala": "leva ao emprego formal",
+   "dias_testados": 0,
+   "veredito": "plano B se a CLT não sair",
+   "evidencia": "não precisou; fica como alternativa"
+  },
+  {
+   "nome": "Celular usado + conta digital",
    "capital_inicial": "R$235",
-   "renda_por_dia": "multiplicador (bicos pelo zap, Pix, vagas)",
+   "renda_por_dia": "multiplicador",
    "dias_ate_primeiro_real": 1,
    "risco": "baixo",
-   "escala": "base para tudo",
-   "dias_testados": 5,
-   "veredito": "vale",
-   "evidencia": "Geraldo passou a chamar pelo zap; SINE marcou entrevista"
+   "escala": "base pra tudo",
+   "dias_testados": 115,
+   "veredito": "vale — melhor compra do experimento",
+   "evidencia": "todos os bicos, a vaga e os serviços elétricos vieram pelo zap"
   }
+ ],
+ "gastos_totais": 5368,
+ "serie_saldo": [
+  [
+   "D10",
+   475
+  ],
+  [
+   "2",
+   346
+  ],
+  [
+   "3",
+   44
+  ],
+  [
+   "4",
+   200
+  ],
+  [
+   "5",
+   417
+  ],
+  [
+   "6",
+   409
+  ],
+  [
+   "7",
+   1021
+  ],
+  [
+   "8",
+   528
+  ],
+  [
+   "9",
+   1415
+  ],
+  [
+   "10",
+   1477
+  ],
+  [
+   "11",
+   2394
+  ],
+  [
+   "12",
+   1774
+  ],
+  [
+   "13",
+   2384
+  ],
+  [
+   "14",
+   2419
+  ],
+  [
+   "15",
+   2964
+  ],
+  [
+   "16",
+   3624
+  ],
+  [
+   "17",
+   4394
+  ]
  ]
 }
