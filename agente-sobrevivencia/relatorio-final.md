@@ -61,3 +61,36 @@ Mesmas condições do Experimento 1: 30 anos, R$500, sem casa, documento ou celu
 - [Cursos grátis de marketing](https://guiadoscursos.com/curso-marketing-digital-gratuito-2026-google-meta-sebrae-rd-station-coursera/)
 - [Bolsa Família 2026](https://www.opovo.com.br/trends/governo-decidiu-o-valor-do-bolsa-familia-para-2026/)
 - [DAS MEI 2026](https://www.opovo.com.br/noticias/economia/2026/01/02/contribuicao-mensal-do-mei-sobe-para-rs-8105-em-2026.html)
+
+---
+
+# Fase 2 (D121–D240, 21/02 a 20/06/2027): de freelancer a pequena agência
+
+| | Valor |
+|---|---|
+| Saldo no D120 | R$8.588 |
+| **Saldo no D240** | **R$21.214** |
+| Ganhou na fase 2 | R$23.560 |
+| Gastou na fase 2 | R$10.934 |
+| Renda mensal recorrente no D240 | **~R$6.200/mês** (contra ~R$3.200 do eletricista do Exp. 1) |
+| Equipe | 1 freelancer de edição (MEI dela) |
+
+**Decisões que fizeram crescer:**
+1. **Subiu o preço para clientes novos** de R$400–600 para R$800–900 assim que teve portfólio.
+2. **Transformou o Perfil no Google em produto mensal:** R$250 de entrada + R$150/mês para manter o perfil e responder avaliações. É barato para o comércio, quase ninguém cancela e foi de 4 para 8 clientes.
+3. **Ofereceu tráfego pago como serviço extra:** +R$500/mês de gestão, com a verba de anúncio paga pelo cliente.
+4. **Terceirizou a edição** quando chegou a 4 clientes, e sobrou tempo para vender.
+5. **Criou o 1º produto digital:** kit de 60 posts editáveis para barbearia, a R$47. Teve 30 vendas, divulgadas para os próprios clientes e em grupos de barbeiros.
+
+**O que deu errado:**
+- A academia atrasou um mês.
+- A pizzaria cancelou porque "o sobrinho assumiu as redes". **Lição:** contrato por escrito com aviso de 30 dias.
+
+**Alerta importante:** o faturamento anual está chegando no **teto do MEI (R$81 mil)**. O próximo passo é migrar para ME no Simples Nacional, com contador.
+
+**Fontes da fase 2:**
+- [Preço de gestor de tráfego 2026](https://trafius.com.br/blog/preco-de-gestor-de-trafego-em-2026-tabela-por-porte)
+- [Calculadora de preço de tráfego](https://www.freelasemcrise.com.br/calculadoras/preco/gestor-trafego)
+- [Canva Pro 2026](https://guiaferramentasdigitais.com.br/guias/canva-pro-vale-a-pena/)
+- [CapCut Pro 2026](https://www.eesel.ai/pt/blog/capcut-pricing)
+- [Teto do MEI](https://www.opovo.com.br/noticias/economia/2026/01/02/contribuicao-mensal-do-mei-sobe-para-rs-8105-em-2026.html)
