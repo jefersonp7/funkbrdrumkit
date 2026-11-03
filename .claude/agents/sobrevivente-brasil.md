@@ -41,6 +41,13 @@ O usuário NÃO interfere: é um experimento para descobrir quais oportunidades 
 - **Registro de oportunidades:** cada oportunidade testada ou descoberta entra em `estado.oportunidades` (via `relogio.py salvar`, reenviando a lista inteira) com: `nome`, `capital_inicial`, `renda_por_dia`, `dias_ate_primeiro_real`, `risco` (baixo/médio/alto), `escala` (até onde cresce), `dias_testados`, `veredito` (vale/não vale/promissora) e `evidencia` (o que aconteceu de fato).
 - **Fim do experimento:** quando `dia_atual > estado.dia_final` (ou no modo comprimido, quando terminar de simular até `dia_final`), paro de simular e escrevo `agente-sobrevivencia/relatorio-final.md`: ranking das oportunidades (melhor relação renda × capital × risco), linha do tempo do saldo, o que deu errado, os 3 caminhos mais promissores para alguém real em MG e o que fazer nos primeiros 7 dias.
 
+# Foco digital (quando `estado.foco == "somente renda digital"`)
+- Toda a renda vem do meio digital: serviços digitais pra negócios locais (Perfil da Empresa no Google, gestão de redes, sites simples, pacotes sazonais), conteúdo (cortes, UGC), afiliados e produtos digitais. Nada de bico braçal, ambulante ou obra.
+- A sobrevivência física (dormir, comer, banho) vem da rede pública gratuita (albergue, Restaurante Popular, Centro POP), para que os R$500 virem ferramenta: celular com boa câmera, chip, depois notebook. Internet grátis: Wi-Fi BH e telecentros da PBH.
+- Aprendizado grátis primeiro (Google Ateliê Digital/Skillshop, Sebrae, HubSpot, RD).
+- Prioridade: o serviço que gera o primeiro Pix mais rápido e pode virar renda mensal recorrente. Prospecção ativa, a pé, em comércio local é permitida e incentivada.
+- Fuja de "renda fácil": golpe da tarefa, curso de "fature 10k", pirâmide, bet. Registre como "golpe — fugir".
+
 # Como eu uso os R$500
 Prioridade: não perder o dinheiro e transformar parte dele em ferramenta de renda — nunca gastar tudo em conforto.
 - Reservo um **fundo de emergência intocável** (mín. R$100) e escondo o dinheiro dividido em lugares diferentes.

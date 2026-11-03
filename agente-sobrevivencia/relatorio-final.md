@@ -1,97 +1,63 @@
-# Relatório final: Rafael, 120 dias em Belo Horizonte com R$500
+# Relatório: Experimento 2 — Rafael empreendendo só no digital (120 dias, BH)
 
-Experimento autônomo: a IA decidiu tudo sozinha, sem nenhuma interferência do usuário.
-- **Período simulado:** D1 = 24/10/2026 até D120 = 20/02/2027 (Carnaval incluído).
-- **Dados:** preços e programas pesquisados na web em 03/11/2026. **Valores são estimativas**: confirme antes de usar na vida real.
+Mesmas condições do Experimento 1: 30 anos, R$500, sem casa, documento ou celular. D1 = 24/10/2026 até D120 = 20/02/2027.
+- **Regra nova:** toda a renda tem que vir do meio digital.
+- **Decisões:** a IA decidiu tudo sozinha.
+- **Dados:** pesquisados na web em 03/11/2026. **Os valores são estimativas.**
 
 ## Resultado
-| | Valor |
-|---|---|
-| Começou com | R$500 em dinheiro vivo, sem casa, documento ou celular |
-| Ganhou no total | R$9.262 |
-| Gastou no total | R$5.368 |
-| **Terminou com** | **R$4.394** (quase 9x o inicial) |
-| Ponto mais baixo | **R$44 no D21** (entre começar na CLT e receber o 1º vale) |
-| Conquistas | RG, conta digital, celular, quarto alugado, CLT efetivada, certificado de eletricista, MEI aberto |
+| | Exp. 1 (bicos + CLT) | **Exp. 2 (digital)** |
+|---|---|---|
+| Saldo no D120 | R$4.394 | **R$8.588** |
+| Renda total | R$9.262 | R$13.300 (R$12.100 digital + R$1.200 Bolsa Família) |
+| Ponto mais baixo | R$44 (D21) | **R$132 (D14)**, 18 dias sem nenhum real entrando |
+| Renda mensal no fim | ~R$1.495 + VA | ~R$1.600 fixos + ~R$1.400 variáveis |
 
-## Ranking das oportunidades (renda × capital × risco)
+## Ranking das oportunidades digitais
 | # | Oportunidade | Capital | Renda | Veredito |
 |---|---|---|---|---|
-| 1 | Emprego CLT via SINE (ajudante de carga em atacadista) | R$0 | ~R$1.495 líq. + VA + 13º | **vale, é a base** |
-| 2 | Ambulante credenciado no Carnaval de BH | ~R$480 | lucro ~R$465/dia de bloco | **vale, maior lucro/dia** |
-| 3 | Curso grátis de eletricista (PMQER/PBH) + MEI | R$0 + ferramentas | R$120–260 por folga | **melhor no longo prazo** |
-| 4 | Carga e descarga na CeasaMinas | R$0 | R$60–120/madrugada | vale para começar |
-| 5 | Entrega por app com e-bike alugada | ~R$45/dia | ~R$85 líq. em 6h | complemento |
-| 6 | Venda de bebida em festa (Réveillon) | R$180 | lucro ~R$110 | treino pro Carnaval |
-| 7 | Lavar carro na rua | R$25 | ~R$85/dia | só feriado |
-| 8 | Feira Hippie (montar barraca) | R$0 | R$70–80, domingo | complemento |
-| 9 | Latinha depois de jogo | R$0 | ~R$34 em 5h | não vale fora do Carnaval |
+| 1 | **Perfil da Empresa no Google** para comércio local | R$0 | R$150–200 por comércio | **melhor primeiro serviço** (3 de 10 viraram clientes mensais) |
+| 2 | **Gestão de Instagram** de pequeno comércio | R$0 | R$400–600 por cliente/mês | **maior renda recorrente** |
+| 3 | Pacotes sazonais (Black Friday, Natal, Carnaval) | R$0 | R$250–300 por pacote | vale |
+| 4 | Site simples para profissional liberal | notebook | R$500 por site | promissora |
+| 5 | UGC (vídeo para marca, sem seguidores) | ~R$40 | R$150 por vídeo | promissora |
+| 6 | Cortes para campanhas de clipping | R$0 | R$150–350/mês no início | complemento |
+| 7 | Afiliado Shopee / TikTok Shop | R$0 | ~0 sem audiência | não vale no começo |
+| — | Golpe da tarefa, curso "fature 10k com IA" | pedem depósito | negativa | **golpe: fugir** |
 
-**Rede pública que fez diferença:** Centro POP (endereço de referência, banho, encaminhamentos), RG grátis na UAI com declaração do Centro POP, Restaurante Popular (R$3, gratuito pra quem está na rua), SINE.
-
-**Programas que não se aplicaram:**
-- **Bolsa Família:** o limite é R$218 por pessoa; com renda de trabalho ele não se enquadra.
-- **Bolsa Moradia (R$800/mês):** ficou na fila e saiu dela quando conseguiu quarto próprio.
-- **Estamos Juntos (bolsa de R$540 + frente de trabalho):** ficou como plano B.
+## O que fez a diferença
+1. **Custo de vida zero nos primeiros 50 dias** (albergue + Restaurante Popular gratuito + Wi-Fi BH + telecentros). Assim os R$500 viraram celular e não sumiram em pensão.
+2. **Vender pra quem está perto.** O primeiro dinheiro não veio de internet "pura", e sim de prospecção a pé: 25 comércios do Centro e da Lagoinha sem Perfil no Google ou com Instagram parado.
+3. **Escada de serviço:** Perfil no Google barato → gestão mensal → pacote sazonal → site.
 
 ## O que deu errado
-1. **Albergue × Ceasa:** o horário de entrada do albergue não bate com trabalho de madrugada. Ele perdeu a vaga no D4.
-2. **Calote parcial** do chefe de equipe (R$30). Recuperou cobrando cedo e pedindo Pix.
-3. **Buraco de caixa da CLT:** a semana 3 quase zerou o dinheiro, porque o salário só chega 30 dias depois de começar. Os R$500 iniciais serviram exatamente pra atravessar esse buraco.
-4. **Cansaço:** com 6x1 + bico na folga + curso, chegou a 9/10 de cansaço no D56 e escolheu parar um dia.
+1. **18 dias sem receita:** o dinheiro chegou a R$132. Sem a rede pública teria acabado.
+2. **Cortes pagam devagar e pouco no início:** o 1º pagamento saiu no D27 e foi menor que o esperado.
+3. **Cliente cancelou em janeiro** (oficina cortando custos). Ter 1 cliente só é risco.
+4. **Notebook de R$900 no D70** derrubou o caixa, mas destravou sites e relatórios.
 
-## Os 3 caminhos mais promissores para alguém real em MG
-1. **Centro POP → SINE → CLT em logística ou atacado.** Não exige experiência e começa a pagar em 2 a 4 semanas.
-2. **Curso grátis (PMQER, Senac) → profissão técnica → MEI.** Eletricista, por exemplo. É o que mais aumenta a renda por hora.
-3. **Calendário de eventos:** Carnaval, Réveillon, jogos e shows como renda extra sazonal. Exige credencial da PBH e um capital pequeno.
+## Os 3 caminhos digitais mais promissores para alguém real em BH
+1. **Perfil no Google + avaliações para comércio de bairro.** Não precisa de capital, se aprende em 1 semana com curso grátis e abre a porta para o contrato mensal.
+2. **Gestão de redes de 3 a 5 comércios locais.** Comece abaixo do mercado (R$400–600) e suba o preço com portfólio. O mercado pratica R$1.200 ou mais.
+3. **Conteúdo como complemento** (cortes e UGC). Não depende de clientes locais, mas paga pouco e devagar no começo.
 
 ## Primeiros 7 dias (se fosse você)
-1. **Dia 1:** Centro POP. Banho, endereço de referência e encaminhamento pra documentos.
-2. **Dias 2–4:** renda rápida sem capital (Ceasa, feira, carga e descarga). Não gaste com pernoite pago se tiver vaga gratuita.
-3. **Dia 5:** celular simples + chip + conta digital. Foi a melhor compra do experimento.
-4. **Dias 6–7:** cadastro no SINE (vagas da PBH) e pedido do RG. Guarde pelo menos 1 mês de aluguel antes de aceitar uma CLT.
+1. **Dia 1:** Centro POP e albergue. Comida e cama resolvidas de graça.
+2. **Dia 2:** celular usado com câmera boa + chip + cadastro no Wi-Fi BH.
+3. **Dias 3–5:** telecentro + cursos grátis Google/Sebrae sobre Perfil da Empresa no Google e Instagram para negócios.
+4. **Dias 6–7:** prospecção a pé. Mostre ao dono do comércio como o negócio dele aparece no Google hoje e quanto custa arrumar.
 
 ## Fontes
-- [Restaurante Popular BH](https://prefeitura.pbh.gov.br/noticias/restaurante-popular-oferece-refeicoes-saudaveis-e-baixo-custo)
-- [Salário mínimo 2026](https://www.serasaexperian.com.br/carreiras/blog-carreiras/salario-minimo-2026/)
+- [Wi-Fi BH gratuito](https://prefeitura.pbh.gov.br/noticias/wi-fi-bh-gratuito-segue-em-expansao-pela-cidade-e-alcanca-mais-de-7-milhoes-de-usuarios)
+- [Telecentros PBH](https://prefeitura.pbh.gov.br/transparencia/duvidas-frequentes/pontos-de-acesso-livre-internet)
+- [Restaurante Popular](https://prefeitura.pbh.gov.br/noticias/restaurante-popular-oferece-refeicoes-saudaveis-e-baixo-custo)
+- [Preço de social media](https://www.mlabs.com.br/blog/gestao-de-redes-sociais-preco)
+- [Precificação social media 2026](https://jamilefernandes.com.br/blog/precificacao-para-social-media-quanto-cobrar-em-2026)
+- [Economia do clipping 2026](https://cut.pro/pt-BR/blog/economia-clipping-pago-um-dolar-mil-views-2026)
+- [Plataformas de clipping](https://www.ssemble.com/pt/blog/best-clipping-platforms-2026)
+- [Preço UGC 2026](https://influee.co/br/blog/ugc-price)
+- [Afiliado Shopee 2026](https://www.divulganinja.com.br/blog/quanto-shopee-paga-comissao-afiliados-2026)
+- [TikTok Shop afiliado](https://bpmoney.com.br/?p=423672)
+- [Cursos grátis de marketing](https://guiadoscursos.com/curso-marketing-digital-gratuito-2026-google-meta-sebrae-rd-station-coursera/)
 - [Bolsa Família 2026](https://www.opovo.com.br/trends/governo-decidiu-o-valor-do-bolsa-familia-para-2026/)
-- [Latinhas 2026](https://diariodocomercio.com.br/mix/reciclagem-quantas-latinhas-sao-necessarias-para-ganhar-um-salario-minimo-em-2026/)
-- [PMQER/PBH](https://prefeitura.pbh.gov.br/assistencia-social/programa-municipal-de-qualificacao-profissional)
 - [DAS MEI 2026](https://www.opovo.com.br/noticias/economia/2026/01/02/contribuicao-mensal-do-mei-sobe-para-rs-8105-em-2026.html)
-- [Bolsa Moradia BH](https://prefeitura.pbh.gov.br/noticias/300-pessoas-em-situacao-de-rua-serao-selecionadas-para-acesso-ao-programa-bolsa-moradia)
-- [Estamos Juntos](https://prefeitura.pbh.gov.br/noticias/programa-estamos-juntos-inseriu-mais-de-130-beneficiarios-em-vagas-de-trabalho)
-- [Credenciamento de ambulantes no Carnaval](https://prefeitura.pbh.gov.br/noticias/pbh-credencia-11528-ambulantes-para-o-carnaval-de-2026)
-- [Entregas de bike](https://diariodopara.com.br/concursos-e-empregos/vale-a-pena-fazer-entregas-de-bike-descubra-como-comecar-e-quanto-da-pra-ganhar)
-- [Temporários em BH](https://diariodocomercio.com.br/economia/contratacao-temporarios-comercio-bh/)
-
----
-
-# Fase 2 (D121–D240, 21/02 a 20/06/2027): de ajudante a eletricista autônomo
-
-| | Valor |
-|---|---|
-| Saldo no D120 | R$4.394 |
-| **Saldo no D240** | **R$12.410** |
-| Ganhou na fase 2 | R$14.605 |
-| Gastou na fase 2 | R$6.589 |
-| Renda do MEI no mês 8 | ~R$3.200/mês (contra ~R$1.495 + VA na CLT) |
-
-**Decisão principal:** ele manteve a CLT até que a renda do MEI passasse o salário por 2 meses seguidos e houvesse 5 meses de reserva. Aí pediu demissão (D205).
-
-**Novas oportunidades:**
-1. **Perfil da Empresa no Google + pedir avaliação a cada cliente.** Custo zero, e virou o melhor canal: metade dos clientes novos veio daí.
-2. **Contrato de manutenção mensal com síndico.** R$400 fixos por prédio. Foi a primeira renda recorrente.
-3. **Parceria com a loja de material elétrico do bairro.** Indicações toda semana.
-4. **NR-10 (R$185).** O síndico exigiu o certificado antes de fechar o contrato.
-5. **GetNinjas.** Ajudou no começo (R$120 em créditos viraram 2 serviços), depois não fez falta.
-
-**O que deu errado:** um calote de R$200 (desde então ele cobra sinal de 50%) e uma bike roubada na porta de um cliente.
-
-**Lição sazonal:** no inverno de BH, os chuveiros queimam mais. A agenda encheu justo no mês em que ele virou autônomo.
-
-**Fontes da fase 2:**
-- [Preços de eletricista 2026](https://catracalivre.com.br/noticias/quanto-custa-instalar-um-chuveiro-eletrico-qual-o-preco-de-um-eletricista-para-fazer-o-servico-em-2026/)
-- [Valor/hora em BH](https://www.freelasemcrise.com.br/quanto-cobra/eletricista/belo-horizonte)
-- [Tomadas e interruptores](https://catracalivre.com.br/noticias/quanto-custa-instalar-tomadas-e-interruptores-qual-o-preco-de-um-eletricista-para-fazer-o-servico-em-2026/)
-- [NR-10 em BH](https://engehall.com.br/curso-de-nr-10/)
-- [Nova NR-10 (Portaria MTE 737/2026)](https://www.osetoreletrico.com.br/?p=168014)

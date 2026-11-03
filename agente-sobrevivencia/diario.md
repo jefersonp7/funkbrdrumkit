@@ -1,48 +1,20 @@
-# Diário do Rafael — Belo Horizonte, MG
-Início real: 2026-11-03 05:32 UTC · 1 hora real = 1 dia
+# Diário do Rafael — Experimento 2 (renda só digital) — Belo Horizonte, MG
+D1 = 24/10/2026 · D120 = 20/02/2027 · modo comprimido com pesquisa real
 
-## Dia 1 (em andamento)
-- 00:00 — Chego na Rodoviária de BH com R$500 no tênis. Decido não pagar pensão essa noite e esperar amanhecer na rodoviária, onde tem luz e movimento.
-- Saída: café + pão de queijo R$8,00
-- Saldo: R$492,00
-- Plano da manhã: Centro POP → almoço no Restaurante Popular → perguntar vaga de albergue → descobrir como pegar serviço na CeasaMinas.
-- (dia 1 continuou) Centro POP: banho, endereço de referência, encaminhamentos; vaga no albergue. -R$5. Saldo R$487
-
-## Semana 1 (D1–D7)
-- D2: 1ª madrugada na CeasaMinas, descarga de caminhão +R$70 -R$22. Saldo R$535
-- D3: Ceasa +R$90 -R$22. Saldo R$603
-- D4: Ceasa dia fraco +R$60 -R$22; perdeu vaga no albergue (horário); dormiu na rodoviária. Saldo R$641
-- D5: celular usado + chip no Shopping Oiapoque, conta digital, depósito de R$250 na lotérica -R$250. Saldo R$391
-- D6: Ceasa, Seu Geraldo passa a chamar no zap +R$100 -R$22. Saldo R$469
-- D7: Feira Hippie +R$80; pensão semanal -R$180, comida -R$10. Saldo R$359
-- Resumo: +R$400 / -R$533 / saldo R$359
-
-## Semana 2
-- D8: Ceasa +R$110; entrevista do CadÚnico. Saldo R$447
-- D9: UAI, 2ª via do RG grátis; descanso -R$10. Saldo R$437
-- D10: Ceasa, recebeu R$60 dos R$90 combinados; SINE, entrevista no D12. Saldo R$475
-- D11 05h: na Ceasa; cobrou os R$30, Geraldo prometeu pagar no fim do turno via Pix
-
-## Modo comprimido (D11–D120, com pesquisa real de BH/MG)
-- Sem 2 (D11–D14): +R$120, -R$249, saldo R$346; D11 Ceasa; cobrou o Geraldo e recebeu R$90 + os R$30 atrasados por Pix; D12 entrevista no atacadista (vaga do SINE): aprovado p/ ajudante de carga CLT, R$1.750 + VA + VT, escala 6x1; D13 exame admissional; Centro POP: pediu inscrição no Bolsa Moradia (fila de espera); D14 renovou pensão 1 semana
-- Sem 3 (D15–D21): +R$90, -R$392, saldo R$44; D15–D20 começou no atacadista; refeitório na empresa resolve o almoço; D21 trocou a pensão semanal por quarto mensal em Contagem (R$650/mês); só tinha R$300 — negociou o resto pro dia do vale. Semana mais perigosa: sobrou R$44; D21 folga: Ceasa de madrugada com o Geraldo
-- Sem 4 (D22–D28): +R$562, -R$406, saldo R$200; D22–D27 trabalho; cartão VA chegou (R$300/mês) = compras do mês; D28 vale de 40% do salário (adiantamento); pagou os R$350 do quarto; D28 folga: testou latinha depois de jogo no Mineirão: 7kg em 5h
-- Sem 5 (D29–D35): +R$310, -R$93, saldo R$417; D29–D34 trabalho; Black Friday (D35) com hora extra; D30 RG (CIN) pronto na UAI, de graça; D33 folga: alugou e-bike de entrega por 1 dia e testou app de entrega (6h)
-- Sem 6 (D36–D42): +R$80, -R$88, saldo R$409; D36–D41 trabalho; inscrição no PMQER (curso grátis de eletricista predial, noturno, começa em janeiro) com o endereço novo; D42 folga: Feira Hippie montando barracas; D42 celular: plano pré-pago do mês
-- Sem 7 (D43–D49): +R$800, -R$188, saldo R$1021; D45 1º salário (saldo de novembro); D43–D48 trabalho; comprou botina e calça (roupa de trabalho própria); D49 folga: Ceasa em semana de Natal paga mais
-- Sem 8 (D50–D56): +R$220, -R$713, saldo R$528; D50–D55 trabalho; hora extra de Natal; D51 aluguel do quarto; D56 folga: descanso (cansaço 9/10 — escolheu não trabalhar)
-- Sem 9 (D57–D63): +R$1000, -R$113, saldo R$1415; D58 vale de 40% + 1ª/2ª parcela do 13º proporcional; D57–D62 trabalho; ceia de Natal com colegas (vaquinha); D63 folga (Natal): lavou carros na rua do bairro com balde e pano próprios
-- Sem 10 (D64–D70): +R$290, -R$228, saldo R$1477; D64–D69 trabalho; Réveillon de folga: vendeu água e refrigerante em festa de bairro em Contagem (isopor R$60 + estoque R$120); D70 contrato de experiência renovado (45+45) — bom sinal de efetivação
-- Sem 11 (D71–D77): +R$985, -R$68, saldo R$2394; D74 salário de dezembro; D71–D76 trabalho; começou o curso de eletricista (noite, 3x/semana); D77 folga: Ceasa; D72 inscrição pra credencial de ambulante do Carnaval de BH (fica de olho no edital da PBH/Belotur)
-- Sem 12 (D78–D84): +R$100, -R$720, saldo R$1774; D78–D83 trabalho + curso; D81 aluguel; D84 folga: ajudou o professor do curso num serviço de fiação (aprendizado pago)
-- Sem 13 (D85–D91): +R$690, -R$80, saldo R$2384; D89 vale 40%; D85–D90 trabalho + curso; D91 folga: Ceasa
-- Sem 14 (D92–D98): +R$120, -R$85, saldo R$2419; D92–D97 trabalho + curso; Bolsa Moradia: saiu da fila (não está mais em situação de rua — saiu por conta própria); D98 folga: 1º servicinho elétrico próprio (troca de chuveiro e tomadas pra vizinha), indicação boca a boca
-- Sem 15 (D99–D105): +R$1045, -R$500, saldo R$2964; D104 salário de janeiro; D99–D104 trabalho; credencial de ambulante retirada; comprou estoque do Carnaval no atacado (desconto de funcionário); D105 folga: troca de 2 resistências de chuveiro + 1 disjuntor
-- Sem 16 (D106–D112) — CARNAVAL: +R$1420, -R$760, saldo R$3624; D106 sábado de Carnaval (folga trocada): bebida no bloco, vendeu tudo; D109 terça de Carnaval (folga): 2º dia de bloco + latinhas no fim; D107–D112 trabalho (atacadista lotado pós-Carnaval); D111 aluguel
-- Sem 17 (D113–D120): +R$860, -R$90, saldo R$4394; D113–D119 trabalho + fim do curso; conclusão do PMQER — certificado de eletricista predial; D116 abriu MEI (grátis no gov.br), DAS de serviços ~R$86/mês; D118 folga: 2 serviços elétricos por indicação no zap; D119 vale 40%; D120 efetivado no atacadista após 90 dias
-
-## Fase 2 (D121–D240): de ajudante a eletricista autônomo
-- Mês 5 (D121–D150, 21/02–22/03): +R$2215, -R$2111, saldo R$4498; salário de fevereiro + vale; NR-10 básico (40h) — R$185; kit de ferramentas (alicate amperímetro, chaves, fita, teste); bike usada pra ir aos serviços; 100 cartões de visita + panfletos na loja de material elétrico do bairro; serviços elétricos nas folgas (4 folgas); aluguel + DAS MEI + vida
-- Mês 6 (D151–D180, 23/03–21/04): +R$2945, -R$1276, saldo R$6167; salário + vale; criou o Perfil da Empresa no Google (grátis) e pediu avaliação a cada cliente: 15 avaliações 5★; testou GetNinjas (créditos pra desbloquear pedidos); serviços: folgas + 3 noites por semana; calote de cliente: R$200 de mão de obra não pagos (aprendeu: sinal de 50% antes); aluguel + DAS + vida
-- Mês 7 (D181–D210, 22/04–21/05): +R$3595, -R$1166, saldo R$8596; salário + vale; D195: contrato de manutenção mensal com síndico de um prédio (R$400/mês); serviços avulsos (indicações do Google e da loja de material); aluguel + DAS + vida; D205: renda do MEI passou o salário por 2 meses e já tinha 5 meses de reserva → pediu demissão; empresa dispensou o aviso
-- Mês 8 (D211–D240, 22/05–20/06) — inverno: +R$5850, -R$2036, saldo R$12410; saldo de salário de maio; rescisão (férias proporcionais + 1/3 + 13º proporcional; sem FGTS por ser pedido de demissão); eletricista em tempo integral: inverno = chuveiro queimando, agenda cheia; contrato do prédio; escada de alumínio; bike roubada na porta de um cliente; comprou outra usada + cadeado bom; aluguel + DAS + vida (sem VA e refeitório agora)
+- Sem 1 (D1–D7): +R$0, -R$338, saldo R$162; D1 rodoviária → Centro POP: endereço de referência, vaga no albergue, Restaurante Popular gratuito pra quem está na rua (comida resolvida sem gastar); D2 celular usado com câmera boa no Shopping Oiapoque + chip; D2 cadastro no Wi-Fi BH gratuito (CPF + telefone); conta digital, e-mail, Instagram e TikTok; D3–D7 telecentro da PBH: cursos grátis Google Ateliê Digital e Sebrae (marketing digital, Perfil da Empresa no Google); 1ºs cortes no CapCut grátis pra campanhas de clipping
+- Sem 2 (D8–D14): +R$0, -R$30, saldo R$132; D8 CadÚnico no CRAS (renda zero declarada); fila do Bolsa Moradia pelo Centro POP; D9–D14 30 cortes postados; prospecção a pé: 25 comércios do Centro e da Lagoinha sem Perfil no Google ou com Instagram parado
+- Sem 3 (D15–D21): +R$500, -R$30, saldo R$602; D18 1º cliente: barbearia — Perfil da Empresa no Google com fotos e pedido de avaliações (R$150); D20 padaria: mesmo serviço (R$150); D21 barbearia contrata gestão de Instagram, R$400/mês (50% adiantado); dados e ônibus
+- Sem 4 (D22–D28): +R$180, -R$40, saldo R$742; D24 caiu no radar do 'golpe da tarefa' (pagam pra curtir vídeo e depois pedem 'depósito'): recusou e avisou o grupo; D27 1º pagamento de campanha de cortes (~US$1 por mil views; muitos cortes deram poucas views); dados e ônibus
+- Sem 5 (D29–D35): +R$820, -R$40, saldo R$1522; Black Friday: 2 lojas compram pacote avulso de posts e stories (R$250 cada); cortes; barbearia: 2ª metade; dados e ônibus
+- Sem 6 (D36–D42): +R$650, -R$126, saldo R$2046; D40 abriu MEI em atividade permitida (conferiu a lista oficial), DAS serviços ~R$86; D41 2º cliente mensal: oficina mecânica, R$450/mês; Perfil no Google pra um salão (R$200); gravou 3 vídeos UGC de portfólio com produtos que já tinha
+- Sem 7 (D43–D49): +R$350, -R$50, saldo R$2346; 1º UGC pago (R$150) por plataforma de criadores; cortes; dados e ônibus
+- Sem 8 (D50–D56): +R$1450, -R$1300, saldo R$2496; D50 saiu do albergue: quarto no Centro (R$600) + caução; D51 barbearia R$400 + oficina R$450; D55 1ª parcela do Bolsa Família (R$600), pela renda baixa declarada no D8; comida (agora paga)
+- Sem 9 (D57–D63): +R$550, -R$100, saldo R$2946; Natal: 2 Perfis no Google (R$200 cada); cortes; comida e dados
+- Sem 10 (D64–D70): +R$600, -R$1086, saldo R$2460; notebook usado pra escalar (edição, sites, relatórios); 3º cliente mensal: restaurante, R$600/mês adiantado; DAS + comida
+- Sem 11 (D71–D77): +R$950, -R$100, saldo R$3310; janeiro fraco: oficina cancelou o contrato (cortou custos); barbearia; cortes; 2 vídeos UGC; comida e dados
+- Sem 12 (D78–D84): +R$1500, -R$700, saldo R$4110; aluguel; 2ª parcela do Bolsa Família; 2 Perfis no Google (R$200 cada); 1º site simples (página única) pra uma psicóloga, com ferramentas grátis; comida
+- Sem 13 (D85–D91): +R$900, -R$186, saldo R$4824; atualizou a renda no CadÚnico: passou de meio salário mínimo por pessoa → Bolsa Família encerrado (correto); 4º cliente mensal: academia, R$600; cortes; DAS + comida
+- Sem 14 (D92–D98): +R$1800, -R$100, saldo R$6524; restaurante; pacote de Carnaval pra 3 bares (posts, stories e agenda dos blocos) — R$300 cada; 2 UGC; comida
+- Sem 15 (D99–D105): +R$750, -R$100, saldo R$7174; barbearia; cortes; comida
+- Sem 16 (D106–D112) — CARNAVAL: +R$1100, -R$700, saldo R$7574; cortes de blocos pra campanha de marca (não política); academia; aluguel; comida
+- Sem 17 (D113–D120): +R$1200, -R$186, saldo R$8588; 3 Perfis no Google (R$200 cada); restaurante renovou; DAS + comida

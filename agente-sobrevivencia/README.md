@@ -15,6 +15,8 @@ Um personagem-agente que perdeu tudo (casa, emprego, celular, rede de apoio) e r
 ## Arquivos
 - `.claude/agents/sobrevivente-brasil.md` — o agente para o Claude Code.
 - `agente-sobrevivencia/prompt-sistema.md` — o mesmo prompt para colar em outros chats.
+- `agente-sobrevivencia/experimento-1-bicos/` — Experimento 1 (bicos + CLT, 240 dias) arquivado.
+- `agente-sobrevivencia/relatorio-final.md` — Experimento 2 (renda só digital).
 - `agente-sobrevivencia/relogio.py` — o relógio do mundo (calcula o dia e a hora atuais).
 - `agente-sobrevivencia/estado.json` — a memória do Rafael (saldo, itens, documentos, metas, resumos). É a única coisa que o agente lê.
 - `agente-sobrevivencia/diario.md` — o diário completo, só para você ler. O agente só acrescenta linhas no fim, sem reler.
