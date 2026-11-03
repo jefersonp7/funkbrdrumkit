@@ -21,3 +21,4 @@ Início real: 2026-11-03 05:32 UTC · 1 hora real = 1 dia
 - D8: Ceasa +R$110; entrevista do CadÚnico. Saldo R$447
 - D9: UAI, 2ª via do RG grátis; descanso -R$10. Saldo R$437
 - D10: Ceasa, recebeu R$60 dos R$90 combinados; SINE, entrevista no D12. Saldo R$475
+- D11 05h: na Ceasa; cobrou os R$30, Geraldo prometeu pagar no fim do turno via Pix
