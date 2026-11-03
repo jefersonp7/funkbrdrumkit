@@ -1,34 +1,37 @@
-# Agente "Sobrevivente Brasil" — Rafael, 30 anos, recomeçando do zero
+# Agente "Sobrevivente Brasil" — Rafael, 30 anos, recomeçando em Minas Gerais
 
-Um personagem-agente que perdeu tudo (casa, dinheiro, celular, rede de apoio) e precisa
-gerar renda do **zero absoluto** numa cidade brasileira real, só por caminhos legais.
+Um personagem-agente que perdeu tudo (casa, emprego, celular, rede de apoio) e recomeça em
+**Belo Horizonte, MG** com **R$500,00 em dinheiro vivo — e mais nada**. Só caminhos legais.
+
+## O mundo roda sozinho: 1 hora real = 1 dia do Rafael
+- O relógio começa quando você manda começar. A cada hora real, passa 1 dia para ele
+  (≈ 2,5 min reais = 1 hora dele). Em 1 dia real, ele vive 24 dias.
+- **Mundo otimizado:** quando você fica um tempo sem falar com ele, o Rafael não fica
+  parado. Ele vive esses dias tomando as melhores decisões realistas sozinho, e ao voltar
+  você recebe o resumo dos dias perdidos. Otimizado não quer dizer sortudo: imprevistos
+  continuam acontecendo.
+- Você não pode "pular" dias: só esperar ou dar ordens.
 
 ## Arquivos
-- `.claude/agents/sobrevivente-brasil.md` — subagente pronto para o Claude Code.
-- `agente-sobrevivencia/prompt-sistema.md` — o mesmo prompt, sem cabeçalho, para colar
-  como instrução de sistema / "Instruções do projeto" em qualquer chat de IA.
+- `.claude/agents/sobrevivente-brasil.md` — o agente para o Claude Code.
+- `agente-sobrevivencia/prompt-sistema.md` — o mesmo prompt para colar em outros chats.
+- `agente-sobrevivencia/relogio.py` — o relógio do mundo (calcula o dia e a hora atuais).
+- `agente-sobrevivencia/estado.json` — criado ao começar: início real, cidade, saldo, último dia.
+- `agente-sobrevivencia/diario.md` — criado pelo Rafael: o diário com o caixa de cada dia.
 
 ## Como usar
-**No Claude Code:** `Use o agente sobrevivente-brasil. Estou em Curitiba, PR. Começa o dia 1.`
+**No Claude Code:** `Use o agente sobrevivente-brasil. Começa o dia 1.`
+(Para outra cidade de MG: `Estou em Uberlândia, MG. Começa o dia 1.`)
 
-**Em qualquer chat:** cole o conteúdo de `prompt-sistema.md` e troque `{CIDADE}` e `{ESTADO}`
-pela sua cidade.
+**Em outros chats:** cole `prompt-sistema.md`. Como lá não existe relógio, ele vai pedir a
+hora real de início e a hora atual para fazer a conta.
 
-### Comandos durante a simulação
 | Você diz | O que acontece |
 |---|---|
-| `próximo dia` | avança 1 dia no diário |
-| `pula 1 semana` / `pula 1 mês` | avança o tempo com resumo do período |
-| `vai pro CRAS`, `vende água no farol`… | você dá a ideia, o Rafael decide e reage |
+| `como tá?` / `e aí, Rafael?` | ele confere o relógio, conta os dias que passaram e narra o dia atual |
+| `vai pra Ceasa`, `compra um celular usado`… | você dá a ideia, ele decide e reage |
 | `modo plano` | plano de 7 / 30 / 90 dias com metas de renda |
 | `relatório` | renda total, média por dia, o que funcionou e próximo passo |
 
-## Regras do mundo
-- Começa com R$0, sem empréstimo nem recurso que caia do céu.
-- Usa a rede real: CRAS, Centro POP, CadÚnico, Bolsa Família, restaurante popular,
-  Defensoria, SINE, ONGs. Valores são estimativas e devem ser conferidos na sua cidade.
-- Caixa sempre fechado, com imprevistos (chuva, calote, cansaço) contando.
-- Nada de golpe, aposta, pirâmide ou atividade ilegal.
-
-> Se você ou alguém próximo estiver de fato nessa situação: procure o CRAS ou Centro POP
+> Se você ou alguém próximo estiver de fato nessa situação: procure o CRAS ou o Centro POP
 > da sua cidade. CVV 188 (apoio emocional, 24h, gratuito) · Disque 100 · SAMU 192.
