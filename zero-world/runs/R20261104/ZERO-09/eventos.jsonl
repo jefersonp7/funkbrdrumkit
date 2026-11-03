@@ -1,0 +1,28 @@
+{"seq":21,"dia":3,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":25,"dia":3,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço perfil_google","dados":{}}
+{"seq":34,"dia":4,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço social_media","dados":{}}
+{"seq":42,"dia":5,"tipo":"CONTRATO","texto":"clínica #73 fechou perfil_google por R$ 180,00","dados":{"contrato":"C1"}}
+{"seq":69,"dia":8,"tipo":"CONTRATO","texto":"padaria #12 fechou perfil_google por R$ 180,00","dados":{"contrato":"C2"}}
+{"seq":96,"dia":11,"tipo":"CONTRATO","texto":"clínica #73 fechou social_media por R$ 500,00","dados":{"contrato":"C3"}}
+{"seq":155,"dia":18,"tipo":"CONTRATO","texto":"lanchonete #9 fechou perfil_google por R$ 130,00","dados":{"contrato":"C4"}}
+{"seq":166,"dia":19,"tipo":"CONTRATO","texto":"clínica #50 fechou social_media por R$ 360,00","dados":{"contrato":"C5"}}
+{"seq":184,"dia":21,"tipo":"CONTRATO","texto":"academia #79 fechou social_media por R$ 500,00","dados":{"contrato":"C6"}}
+{"seq":196,"dia":22,"tipo":"RG_PRONTO","texto":"RG pronto","dados":{}}
+{"seq":197,"dia":22,"tipo":"CONTRATO","texto":"restaurante #24 fechou perfil_google por R$ 180,00","dados":{"contrato":"C7"}}
+{"seq":202,"dia":22,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço site","dados":{}}
+{"seq":209,"dia":23,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço clipping","dados":{}}
+{"seq":210,"dia":23,"tipo":"CONTRATO","texto":"clínica #51 fechou perfil_google por R$ 180,00","dados":{"contrato":"C8"}}
+{"seq":213,"dia":23,"tipo":"CALOTE","texto":"Cliente N051 não pagou R$ 180,00","dados":{}}
+{"seq":221,"dia":24,"tipo":"CONTRATO","texto":"loja de roupa #11 fechou perfil_google por R$ 180,00","dados":{"contrato":"C9"}}
+{"seq":222,"dia":24,"tipo":"CONTRATO","texto":"salão #6 fechou social_media por R$ 500,00","dados":{"contrato":"C10"}}
+{"seq":243,"dia":26,"tipo":"CONTRATO","texto":"clínica #51 fechou social_media por R$ 650,00","dados":{"contrato":"C11"}}
+{"seq":263,"dia":28,"tipo":"CONTRATO","texto":"restaurante #24 fechou social_media por R$ 650,00","dados":{"contrato":"C12"}}
+{"seq":274,"dia":29,"tipo":"CONTRATO","texto":"padaria #60 fechou site por R$ 600,00","dados":{"contrato":"C13"}}
+{"seq":423,"dia":44,"tipo":"CONTRATO","texto":"pet shop #52 fechou site por R$ 600,00","dados":{"contrato":"C14"}}
+{"seq":425,"dia":44,"tipo":"CONTRATO","texto":"clínica #55 fechou perfil_google por R$ 140,00","dados":{"contrato":"C15"}}
+{"seq":426,"dia":44,"tipo":"CONTRATO","texto":"restaurante #39 fechou perfil_google por R$ 140,00","dados":{"contrato":"C16"}}
+{"seq":468,"dia":48,"tipo":"BF_NEGADO","texto":"Renda acima do limite","dados":{}}
+{"seq":921,"dia":101,"tipo":"CALOTE","texto":"Mensalidade não paga C3","dados":{}}
+{"seq":1115,"dia":125,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":1217,"dia":139,"tipo":"CANCELAMENTO","texto":"Cliente N050 cancelou social_media","dados":{}}
+{"seq":1725,"dia":206,"tipo":"CANCELAMENTO","texto":"Cliente N051 cancelou social_media","dados":{}}

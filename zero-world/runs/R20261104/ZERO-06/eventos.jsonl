@@ -1,0 +1,31 @@
+{"seq":24,"dia":3,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço perfil_google","dados":{}}
+{"seq":35,"dia":4,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço social_media","dados":{}}
+{"seq":49,"dia":6,"tipo":"CONTRATO","texto":"salão #75 fechou perfil_google por R$ 180,00","dados":{"contrato":"C1"}}
+{"seq":59,"dia":7,"tipo":"CONTRATO","texto":"barbearia #28 fechou perfil_google por R$ 180,00","dados":{"contrato":"C2"}}
+{"seq":110,"dia":13,"tipo":"CONTRATO","texto":"oficina #46 fechou perfil_google por R$ 150,00","dados":{"contrato":"C3"}}
+{"seq":120,"dia":14,"tipo":"CONTRATO","texto":"clínica #52 fechou social_media por R$ 430,00","dados":{"contrato":"C4"}}
+{"seq":130,"dia":15,"tipo":"CONTRATO","texto":"loja de roupa #61 fechou social_media por R$ 310,00","dados":{"contrato":"C5"}}
+{"seq":149,"dia":17,"tipo":"CONTRATO","texto":"academia #48 fechou social_media por R$ 500,00","dados":{"contrato":"C6"}}
+{"seq":159,"dia":18,"tipo":"CONTRATO","texto":"pet shop #41 fechou social_media por R$ 500,00","dados":{"contrato":"C7"}}
+{"seq":161,"dia":18,"tipo":"CONTRATO","texto":"pet shop #26 fechou perfil_google por R$ 180,00","dados":{"contrato":"C8"}}
+{"seq":176,"dia":19,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço site","dados":{}}
+{"seq":190,"dia":21,"tipo":"CONTRATO","texto":"restaurante #47 fechou social_media por R$ 500,00","dados":{"contrato":"C9"}}
+{"seq":200,"dia":22,"tipo":"RG_PRONTO","texto":"RG pronto","dados":{}}
+{"seq":210,"dia":23,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço clipping","dados":{}}
+{"seq":211,"dia":23,"tipo":"CONTRATO","texto":"pet shop #71 fechou social_media por R$ 500,00","dados":{"contrato":"C10"}}
+{"seq":272,"dia":29,"tipo":"CONTRATO","texto":"academia #21 fechou perfil_google por R$ 150,00","dados":{"contrato":"C11"}}
+{"seq":333,"dia":35,"tipo":"CONTRATO","texto":"pet shop #37 fechou site por R$ 600,00","dados":{"contrato":"C12"}}
+{"seq":386,"dia":40,"tipo":"CONTRATO","texto":"oficina #42 fechou site por R$ 600,00","dados":{"contrato":"C13"}}
+{"seq":431,"dia":44,"tipo":"CONTRATO","texto":"oficina #8 fechou perfil_google por R$ 170,00","dados":{"contrato":"C14"}}
+{"seq":455,"dia":46,"tipo":"CONTRATO","texto":"academia #18 fechou perfil_google por R$ 230,00","dados":{"contrato":"C15"}}
+{"seq":459,"dia":46,"tipo":"CALOTE","texto":"Cliente N018 não pagou R$ 230,00","dados":{}}
+{"seq":477,"dia":48,"tipo":"BF_NEGADO","texto":"Renda acima do limite","dados":{}}
+{"seq":480,"dia":48,"tipo":"CONTRATO","texto":"pet shop #10 fechou perfil_google por R$ 200,00","dados":{"contrato":"C16"}}
+{"seq":531,"dia":53,"tipo":"CANCELAMENTO","texto":"Cliente N071 cancelou social_media","dados":{}}
+{"seq":553,"dia":55,"tipo":"CONTRATO","texto":"oficina #64 fechou perfil_google por R$ 170,00","dados":{"contrato":"C17"}}
+{"seq":959,"dia":104,"tipo":"CANCELAMENTO","texto":"Cliente N052 cancelou social_media","dados":{}}
+{"seq":1192,"dia":135,"tipo":"CANCELAMENTO","texto":"Cliente N061 cancelou social_media","dados":{}}
+{"seq":1684,"dia":201,"tipo":"CANCELAMENTO","texto":"Cliente N047 cancelou social_media","dados":{}}
+{"seq":1723,"dia":206,"tipo":"CONTRATO","texto":"restaurante #47 fechou site por R$ 600,00","dados":{"contrato":"C18"}}
+{"seq":1887,"dia":228,"tipo":"CANCELAMENTO","texto":"Cliente N041 cancelou social_media","dados":{}}
+{"seq":1930,"dia":233,"tipo":"CONTRATADO","texto":"Contratado como auxiliar de limpeza (R$ 1.990,00)","dados":{}}

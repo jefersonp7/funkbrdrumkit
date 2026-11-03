@@ -1,0 +1,653 @@
+{
+ "motor": "zero-world-motor-0.1.0",
+ "politica": "politica-programada-v1",
+ "tipoCerebro": "POLÍTICA PROGRAMADA (regras fixas, não é IA)",
+ "semente": 20261104,
+ "dias": 240,
+ "sementesRodadas": [
+  20261104,
+  20261105,
+  20261106,
+  20261107,
+  20261108
+ ],
+ "executadoEm": "2026-11-03T06:37:53.664Z",
+ "msTotal": 92425,
+ "hashes": {
+  "ZERO-01": "a4275555",
+  "ZERO-02": "3ee9913e",
+  "ZERO-03": "07ca1141",
+  "ZERO-04": "7d4910c2",
+  "ZERO-05": "748b7450",
+  "ZERO-06": "e3fc5183",
+  "ZERO-07": "b7194dbc",
+  "ZERO-08": "5951e521",
+  "ZERO-09": "12208a36",
+  "ZERO-10": "bcda8bed"
+ },
+ "analise": {
+  "dias": 240,
+  "mundos": 10,
+  "metricas": [
+   {
+    "id": "ZERO-01",
+    "seed": 3241030024,
+    "capitalInicial": 0,
+    "diasSimulados": 240,
+    "saldo": 1402186,
+    "patrimonio": 1539186,
+    "receita": 2187021,
+    "beneficios": 0,
+    "despesas": 599835,
+    "perdas": 0,
+    "lucro": 1587186,
+    "dividas": 0,
+    "ganhoLiquido": 1539186,
+    "roi": "não aplicável",
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 1,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 4,
+    "estrategiaFinal": "EMPREGO+DIGITAL",
+    "emprego": "porteiro",
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 0,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 443,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1199,
+     "transacoes": 439,
+     "bytesEstado": 889032
+    },
+    "hash": "a4275555",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-02",
+    "seed": 3291362881,
+    "capitalInicial": 0,
+    "diasSimulados": 240,
+    "saldo": 2201999,
+    "patrimonio": 2338999,
+    "receita": 2986534,
+    "beneficios": 0,
+    "despesas": 599535,
+    "perdas": 0,
+    "lucro": 2386999,
+    "dividas": 0,
+    "ganhoLiquido": 2338999,
+    "roi": "não aplicável",
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 5,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 4,
+    "estrategiaFinal": "EMPREGO+DIGITAL",
+    "emprego": "atendente",
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 0,
+     "diasCaixaAbaixoDe50": 4
+    },
+    "custo": {
+     "ms": 309,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1151,
+     "transacoes": 324,
+     "bytesEstado": 831925
+    },
+    "hash": "3ee9913e",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-03",
+    "seed": 3274585262,
+    "capitalInicial": 0,
+    "diasSimulados": 240,
+    "saldo": 1333168,
+    "patrimonio": 1470168,
+    "receita": 2186303,
+    "beneficios": 0,
+    "despesas": 668135,
+    "perdas": 0,
+    "lucro": 1518168,
+    "dividas": 0,
+    "ganhoLiquido": 1470168,
+    "roi": "não aplicável",
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 3,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 3,
+    "estrategiaFinal": "DIGITAL",
+    "emprego": null,
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 0,
+     "diasCaixaAbaixoDe50": 2
+    },
+    "custo": {
+     "ms": 376,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1153,
+     "transacoes": 406,
+     "bytesEstado": 845681
+    },
+    "hash": "07ca1141",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-04",
+    "seed": 3324918119,
+    "capitalInicial": 0,
+    "diasSimulados": 240,
+    "saldo": 1406569,
+    "patrimonio": 1543569,
+    "receita": 2257304,
+    "beneficios": 0,
+    "despesas": 665735,
+    "perdas": 0,
+    "lucro": 1591569,
+    "dividas": 0,
+    "ganhoLiquido": 1543569,
+    "roi": "não aplicável",
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 6,
+    "diaEstabilidade": 33,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 4,
+    "estrategiaFinal": "EMPREGO+DIGITAL",
+    "emprego": "auxiliar de limpeza",
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 0,
+     "diasCaixaAbaixoDe50": 5
+    },
+    "custo": {
+     "ms": 267,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1169,
+     "transacoes": 359,
+     "bytesEstado": 851437
+    },
+    "hash": "7d4910c2",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-05",
+    "seed": 3308140500,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 1444723,
+    "patrimonio": 1581723,
+    "receita": 2179858,
+    "beneficios": 0,
+    "despesas": 600135,
+    "perdas": 0,
+    "lucro": 1579723,
+    "dividas": 0,
+    "ganhoLiquido": 1531723,
+    "roi": 30.63446,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 9,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 1,
+    "mudancasEstrategia": 3,
+    "estrategiaFinal": "DIGITAL",
+    "emprego": null,
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 17900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 467,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1235,
+     "transacoes": 487,
+     "bytesEstado": 917059
+    },
+    "hash": "748b7450",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-06",
+    "seed": 3358473357,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 1217122,
+    "patrimonio": 1354122,
+    "receita": 2019657,
+    "beneficios": 0,
+    "despesas": 667535,
+    "perdas": 0,
+    "lucro": 1352122,
+    "dividas": 0,
+    "ganhoLiquido": 1304122,
+    "roi": 26.08244,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 6,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 4,
+    "estrategiaFinal": "EMPREGO+DIGITAL",
+    "emprego": "auxiliar de limpeza",
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 17900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 440,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1226,
+     "transacoes": 489,
+     "bytesEstado": 919265
+    },
+    "hash": "e3fc5183",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-07",
+    "seed": 3341695738,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 1704580,
+    "patrimonio": 1841580,
+    "receita": 2508315,
+    "beneficios": 0,
+    "despesas": 668735,
+    "perdas": 0,
+    "lucro": 1839580,
+    "dividas": 0,
+    "ganhoLiquido": 1791580,
+    "roi": 35.8316,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 5,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 3,
+    "estrategiaFinal": "DIGITAL",
+    "emprego": null,
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 17900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 446,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1246,
+     "transacoes": 500,
+     "bytesEstado": 927204
+    },
+    "hash": "b7194dbc",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-08",
+    "seed": 3123586691,
+    "capitalInicial": 100000,
+    "diasSimulados": 240,
+    "saldo": 1131571,
+    "patrimonio": 1268571,
+    "receita": 1885306,
+    "beneficios": 0,
+    "despesas": 668735,
+    "perdas": 0,
+    "lucro": 1216571,
+    "dividas": 0,
+    "ganhoLiquido": 1168571,
+    "roi": 11.68571,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 6,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 5,
+    "estrategiaFinal": "EMPREGO",
+    "emprego": "auxiliar de limpeza",
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 30900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 324,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1200,
+     "transacoes": 443,
+     "bytesEstado": 888174
+    },
+    "hash": "5951e521",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-09",
+    "seed": 3106809072,
+    "capitalInicial": 100000,
+    "diasSimulados": 240,
+    "saldo": 2087637,
+    "patrimonio": 2224637,
+    "receita": 2772772,
+    "beneficios": 0,
+    "despesas": 600135,
+    "perdas": 0,
+    "lucro": 2172637,
+    "dividas": 0,
+    "ganhoLiquido": 2124637,
+    "roi": 21.24637,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 5,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 3,
+    "estrategiaFinal": "DIGITAL",
+    "emprego": null,
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 67900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 322,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1229,
+     "transacoes": 490,
+     "bytesEstado": 921458
+    },
+    "hash": "12208a36",
+    "auditoria": true
+   },
+   {
+    "id": "ZERO-10",
+    "seed": 3156994834,
+    "capitalInicial": 100000,
+    "diasSimulados": 240,
+    "saldo": 1376961,
+    "patrimonio": 1513961,
+    "receita": 2130396,
+    "beneficios": 0,
+    "despesas": 668435,
+    "perdas": 0,
+    "lucro": 1461961,
+    "dividas": 0,
+    "ganhoLiquido": 1413961,
+    "roi": 14.13961,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 9,
+    "diaEstabilidade": 30,
+    "negociosCriados": 4,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 4,
+    "estrategiaFinal": "EMPREGO+DIGITAL",
+    "emprego": "auxiliar de limpeza",
+    "moradia": "quarto",
+    "risco": {
+     "menorCaixa": 67900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 326,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1211,
+     "transacoes": 398,
+     "bytesEstado": 876435
+    },
+    "hash": "bcda8bed",
+    "auditoria": true
+   }
+  ],
+  "efeitoCapital": [
+   {
+    "capitalInicial": 0,
+    "n": 4,
+    "medianaGanhoLiquido": 1541378,
+    "medianaPatrimonio": 1541378,
+    "medianaDiaPrimeiraReceita": 4,
+    "medianaDiaEstabilidade": 30,
+    "semEstabilidade": 0
+   },
+   {
+    "capitalInicial": 50000,
+    "n": 3,
+    "medianaGanhoLiquido": 1531723,
+    "medianaPatrimonio": 1581723,
+    "medianaDiaPrimeiraReceita": 6,
+    "medianaDiaEstabilidade": 30,
+    "semEstabilidade": 0
+   },
+   {
+    "capitalInicial": 100000,
+    "n": 3,
+    "medianaGanhoLiquido": 1413961,
+    "medianaPatrimonio": 1513961,
+    "medianaDiaPrimeiraReceita": 6,
+    "medianaDiaEstabilidade": 30,
+    "semEstabilidade": 0
+   }
+  ],
+  "negocios": [
+   {
+    "servico": "perfil_google",
+    "lancados": 10,
+    "fracassados": 0,
+    "receita": 825000,
+    "propostas": 429,
+    "aceitas": 54,
+    "taxaAceite": 12.6
+   },
+   {
+    "servico": "social_media",
+    "lancados": 10,
+    "fracassados": 0,
+    "receita": 13423000,
+    "propostas": 488,
+    "aceitas": 49,
+    "taxaAceite": 10
+   },
+   {
+    "servico": "clipping",
+    "lancados": 10,
+    "fracassados": 0,
+    "receita": 2155440,
+    "propostas": 0,
+    "aceitas": 0,
+    "taxaAceite": null
+   },
+   {
+    "servico": "site",
+    "lancados": 10,
+    "fracassados": 1,
+    "receita": 1770000,
+    "propostas": 773,
+    "aceitas": 32,
+    "taxaAceite": 4.1
+   }
+  ],
+  "errosRecorrentes": [
+   {
+    "motivo": "DORMIR: sem vaga no albergue; dormiu na rua",
+    "vezes": 38
+   }
+  ],
+  "tempoEmEstrategia": {
+   "SOBREVIVENCIA (bicos)": 40,
+   "BUSCA (digital + vagas)": 49,
+   "DIGITAL": 1705,
+   "EMPREGO+DIGITAL": 572,
+   "EMPREGO": 34
+  },
+  "eventos": {
+   "NEGOCIO_CRIADO": 40,
+   "CONTRATO": 135,
+   "RG_PRONTO": 10,
+   "DOENCA": 16,
+   "BF_NEGADO": 10,
+   "CALOTE": 24,
+   "CANCELAMENTO": 22,
+   "CONTRATADO": 6,
+   "NEGOCIO_FRACASSADO": 1
+  },
+  "adaptacao": [
+   {
+    "id": "ZERO-01",
+    "mudancasEstrategia": 4,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-02",
+    "mudancasEstrategia": 4,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-03",
+    "mudancasEstrategia": 3,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-04",
+    "mudancasEstrategia": 4,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-05",
+    "mudancasEstrategia": 3,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-06",
+    "mudancasEstrategia": 4,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-07",
+    "mudancasEstrategia": 3,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-08",
+    "mudancasEstrategia": 5,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-09",
+    "mudancasEstrategia": 3,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "ZERO-10",
+    "mudancasEstrategia": 4,
+    "furtos": 0,
+    "colapsos": 0
+   }
+  ],
+  "aviso": "Resultados de RESULTADO SIMULADO sob regras SINTÉTICAS e uma POLÍTICA PROGRAMADA (não é IA). Não são previsões do mundo real."
+ },
+ "agregadoMultiRodadas": [
+  {
+   "capitalInicial": 0,
+   "rodadas": 5,
+   "medianaGanhoLiquido": 1468771,
+   "medianaDiaPrimeiraReceita": 3,
+   "medianaDiaEstabilidade": 30
+  },
+  {
+   "capitalInicial": 50000,
+   "rodadas": 5,
+   "medianaGanhoLiquido": 1571475,
+   "medianaDiaPrimeiraReceita": 7,
+   "medianaDiaEstabilidade": 30
+  },
+  {
+   "capitalInicial": 100000,
+   "rodadas": 5,
+   "medianaGanhoLiquido": 1645514,
+   "medianaDiaPrimeiraReceita": 8,
+   "medianaDiaEstabilidade": 30
+  }
+ ],
+ "aprendizados": {
+  "geradoApos": "rodada concluída de 240 dias",
+  "servicosPorReceita": [
+   {
+    "servico": "social_media",
+    "receita": 13423000,
+    "taxaAceite": 10
+   },
+   {
+    "servico": "clipping",
+    "receita": 2155440,
+    "taxaAceite": null
+   },
+   {
+    "servico": "site",
+    "receita": 1770000,
+    "taxaAceite": 4.1
+   },
+   {
+    "servico": "perfil_google",
+    "receita": 825000,
+    "taxaAceite": 12.6
+   }
+  ],
+  "errosMaisComuns": [
+   {
+    "motivo": "DORMIR: sem vaga no albergue; dormiu na rua",
+    "vezes": 38
+   }
+  ],
+  "regraDeUso": "Pode orientar a política da próxima geração; avaliar sempre em sementes do namespace AVALIACAO, nunca nas sementes usadas aqui."
+ }
+}

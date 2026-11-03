@@ -1,0 +1,26 @@
+{"seq":51,"dia":9,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço perfil_google","dados":{}}
+{"seq":62,"dia":10,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço social_media","dados":{}}
+{"seq":106,"dia":16,"tipo":"CONTRATO","texto":"salão #76 fechou social_media por R$ 430,00","dados":{"contrato":"C1"}}
+{"seq":116,"dia":17,"tipo":"CONTRATO","texto":"loja de roupa #17 fechou social_media por R$ 500,00","dados":{"contrato":"C2"}}
+{"seq":158,"dia":22,"tipo":"RG_PRONTO","texto":"RG pronto","dados":{}}
+{"seq":159,"dia":22,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":195,"dia":27,"tipo":"CONTRATO","texto":"loja de roupa #57 fechou perfil_google por R$ 110,00","dados":{"contrato":"C3"}}
+{"seq":215,"dia":29,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço clipping","dados":{}}
+{"seq":216,"dia":29,"tipo":"CONTRATO","texto":"loja de roupa #57 fechou social_media por R$ 500,00","dados":{"contrato":"C4"}}
+{"seq":232,"dia":30,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço site","dados":{}}
+{"seq":255,"dia":33,"tipo":"CONTRATO","texto":"pet shop #22 fechou perfil_google por R$ 180,00","dados":{"contrato":"C5"}}
+{"seq":268,"dia":34,"tipo":"CONTRATO","texto":"pet shop #53 fechou site por R$ 600,00","dados":{"contrato":"C6"}}
+{"seq":368,"dia":45,"tipo":"CONTRATO","texto":"clínica #48 fechou site por R$ 600,00","dados":{"contrato":"C7"}}
+{"seq":391,"dia":47,"tipo":"CONTRATO","texto":"lanchonete #30 fechou site por R$ 600,00","dados":{"contrato":"C8"}}
+{"seq":402,"dia":48,"tipo":"BF_NEGADO","texto":"Renda acima do limite","dados":{}}
+{"seq":404,"dia":48,"tipo":"CONTRATO","texto":"academia #39 fechou social_media por R$ 300,00","dados":{"contrato":"C9"}}
+{"seq":475,"dia":55,"tipo":"CONTRATO","texto":"barbearia #79 fechou perfil_google por R$ 170,00","dados":{"contrato":"C10"}}
+{"seq":479,"dia":55,"tipo":"CALOTE","texto":"Cliente N079 não pagou R$ 170,00","dados":{}}
+{"seq":497,"dia":57,"tipo":"CONTRATO","texto":"restaurante #19 fechou site por R$ 600,00","dados":{"contrato":"C11"}}
+{"seq":527,"dia":60,"tipo":"CONTRATO","texto":"clínica #74 fechou site por R$ 600,00","dados":{"contrato":"C12"}}
+{"seq":529,"dia":60,"tipo":"CONTRATO","texto":"salão #55 fechou perfil_google por R$ 230,00","dados":{"contrato":"C13"}}
+{"seq":549,"dia":62,"tipo":"CONTRATO","texto":"salão #69 fechou perfil_google por R$ 230,00","dados":{"contrato":"C14"}}
+{"seq":1375,"dia":166,"tipo":"CANCELAMENTO","texto":"Cliente N076 cancelou social_media","dados":{}}
+{"seq":1474,"dia":179,"tipo":"CALOTE","texto":"Mensalidade não paga C4","dados":{}}
+{"seq":1527,"dia":185,"tipo":"CONTRATADO","texto":"Contratado como porteiro (R$ 1.910,00)","dados":{}}
+{"seq":1711,"dia":211,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}

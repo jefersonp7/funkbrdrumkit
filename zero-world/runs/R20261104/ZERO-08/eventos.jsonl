@@ -1,0 +1,30 @@
+{"seq":24,"dia":3,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço perfil_google","dados":{}}
+{"seq":33,"dia":4,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço social_media","dados":{}}
+{"seq":49,"dia":6,"tipo":"CONTRATO","texto":"pet shop #61 fechou social_media por R$ 500,00","dados":{"contrato":"C1"}}
+{"seq":59,"dia":7,"tipo":"CONTRATO","texto":"barbearia #26 fechou perfil_google por R$ 180,00","dados":{"contrato":"C2"}}
+{"seq":62,"dia":7,"tipo":"CALOTE","texto":"Cliente N026 não pagou R$ 180,00","dados":{}}
+{"seq":95,"dia":11,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":121,"dia":14,"tipo":"CONTRATO","texto":"restaurante #47 fechou perfil_google por R$ 150,00","dados":{"contrato":"C3"}}
+{"seq":140,"dia":16,"tipo":"CONTRATO","texto":"restaurante #47 fechou social_media por R$ 500,00","dados":{"contrato":"C4"}}
+{"seq":158,"dia":18,"tipo":"CONTRATO","texto":"salão #64 fechou perfil_google por R$ 180,00","dados":{"contrato":"C5"}}
+{"seq":168,"dia":19,"tipo":"CONTRATO","texto":"padaria #44 fechou social_media por R$ 500,00","dados":{"contrato":"C6"}}
+{"seq":184,"dia":20,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço site","dados":{}}
+{"seq":197,"dia":22,"tipo":"RG_PRONTO","texto":"RG pronto","dados":{}}
+{"seq":210,"dia":23,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço clipping","dados":{}}
+{"seq":221,"dia":24,"tipo":"CONTRATO","texto":"pet shop #1 fechou social_media por R$ 500,00","dados":{"contrato":"C7"}}
+{"seq":233,"dia":25,"tipo":"CONTRATO","texto":"salão #16 fechou site por R$ 600,00","dados":{"contrato":"C8"}}
+{"seq":255,"dia":27,"tipo":"CONTRATO","texto":"oficina #63 fechou social_media por R$ 500,00","dados":{"contrato":"C9"}}
+{"seq":270,"dia":28,"tipo":"CALOTE","texto":"Cliente N016 não pagou R$ 300,00","dados":{}}
+{"seq":351,"dia":36,"tipo":"CONTRATO","texto":"barbearia #20 fechou site por R$ 600,00","dados":{"contrato":"C10"}}
+{"seq":422,"dia":43,"tipo":"CONTRATO","texto":"oficina #56 fechou perfil_google por R$ 170,00","dados":{"contrato":"C11"}}
+{"seq":475,"dia":48,"tipo":"BF_NEGADO","texto":"Renda acima do limite","dados":{}}
+{"seq":477,"dia":48,"tipo":"CONTRATO","texto":"pet shop #37 fechou perfil_google por R$ 230,00","dados":{"contrato":"C12"}}
+{"seq":743,"dia":79,"tipo":"CALOTE","texto":"Mensalidade não paga C6","dados":{}}
+{"seq":884,"dia":96,"tipo":"CANCELAMENTO","texto":"Cliente N061 cancelou social_media","dados":{}}
+{"seq":955,"dia":105,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":1025,"dia":114,"tipo":"CANCELAMENTO","texto":"Cliente N001 cancelou social_media","dados":{}}
+{"seq":1405,"dia":166,"tipo":"CANCELAMENTO","texto":"Cliente N047 cancelou social_media","dados":{}}
+{"seq":1458,"dia":172,"tipo":"CONTRATADO","texto":"Contratado como auxiliar de limpeza (R$ 1.900,00)","dados":{}}
+{"seq":1645,"dia":199,"tipo":"CANCELAMENTO","texto":"Cliente N044 cancelou social_media","dados":{}}
+{"seq":1698,"dia":207,"tipo":"CANCELAMENTO","texto":"Cliente N063 cancelou social_media","dados":{}}
+{"seq":1738,"dia":213,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}

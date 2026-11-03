@@ -1,0 +1,25 @@
+{"seq":40,"dia":7,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço perfil_google","dados":{}}
+{"seq":47,"dia":8,"tipo":"CONTRATO","texto":"pet shop #51 fechou perfil_google por R$ 180,00","dados":{"contrato":"C1"}}
+{"seq":54,"dia":8,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço social_media","dados":{}}
+{"seq":75,"dia":11,"tipo":"CONTRATO","texto":"clínica #53 fechou perfil_google por R$ 180,00","dados":{"contrato":"C2"}}
+{"seq":78,"dia":11,"tipo":"CALOTE","texto":"Cliente N053 não pagou R$ 180,00","dados":{}}
+{"seq":101,"dia":14,"tipo":"CONTRATO","texto":"loja de roupa #5 fechou social_media por R$ 500,00","dados":{"contrato":"C3"}}
+{"seq":111,"dia":15,"tipo":"CONTRATO","texto":"clínica #53 fechou social_media por R$ 430,00","dados":{"contrato":"C4"}}
+{"seq":130,"dia":17,"tipo":"CONTRATO","texto":"academia #67 fechou social_media por R$ 430,00","dados":{"contrato":"C5"}}
+{"seq":156,"dia":20,"tipo":"CONTRATO","texto":"salão #79 fechou perfil_google por R$ 180,00","dados":{"contrato":"C6"}}
+{"seq":174,"dia":22,"tipo":"RG_PRONTO","texto":"RG pronto","dados":{}}
+{"seq":224,"dia":27,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço clipping","dados":{}}
+{"seq":251,"dia":30,"tipo":"CONTRATO","texto":"academia #75 fechou perfil_google por R$ 130,00","dados":{"contrato":"C7"}}
+{"seq":290,"dia":34,"tipo":"CONTRATO","texto":"padaria #38 fechou perfil_google por R$ 150,00","dados":{"contrato":"C8"}}
+{"seq":304,"dia":35,"tipo":"CONTRATO","texto":"padaria #2 fechou perfil_google por R$ 180,00","dados":{"contrato":"C9"}}
+{"seq":392,"dia":45,"tipo":"CANCELAMENTO","texto":"Cliente N053 cancelou social_media","dados":{}}
+{"seq":398,"dia":45,"tipo":"NEGOCIO_CRIADO","texto":"Lançou o serviço site","dados":{}}
+{"seq":422,"dia":48,"tipo":"BF_NEGADO","texto":"Renda acima do limite","dados":{}}
+{"seq":478,"dia":54,"tipo":"CONTRATO","texto":"oficina #6 fechou site por R$ 600,00","dados":{"contrato":"C10"}}
+{"seq":550,"dia":61,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":578,"dia":64,"tipo":"CONTRATO","texto":"lanchonete #35 fechou site por R$ 600,00","dados":{"contrato":"C11"}}
+{"seq":613,"dia":67,"tipo":"CALOTE","texto":"Cliente N035 não pagou R$ 300,00","dados":{}}
+{"seq":715,"dia":79,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":896,"dia":104,"tipo":"CALOTE","texto":"Mensalidade não paga C3","dados":{}}
+{"seq":1068,"dia":129,"tipo":"DOENCA","texto":"Adoeceu","dados":{}}
+{"seq":1310,"dia":164,"tipo":"CANCELAMENTO","texto":"Cliente N005 cancelou social_media","dados":{}}

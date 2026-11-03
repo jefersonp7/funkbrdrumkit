@@ -1,0 +1,355 @@
+<title>Zero World</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Archivo+Narrow:wght@600;700&display=swap">
+<style>
+/* Layout: console de laboratório — barra de controle fixa no topo, abas, tabelas densas com números em mono */
+:root{
+  --bg:#F4F5F3; --surface:#FFFFFF; --ink:#141714; --muted:#5A615B; --line:#DADFDA; --soft:#ECEFEC;
+  --accent:#1E5E3B; --accent-ink:#FFFFFF;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --t-real:#1F5FAE; --t-est:#9A5B00; --t-sin:#6B4FB8; --t-sim:#1E6B45;
+  --ok:#1E7A3E; --bad:#B3261E;
+  --f-display:"Archivo Narrow","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111412; --surface:#191D1A; --ink:#E7EBE7; --muted:#9DA69F; --line:#2C332E; --soft:#212622;
+  --accent:#5FC48C; --accent-ink:#0E1A12; --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --t-real:#7FB0F0; --t-est:#E2A65A; --t-sin:#B3A1EE; --t-sim:#6FD39E; --ok:#6FD39E; --bad:#F08A80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111412; --surface:#191D1A; --ink:#E7EBE7; --muted:#9DA69F; --line:#2C332E; --soft:#212622;
+  --accent:#5FC48C; --accent-ink:#0E1A12; --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --t-real:#7FB0F0; --t-est:#E2A65A; --t-sin:#B3A1EE; --t-sim:#6FD39E; --ok:#6FD39E; --bad:#F08A80; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:18px}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:2rem} h2{font-size:1.35rem} h3{font-size:1.05rem}
+p{margin:0;max-width:75ch}
+.muted{color:var(--muted)} .mono,td.n,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header{display:grid;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:4px;border:1px solid var(--line);background:var(--surface);overflow-wrap:anywhere}
+.tag-REAL{color:var(--t-real);border-color:var(--t-real)} .tag-ESTIMATIVA{color:var(--t-est);border-color:var(--t-est)}
+.tag-SINTETICA{color:var(--t-sin);border-color:var(--t-sin)} .tag-SIM{color:var(--t-sim);border-color:var(--t-sim)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.grp{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.grp>span{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+button,select,input{font:inherit;color:inherit}
+button{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer}
+button:hover{border-color:var(--muted)} button.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=number]{width:8.5em;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+select{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+.status{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.prog{height:4px;background:var(--soft);border-radius:2px;overflow:hidden;flex:1 1 120px;min-width:80px}
+.prog i{display:block;height:100%;width:0;background:var(--accent)}
+nav.tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line)}
+nav.tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;background:none;padding:8px 10px;color:var(--muted)}
+nav.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.panel{display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:grid;gap:10px;min-width:0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.cols>*{min-width:0}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;max-width:100%}
+.tbl.tall{max-height:420px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:.82rem}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;white-space:nowrap}
+td.wrap{white-space:normal;min-width:220px}
+th{position:sticky;top:0;background:var(--soft);font-weight:500;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+td.n,th.n{text-align:right}
+tr.sel td{background:var(--soft)}
+tr.click{cursor:pointer}
+.okc{color:var(--ok)} .badc{color:var(--bad)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:var(--f-mono);font-size:10px;fill:var(--muted)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:.75rem;font-family:var(--f-mono);box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;z-index:3}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:.85rem}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-family:var(--f-mono)}
+ul.plain{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:.85rem}
+.note{font-size:.8rem;color:var(--muted)}
+.warn{border-left:3px solid var(--t-est);padding:8px 12px;background:var(--surface);border-radius:4px;font-size:.85rem}
+input[type=range]{width:100%}
+a{color:var(--t-real)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Zero World</h1>
+  <p class="muted">Motor de simulação econômica com 10 vidas independentes em Belo Horizonte. Cada vida tem seu próprio mundo, semente, livro-caixa e memória. O cérebro dos agentes é uma <strong>política programada (regras fixas, não é IA)</strong>. Tudo que aparece aqui é <strong>resultado simulado</strong> sob regras sintéticas, e não previsão do mundo real.</p>
+  <div class="chips" id="chipsTopo"></div>
+</header>
+
+<div class="bar" role="toolbar" aria-label="Controle da simulação">
+  <div class="grp"><span>Semente</span><input type="number" id="semente" value="20261104" aria-label="Semente da rodada"><button id="btnNova">Nova rodada</button></div>
+  <div class="grp"><span>Vida</span><button id="btnVida">+1 dia</button></div>
+  <div class="grp"><span>Turbo</span><button data-t="7">7</button><button data-t="30">30</button><button data-t="90">90</button><button data-t="240" class="pri">240</button><button data-t="365">365</button></div>
+  <div class="grp"><span>24x</span><button id="btn24">Iniciar</button></div>
+  <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+  <div class="status" id="status" role="status" aria-live="polite">—</div>
+</div>
+
+<nav class="tabs" role="tablist" id="tabs">
+  <button role="tab" data-tab="geral" aria-selected="true">Visão geral</button>
+  <button role="tab" data-tab="agente" aria-selected="false">Agente e replay</button>
+  <button role="tab" data-tab="comparar" aria-selected="false">Comparação</button>
+  <button role="tab" data-tab="auditoria" aria-selected="false">Auditoria e testes</button>
+  <button role="tab" data-tab="params" aria-selected="false">Dados e regras</button>
+</nav>
+
+<section class="panel" id="tab-geral"></section>
+<section class="panel" id="tab-agente" hidden></section>
+<section class="panel" id="tab-comparar" hidden></section>
+<section class="panel" id="tab-auditoria" hidden></section>
+<section class="panel" id="tab-params" hidden></section>
+</div>
+
+<script>/*ENGINE*/</script>
+<script>/*POLICY*/</script>
+<script>/*EXPERIMENT*/</script>
+<script>
+const HASHES_NODE = /*HASHES*/;
+(function(){
+'use strict';
+const $=s=>document.querySelector(s), brl=ZW.brl;
+const COR={0:'var(--s1)',50000:'var(--s2)',100000:'var(--s3)'};
+const S={semente:20261104,mundos:[],sel:'ZERO-05',dia:null,tab:'geral',ocupado:false,timer24:null,prox24:null,rodadaConcluida:false,multi:null,cache:null};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tag=(t,txt)=>`<span class="chip tag-${t}">${txt||({REAL:'DADO REAL',ESTIMATIVA:'ESTIMATIVA',SINTETICA:'REGRA SINTÉTICA',SIM:'RESULTADO SIMULADO'}[t])}</span>`;
+function guardar(){try{localStorage.setItem('zw-estado',JSON.stringify({semente:S.semente,dia:S.mundos[0]?S.mundos[0].dia:0}))}catch(e){}}
+function ler(){try{return JSON.parse(localStorage.getItem('zw-estado')||'null')}catch(e){return null}}
+function status(t){$('#status').textContent=t}
+function prog(p){$('#progBar').style.width=(p*100).toFixed(1)+'%'}
+
+$('#chipsTopo').innerHTML=[`<span class="chip">${ZW.VERSAO_MOTOR}</span>`,`<span class="chip">cérebro: ${esc(ZWPolitica.tipo)}</span>`,tag('REAL'),tag('ESTIMATIVA'),tag('SINTETICA'),tag('SIM')].join('');
+
+function nova(semente){S.semente=semente;S.mundos=ZWExp.criarRodada(semente);S.dia=null;S.rodadaConcluida=false;S.cache=null;guardar();render()}
+function avancar(n,fim){
+  if(S.ocupado)return; S.ocupado=true; botoes(); S.rodadaConcluida=false;
+  let k=0; const alvo=S.mundos[0].dia+n; const erros=[];
+  function lote(){
+    const t0=performance.now();
+    while(k<n&&performance.now()-t0<40){
+      for(const w of S.mundos){const r=ZW.avancarDia(w,ZWPolitica); if(!r.ok) erros.push(w.meta.id+': '+r.erro)}
+      k++; if(erros.length)break;
+    }
+    prog(k/n); status(`processando dia ${S.mundos[0].dia} de ${alvo} · 10 mundos`);
+    if(k<n&&!erros.length){setTimeout(lote,0);return}
+    S.ocupado=false; S.rodadaConcluida=!erros.length; S.cache=null; botoes(); guardar();
+    status(erros.length?('ERRO: '+erros[0]):`dia ${S.mundos[0].dia} · ${S.mundos.length} mundos · semente ${S.semente}`);
+    if(S.dia===null||S.dia>S.mundos[0].dia)S.dia=S.mundos[0].dia; else S.dia=S.mundos[0].dia;
+    render(); if(fim)fim();
+  }
+  lote();
+}
+function botoes(){document.querySelectorAll('.bar button').forEach(b=>{if(b.id!=='btn24')b.disabled=S.ocupado})}
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>avancar(+b.dataset.t));
+$('#btnVida').onclick=()=>avancar(1);
+$('#btnNova').onclick=()=>{const v=parseInt($('#semente').value,10);if(Number.isFinite(v)&&v>0)nova(v)};
+$('#btn24').onclick=()=>{
+  if(S.timer24){clearInterval(S.timer24);clearInterval(S.tick24);S.timer24=null;$('#btn24').textContent='Iniciar';status('24x parado');return}
+  S.prox24=Date.now()+3600000;
+  S.timer24=setInterval(()=>{S.prox24=Date.now()+3600000;avancar(1)},3600000);
+  S.tick24=setInterval(()=>{if(!S.ocupado){const m=Math.max(0,Math.round((S.prox24-Date.now())/60000));status(`24x ativo · próximo dia em ${m} min · só roda com esta página aberta`)}},30000);
+  $('#btn24').textContent='Parar'; status('24x ativo · 1 dia virtual por hora real · só roda com esta página aberta');
+};
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;document.querySelectorAll('#tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));document.querySelectorAll('section.panel').forEach(p=>p.hidden=p.id!=='tab-'+S.tab);render()});
+
+function metricasTodas(){ if(!S.cache) S.cache=S.mundos.map(w=>ZWExp.metricas(w)); return S.cache }
+function mundo(id){return S.mundos.find(w=>w.meta.id===id)}
+
+// ------------------------------------------------------------ gráfico de linhas
+function grafico(el,series,opt){
+  const W=760,H=opt.h||260,L=72,R=16,T=12,B=28;
+  const dias=Math.max(1,...series.map(s=>s.pts.length?s.pts[s.pts.length-1][0]:1));
+  let max=Math.max(1,...series.flatMap(s=>s.pts.map(p=>p[1]))); let min=Math.min(0,...series.flatMap(s=>s.pts.map(p=>p[1])));
+  const passo=niceStep((max-min)/4); max=Math.ceil(max/passo)*passo; min=Math.floor(min/passo)*passo;
+  const x=d=>L+(W-L-R)*(d-1)/Math.max(1,dias-1), y=v=>T+(H-T-B)*(1-(v-min)/(max-min||1));
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.aria)}">`;
+  for(let v=min;v<=max+1;v+=passo){s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${(v/100).toLocaleString('pt-BR',{maximumFractionDigits:0})}</text>`}
+  const ticks=[1,Math.round(dias/4),Math.round(dias/2),Math.round(3*dias/4),dias].filter((v,i,a)=>v>=1&&a.indexOf(v)===i);
+  for(const d of ticks)s+=`<text x="${x(d)}" y="${H-8}" text-anchor="middle">D${d}</text>`;
+  for(const se of series){ if(!se.pts.length)continue; const d=se.pts.map((p,i)=>(i?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[1]).toFixed(1)).join(''); s+=`<path d="${d}" fill="none" stroke="${se.cor}" stroke-width="${se.w||2}" stroke-linejoin="round" ${se.dash?'stroke-dasharray="5 4"':''} opacity="${se.op||1}"/>` }
+  if(opt.marca){s+=`<line x1="${x(opt.marca)}" x2="${x(opt.marca)}" y1="${T}" y2="${H-B}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="2 3"/>`}
+  s+=`<line id="cx" x1="0" x2="0" y1="${T}" y2="${H-B}" stroke="var(--muted)" stroke-width="1" visibility="hidden"/><rect x="${L}" y="${T}" width="${W-L-R}" height="${H-T-B}" fill="transparent" class="hit"/></svg><div class="tip" hidden></div>`;
+  el.innerHTML=s;
+  const svg=el.querySelector('svg'),tip=el.querySelector('.tip'),cx=el.querySelector('#cx');
+  const diaDe=ev=>{const r=svg.getBoundingClientRect();const px=(ev.clientX-r.left)*W/r.width;return Math.max(1,Math.min(dias,Math.round(1+(px-L)/(W-L-R)*(dias-1))))};
+  svg.addEventListener('mousemove',ev=>{const d=diaDe(ev);cx.setAttribute('x1',x(d));cx.setAttribute('x2',x(d));cx.setAttribute('visibility','visible');
+    tip.hidden=false;tip.innerHTML=`<b>D${d}</b><br>`+series.filter(se=>se.rotulo).map(se=>{const p=se.pts[d-1];return p?`<span class="dot" style="background:${se.cor}"></span>${esc(se.rotulo)} ${brl(p[1])}`:''}).join('<br>');
+    const r=el.getBoundingClientRect();let lx=ev.clientX-r.left+12;if(lx>r.width-200)lx=ev.clientX-r.left-200;tip.style.left=lx+'px';tip.style.top='8px'});
+  svg.addEventListener('mouseleave',()=>{tip.hidden=true;cx.setAttribute('visibility','hidden')});
+  if(opt.clique)svg.addEventListener('click',ev=>opt.clique(diaDe(ev)));
+}
+function niceStep(r){const p=Math.pow(10,Math.floor(Math.log10(r||1)));for(const m of [1,2,2.5,5,10])if(m*p>=r)return m*p;return 10*p}
+
+// ------------------------------------------------------------ abas
+function render(){
+  if(!S.mundos.length)return;
+  ({geral:rGeral,agente:rAgente,comparar:rComparar,auditoria:rAuditoria,params:rParams})[S.tab]();
+}
+function vazio(){return S.mundos[0].dia===0}
+
+function rGeral(){
+  const el=$('#tab-geral');
+  if(vazio()){el.innerHTML=`<div class="card"><h2>Rodada pronta, dia 0</h2><p>10 mundos criados com a semente <span class="mono">${S.semente}</span>. Cada vida tem 30 anos, está em Belo Horizonte, sem clientes, sem negócio e sem renda. Muda só o capital inicial: R$0 (ZERO-01 a 04), R$500 (05 a 07) e R$1.000 (08 a 10). Use <b>Turbo 240</b> para executar 240 ciclos diários completos em cada mundo, ou <b>+1 dia</b> para ver dia a dia.</p></div>`+tabelaParams(true);return}
+  const ms=metricasTodas();
+  const linhas=ms.map(m=>`<tr class="click${m.id===S.sel?' sel':''}" data-id="${m.id}"><td><span class="dot" style="background:${COR[m.capitalInicial]}"></span>${m.id}</td><td class="n">${brl(m.capitalInicial)}</td><td class="n">${brl(m.saldo)}</td><td class="n">${brl(m.patrimonio)}</td><td class="n">${brl(m.ganhoLiquido)}</td><td class="n">${typeof m.roi==='number'?(m.roi*100).toFixed(0)+'%':'não aplicável'}</td><td class="n">${brl(m.receita)}</td><td class="n">${brl(m.lucro)}</td><td class="n">${brl(m.dividas)}</td><td class="n">${m.diasSobrevividos}/${m.diasSimulados}</td><td class="n">${m.diaPrimeiraReceita?('D'+m.diaPrimeiraReceita):'ainda não'}</td><td class="n">${m.diaEstabilidade?('D'+m.diaEstabilidade):'ainda não'}</td><td class="n">${m.negociosCriados}</td><td class="n">${m.negociosFracassados}</td><td class="n">${m.mudancasEstrategia}</td><td class="n">${brl(m.risco.menorCaixa)}</td><td class="n">${m.furtos}/${m.colapsos}</td><td>${esc(m.estrategiaFinal)}</td><td class="n">${m.custo.ms} ms · ${m.custo.transacoes} tx</td></tr>`).join('');
+  el.innerHTML=`<div class="card"><h2>Visão geral · dia ${S.mundos[0].dia}</h2>
+  <p class="note">Clique numa linha para abrir o agente. O ganho líquido já desconta o capital inicial. "Estável" é o primeiro dia em que a receita dos últimos 30 dias chegou a um salário mínimo e o caixa cobria um mês de quarto. Todos os números são ${tag('SIM')} e saem do livro-caixa de cada mundo.</p>
+  <div class="tbl"><table><thead><tr><th>Agente</th><th class="n">Capital inicial</th><th class="n">Saldo</th><th class="n">Patrimônio</th><th class="n">Ganho líquido</th><th class="n">ROI</th><th class="n">Receita acum.</th><th class="n">Lucro</th><th class="n">Dívidas</th><th class="n">Dias sem internação</th><th class="n">1ª receita</th><th class="n">Estável</th><th class="n">Negócios</th><th class="n">Fracassados</th><th class="n">Mudanças de estratégia</th><th class="n">Menor caixa</th><th class="n">Furtos/colapsos</th><th>Estratégia atual</th><th class="n">Custo</th></tr></thead><tbody>${linhas}</tbody></table></div></div>
+  <div class="card"><h3>Por capital inicial (mediana)</h3>${tabelaGrupos(ms)}<p class="note">Uma rodada é uma amostra só. Para reduzir a influência da sorte, use "Várias rodadas" na aba Comparação.</p></div>`;
+  el.querySelectorAll('tr.click').forEach(tr=>tr.onclick=()=>{S.sel=tr.dataset.id;S.tab='agente';document.querySelector('[data-tab=agente]').click()});
+}
+function med(xs){const v=xs.filter(x=>x!==null).sort((a,b)=>a-b);if(!v.length)return null;const m=Math.floor(v.length/2);return v.length%2?v[m]:Math.round((v[m-1]+v[m])/2)}
+function tabelaGrupos(ms){
+  const gs=[0,50000,100000].map(c=>{const g=ms.filter(m=>m.capitalInicial===c);return{c,n:g.length,ganho:med(g.map(m=>m.ganhoLiquido)),patr:med(g.map(m=>m.patrimonio)),pr:med(g.map(m=>m.diaPrimeiraReceita)),est:med(g.map(m=>m.diaEstabilidade)),sem:g.filter(m=>m.diaEstabilidade===null).length}});
+  return `<div class="tbl"><table><thead><tr><th>Capital</th><th class="n">Vidas</th><th class="n">Ganho líquido</th><th class="n">Patrimônio</th><th class="n">1ª receita</th><th class="n">Estabilidade</th><th class="n">Sem estabilidade</th></tr></thead><tbody>${gs.map(g=>`<tr><td><span class="dot" style="background:${COR[g.c]}"></span>${brl(g.c)}</td><td class="n">${g.n}</td><td class="n">${g.ganho===null?'—':brl(g.ganho)}</td><td class="n">${g.patr===null?'—':brl(g.patr)}</td><td class="n">${g.pr===null?'—':'D'+g.pr}</td><td class="n">${g.est===null?'—':'D'+g.est}</td><td class="n">${g.sem}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
+function rAgente(){
+  const el=$('#tab-agente'); const w=mundo(S.sel);
+  const sel=`<select id="selAg" aria-label="Agente">${S.mundos.map(x=>`<option ${x.meta.id===S.sel?'selected':''}>${x.meta.id}</option>`).join('')}</select>`;
+  if(vazio()){el.innerHTML=`<div class="card"><h2>${sel}</h2><p>Nenhum dia simulado ainda.</p></div>`;$('#selAg').onchange=e=>{S.sel=e.target.value;render()};return}
+  if(S.dia===null||S.dia>w.dia)S.dia=w.dia;
+  const d=ZW.diaRegistrado(w,S.dia); const f=ZW.financeiro(w);
+  const alt=(d.alternativas||[]).map(a=>`<li>${a.escolhida?'✓':'✗'} <b>${esc(a.acao)}</b>${a.valorEsperadoPorHora!==undefined?` <span class="mono">(${brl(a.valorEsperadoPorHora)}/h estimado)</span>`:''} <span class="muted">${esc(a.motivo||'')}</span></li>`).join('')||'<li class="muted">nenhuma alternativa registrada</li>';
+  const res=d.resultados.map(r=>`<li>${r.ok?'<span class="okc">✓</span>':'<span class="badc">✗</span>'} <b>${esc(r.acao)}</b> — ${esc(r.resultado)} <span class="muted">${r.horas}h · ${esc(r.params.motivo||'')}</span></li>`).join('')||'<li class="muted">nenhuma ação (internado)</li>';
+  const ev=d.eventos.map(e=>`<li>${esc(e.tipo)}: ${esc(e.texto)}</li>`).join('');
+  const tx=d.transacoes.map(t=>`<tr><td class="mono">${t.id}</td><td>${t.tipo}</td><td class="n ${t.direcao==='ENTRADA'?'okc':''}">${t.direcao==='ENTRADA'?'+':'−'}${brl(t.valor)}</td><td class="n">${brl(t.saldoAnterior)}</td><td class="n">${brl(t.saldoPosterior)}</td><td class="wrap">${esc(t.justificativa)}</td></tr>`).join('');
+  const sab=d.sabia;
+  el.innerHTML=`<div class="card"><div class="grp" style="justify-content:space-between"><h2>${sel} · ${brl(w.meta.capitalInicial)} de capital · semente <span class="mono">${w.meta.seed}</span></h2><span class="note">${tag('SIM')}</span></div>
+   <div class="legend"><span><span class="dot" style="background:var(--accent)"></span>patrimônio</span><span><span class="dot" style="background:var(--muted)"></span>caixa (tracejado)</span><span>clique no gráfico para abrir o dia</span></div>
+   <div class="chart" id="gAg"></div>
+   <label class="note" for="rng">Replay: dia <b class="mono">${S.dia}</b> de ${w.dia}</label><input type="range" id="rng" min="1" max="${w.dia}" value="${S.dia}"></div>
+  <div class="cols">
+   <div class="card"><h3>Dia ${d.dia} · ${d.data}${d.internado?' · INTERNADO':''}</h3>
+     <dl class="kv"><dt>Caixa</dt><dd>${brl(d.caixaInicio)} → ${brl(d.caixaFim)}</dd><dt>Patrimônio</dt><dd>${brl(d.patrimonio)}</dd><dt>Dormiu</dt><dd>${esc(d.noite)}</dd><dt>Necessidades</dt><dd>fome ${d.necessidades.fome} · energia ${d.necessidades.energia} · saúde ${d.necessidades.saude}</dd><dt>Estratégia</dt><dd>${esc(d.estrategia)}</dd></dl>
+     <h3>O que sabia ao decidir</h3>${sab?`<dl class="kv"><dt>Caixa</dt><dd>${brl(sab.caixa)}</dd><dt>Onde estava</dt><dd>${esc(sab.local)}</dd><dt>Documentos</dt><dd>RG ${sab.docs.rg?'sim':sab.docs.rgPedido?'pedido':'não'}</dd><dt>Itens</dt><dd>${Object.entries(sab.itens).filter(e=>e[1]).map(e=>e[0]).join(', ')||'nenhum'}</dd><dt>Emprego</dt><dd>${esc(sab.emprego||'não')}</dd><dt>Contratos ativos</dt><dd>${sab.contratosAtivos}</dd><dt>Pendências</dt><dd>${sab.pendencias}</dd><dt>Comércios conhecidos</dt><dd>${sab.leadsConhecidos}</dd><dt>Vagas conhecidas</dt><dd>${sab.vagasConhecidas}</dd></dl><ul class="plain">${sab.ultimosFatos.map(f=>`<li class="muted">D${f.dia}: ${esc(f.texto)}</li>`).join('')}</ul>`:'<p class="muted">sem decisão neste dia</p>'}
+   </div>
+   <div class="card"><h3>Alternativas consideradas</h3><ul class="plain">${alt}</ul><h3>O que decidiu e o que aconteceu</h3><ul class="plain">${res}</ul>${ev?`<h3>Eventos do mundo</h3><ul class="plain">${ev}</ul>`:''}</div>
+  </div>
+  <div class="card"><h3>Transações do dia ${d.dia}</h3>${tx?`<div class="tbl"><table><thead><tr><th>ID</th><th>Tipo</th><th class="n">Valor</th><th class="n">Saldo antes</th><th class="n">Saldo depois</th><th>Justificativa</th></tr></thead><tbody>${tx}</tbody></table></div>`:'<p class="muted">Nenhuma transação: o saldo não mudou.</p>'}</div>
+  <div class="cols">
+   <div class="card"><h3>Linha do tempo</h3><div class="tbl tall"><table><tbody>${w.logs.eventos.slice().reverse().map(e=>`<tr class="click" data-dia="${e.dia}"><td class="mono">D${e.dia}</td><td>${esc(e.tipo)}</td><td class="wrap">${esc(e.texto)}</td></tr>`).join('')||'<tr><td class="muted">sem eventos</td></tr>'}</tbody></table></div></div>
+   <div class="card"><h3>Oportunidades avaliadas</h3>${oportunidades(w)}</div>
+  </div>
+  <div class="cols">
+   <div class="card"><h3>Negócios criados</h3>${w.agente.negocios.length?`<div class="tbl"><table><thead><tr><th>Serviço</th><th class="n">Lançado</th><th class="n">Contratos</th><th class="n">Receita</th><th>Status</th></tr></thead><tbody>${w.agente.negocios.map(n=>`<tr><td>${esc(n.servico)}</td><td class="n">D${n.lancadoDia}</td><td class="n">${n.contratos}</td><td class="n">${brl(n.receita)}</td><td class="${n.status==='fracassado'?'badc':''}">${n.status}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">nenhum</p>'}
+     <dl class="kv"><dt>Receita</dt><dd>${brl(f.receita)}</dd><dt>Benefícios</dt><dd>${brl(f.beneficios)}</dd><dt>Despesas</dt><dd>${brl(f.despesas)}</dd><dt>Perdas</dt><dd>${brl(f.perdas)}</dd><dt>Ativos (contábil)</dt><dd>${brl(f.ativos)}</dd><dt>Dívidas</dt><dd>${brl(f.dividas)}</dd></dl></div>
+   <div class="card"><h3>Registro de decisões</h3><div class="tbl tall"><table><tbody>${w.logs.decisoes.slice().reverse().map(x=>`<tr class="click" data-dia="${x.dia}"><td class="mono">D${x.dia}</td><td class="mono">#${x.seq}</td><td class="wrap">${x.plano.map(p=>esc(p.tipo)).join(' → ')}</td></tr>`).join('')}</tbody></table></div><p class="note">O número # é a posição na sequência do mundo. Toda decisão tem número menor que os resultados do mesmo dia: ela foi gravada antes.</p></div>
+  </div>
+  <div class="card"><h3>Livro-caixa completo (${w.ledger.tx.length} transações)</h3><div class="tbl tall"><table><thead><tr><th>ID</th><th class="n">Dia</th><th>Tipo</th><th class="n">Valor</th><th>Origem → destino</th><th class="n">Saldo depois</th><th>Justificativa</th></tr></thead><tbody>${w.ledger.tx.slice().reverse().map(t=>`<tr class="click" data-dia="${t.dia}"><td class="mono">${t.id}</td><td class="n">${t.dia}</td><td>${t.tipo}</td><td class="n ${t.direcao==='ENTRADA'?'okc':''}">${t.direcao==='ENTRADA'?'+':'−'}${brl(t.valor)}</td><td>${esc(t.origem)} → ${esc(t.destino)}</td><td class="n">${brl(t.saldoPosterior)}</td><td class="wrap">${esc(t.justificativa)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  $('#selAg').onchange=e=>{S.sel=e.target.value;S.dia=null;render()};
+  $('#rng').oninput=e=>{S.dia=+e.target.value;render()};
+  el.querySelectorAll('tr[data-dia]').forEach(tr=>tr.onclick=()=>{const v=+tr.dataset.dia;if(v>=1){S.dia=v;render();window.scrollTo({top:0})}});
+  const pat=w.historico.map(h=>[h.dia,h.patrimonio]),cx=w.historico.map(h=>[h.dia,h.caixaFim]);
+  grafico($('#gAg'),[{pts:pat,cor:'var(--accent)',rotulo:'patrimônio'},{pts:cx,cor:'var(--muted)',dash:true,w:1.5,rotulo:'caixa'}],{aria:'Patrimônio e caixa de '+w.meta.id+' por dia',marca:S.dia,clique:dd=>{S.dia=dd;render()}});
+}
+function oportunidades(w){
+  const ag={};
+  for(const d of w.logs.decisoes)for(const a of d.alternativas){const k=a.acao;const o=(ag[k]=ag[k]||{n:0,esc:0,ev:0,nev:0});o.n++;if(a.escolhida)o.esc++;if(a.valorEsperadoPorHora!==undefined){o.ev+=a.valorEsperadoPorHora;o.nev++}}
+  const rows=Object.entries(ag).sort((a,b)=>b[1].n-a[1].n).map(([k,o])=>`<tr><td>${esc(k)}</td><td class="n">${o.n}</td><td class="n">${o.esc}</td><td class="n">${o.nev?brl(Math.round(o.ev/o.nev)):'—'}</td></tr>`).join('');
+  return `<div class="tbl"><table><thead><tr><th>Opção</th><th class="n">Dias avaliada</th><th class="n">Escolhida</th><th class="n">Valor/h estimado (médio)</th></tr></thead><tbody>${rows}</tbody></table></div><p class="note">O valor por hora é a estimativa que o próprio agente fez com a experiência que tinha, e não o valor real.</p>`;
+}
+
+function rComparar(){
+  const el=$('#tab-comparar');
+  if(vazio()){el.innerHTML='<div class="card"><p>Execute a rodada para comparar.</p></div>';return}
+  let analiseHtml='';
+  if(S.rodadaConcluida){
+    const a=ZWExp.analisar(S.mundos,S.mundos[0].dia);
+    analiseHtml=`<div class="card"><h2>Relatório coletivo · rodada concluída no dia ${a.dias}</h2><p class="note">${esc(a.aviso)} Gerado só depois de todos os mundos chegarem ao mesmo dia. Nenhuma vida viu este relatório durante a rodada.</p>
+    <div class="cols"><div><h3>Negócios</h3><div class="tbl"><table><thead><tr><th>Serviço</th><th class="n">Lançado por</th><th class="n">Fracassou</th><th class="n">Propostas</th><th class="n">Aceite</th><th class="n">Receita total</th></tr></thead><tbody>${a.negocios.map(n=>`<tr><td>${esc(n.servico)}</td><td class="n">${n.lancados}</td><td class="n">${n.fracassados}</td><td class="n">${n.propostas||'—'}</td><td class="n">${n.taxaAceite===null?'—':n.taxaAceite+'%'}</td><td class="n">${brl(n.receita)}</td></tr>`).join('')}</tbody></table></div></div>
+    <div><h3>Erros recorrentes (ações recusadas pelo motor)</h3><div class="tbl"><table><tbody>${a.errosRecorrentes.map(e=>`<tr><td class="wrap">${esc(e.motivo)}</td><td class="n">${e.vezes}</td></tr>`).join('')}</tbody></table></div></div></div>
+    <div class="cols"><div><h3>Dias em cada estratégia (soma das 10 vidas)</h3><div class="tbl"><table><tbody>${Object.entries(a.tempoEmEstrategia).sort((x,y)=>y[1]-x[1]).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="n">${v}</td></tr>`).join('')}</tbody></table></div></div>
+    <div><h3>Eventos do mundo (soma)</h3><div class="tbl"><table><tbody>${Object.entries(a.eventos).sort((x,y)=>y[1]-x[1]).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="n">${v}</td></tr>`).join('')}</tbody></table></div></div></div></div>`;
+  } else analiseHtml='<div class="card"><p class="muted">O relatório coletivo aparece quando uma execução termina com todos os mundos no mesmo dia.</p></div>';
+  const multi=S.multi?`<div class="tbl"><table><thead><tr><th>Capital</th><th class="n">Rodadas</th><th class="n">Mediana do ganho líquido</th><th class="n">Mediana 1ª receita</th><th class="n">Mediana estabilidade</th></tr></thead><tbody>${S.multi.agregado.map(g=>`<tr><td><span class="dot" style="background:${COR[g.capitalInicial]}"></span>${brl(g.capitalInicial)}</td><td class="n">${g.rodadas}</td><td class="n">${brl(g.medianaGanhoLiquido)}</td><td class="n">${g.medianaDiaPrimeiraReceita===null?'—':'D'+g.medianaDiaPrimeiraReceita}</td><td class="n">${g.medianaDiaEstabilidade===null?'—':'D'+g.medianaDiaEstabilidade}</td></tr>`).join('')}</tbody></table></div><p class="note">Sementes ${S.multi.sementes.join(', ')} · ${S.multi.dias} dias cada.</p>`:'<p class="muted">Ainda não executado.</p>';
+  el.innerHTML=`<div class="card"><h2>Patrimônio das 10 vidas</h2><div class="legend"><span><span class="dot" style="background:var(--s1)"></span>R$0 (ZERO-01 a 04)</span><span><span class="dot" style="background:var(--s2)"></span>R$500 (05 a 07)</span><span><span class="dot" style="background:var(--s3)"></span>R$1.000 (08 a 10)</span></div><div class="chart" id="gCmp"></div><p class="note">Passe o mouse para ver o valor de cada vida no dia. Os valores estão na tabela da Visão geral.</p></div>
+  ${analiseHtml}
+  <div class="card"><h2>Várias rodadas</h2><p>Para separar o efeito do capital do efeito da sorte, roda as 10 vidas em várias sementes diferentes (mundos novos, sem mexer na rodada atual) e compara as medianas por grupo de capital.</p><div class="grp"><button id="btnMulti">Rodar 5 rodadas × 240 dias</button><span class="status" id="stMulti"></span></div>${multi}</div>`;
+  grafico($('#gCmp'),S.mundos.map(w=>({pts:w.historico.map(h=>[h.dia,h.patrimonio]),cor:COR[w.meta.capitalInicial],w:1.6,op:.9,rotulo:w.meta.id})),{aria:'Patrimônio diário das 10 vidas',h:300});
+  $('#btnMulti').onclick=rodarMulti;
+}
+function rodarMulti(){
+  if(S.ocupado)return; S.ocupado=true; botoes();
+  const sementes=[0,1,2,3,4].map(i=>S.semente+1000+i), dias=240; let i=0; const res=[];
+  let mundos=null,k=0;
+  function passo(){
+    const t0=performance.now();
+    while(performance.now()-t0<40){
+      if(!mundos){mundos=ZWExp.criarRodada(sementes[i]);k=0}
+      for(const w of mundos)ZW.avancarDia(w,ZWPolitica);
+      k++;
+      if(k>=dias){res.push(ZWExp.analisar(mundos,dias));mundos=null;i++;if(i>=sementes.length)break}
+    }
+    const p=(i*dias+k)/(sementes.length*dias); prog(p); $('#stMulti').textContent=`rodada ${Math.min(i+1,sementes.length)} de ${sementes.length}`;
+    if(i<sementes.length){setTimeout(passo,0);return}
+    const ag={};for(const r of res)for(const e of r.efeitoCapital)(ag[e.capitalInicial]=ag[e.capitalInicial]||[]).push(e);
+    S.multi={sementes,dias,agregado:Object.keys(ag).map(Number).map(c=>({capitalInicial:c,rodadas:ag[c].length,medianaGanhoLiquido:med(ag[c].map(x=>x.medianaGanhoLiquido)),medianaDiaPrimeiraReceita:med(ag[c].map(x=>x.medianaDiaPrimeiraReceita)),medianaDiaEstabilidade:med(ag[c].map(x=>x.medianaDiaEstabilidade))}))};
+    S.ocupado=false; botoes(); prog(1); render();
+  }
+  passo();
+}
+
+function rAuditoria(){
+  const el=$('#tab-auditoria');
+  const d0=S.mundos[0].dia;
+  const linhas=S.mundos.map(w=>{const a=ZW.auditar(w);const h=ZW.hashMundo(w);const esperado=(S.semente===HASHES_NODE.semente&&d0===HASHES_NODE.dias)?HASHES_NODE.hashes[w.meta.id]:null;
+    return `<tr><td>${w.meta.id}</td><td class="${a.ok?'okc':'badc'}">${a.ok?'OK':'FALHOU: '+esc(a.erros[0])}</td><td class="n">${brl(a.saldoInicial)}</td><td class="n">+${brl(a.entradasSemCapital)}</td><td class="n">−${brl(a.saidas)}</td><td class="n">${brl(a.saldo)}</td><td class="n">${w.ledger.tx.length}</td><td class="n">${w.historico.length}</td><td class="mono">${h}</td><td>${esperado?(esperado===h?'<span class="okc">igual ao Node ✓</span>':'<span class="badc">diferente do Node</span>'):'<span class="muted">sem referência</span>'}</td></tr>`}).join('');
+  el.innerHTML=`<div class="card"><h2>Auditoria financeira · dia ${d0}</h2><p class="note">Para cada mundo: SALDO_FINAL = SALDO_INICIAL + ENTRADAS − SAÍDAS, recalculado a partir do livro, transação por transação. O capital inicial não entra como receita. O motor faz essa verificação ao fim de cada dia e desfaz o dia inteiro se ela falhar.</p>
+  <div class="tbl"><table><thead><tr><th>Mundo</th><th>Auditoria</th><th class="n">Saldo inicial</th><th class="n">Entradas</th><th class="n">Saídas</th><th class="n">Saldo final</th><th class="n">Transações</th><th class="n">Ciclos</th><th>Hash do estado</th><th>Execução em Node (semente ${HASHES_NODE.semente}, ${HASHES_NODE.dias} dias)</th></tr></thead><tbody>${linhas}</tbody></table></div>
+  <p class="note">Com a semente ${HASHES_NODE.semente} e 240 dias, cada hash deve bater com o da execução feita na linha de comando (zero-world/runs/R${HASHES_NODE.semente}/resumo.json). É o mesmo código rodando em outro ambiente.</p></div>
+  <div class="card"><h2>Testes no navegador</h2><p>Repetem aqui alguns dos testes obrigatórios. Os 10 testes completos rodam com <span class="mono">node --test zero-world/test.js</span>.</p><div class="grp"><button id="btnTestes">Rodar testes</button></div><ul class="plain" id="resTestes"></ul></div>
+  <div class="card"><h2>Limitações deste ambiente</h2><ul class="plain">
+   <li><b>Cérebro:</b> política programada com regras fixas, sem modelo de IA. Nada aqui é decisão autônoma de um modelo de linguagem.</li>
+   <li><b>Modo 24x:</b> só avança enquanto esta página estiver aberta. Para rodar sem parar, use <span class="mono">node zero-world/cli.js 24x</span> num computador ligado.</li>
+   <li><b>Persistência:</b> a página guarda só a semente e o dia no navegador. Ao reabrir, reproduz a rodada a partir da semente, e o resultado é idêntico por ser determinístico. Os checkpoints completos ficam na linha de comando.</li>
+   <li><b>Economia:</b> vagas, comércios, aceite de propostas e prazos são regras sintéticas, ainda sem calibração com dados reais. Os resultados mostram o comportamento das regras, não a realidade de BH.</li>
+  </ul></div>`;
+  $('#btnTestes').onclick=testesNavegador;
+}
+function testesNavegador(){
+  const out=$('#resTestes'); out.innerHTML='<li class="muted">rodando…</li>';
+  setTimeout(()=>{
+    const r=[]; const ok=(n,c,det)=>r.push(`<li>${c?'<span class="okc">✓</span>':'<span class="badc">✗</span>'} ${n}${det?` <span class="muted">${esc(det)}</span>`:''}</li>`);
+    const a=ZW.criarMundo({id:'T',capitalInicial:50000,seed:33}); ZW.avancar(a,ZWPolitica,60);
+    let b=ZW.criarMundo({id:'T',capitalInicial:50000,seed:33}); for(let i=0;i<60;i++){b=ZW.desserializar(ZW.serializar(b));ZW.avancarDia(b,ZWPolitica)}
+    ok('Turbo (60 dias de uma vez) = Vida (60 passos com recarga)',ZW.hashMundo(a)===ZW.hashMundo(b),ZW.hashMundo(a)+' / '+ZW.hashMundo(b));
+    ok('60 dias = 60 ciclos',a.historico.length===60&&a.metricas.ciclos===60);
+    ok('Livro-caixa fecha',ZW.auditar(a).ok);
+    const adult=ZW.desserializar(ZW.serializar(a)); adult.ledger.saldo+=1; ok('Adulteração do saldo é detectada',!ZW.auditar(adult).ok);
+    const c=ZW.criarMundo({id:'T',capitalInicial:50000,seed:33}); ZW.avancar(c,ZWPolitica,9); const h9=ZW.hashMundo(c);
+    const rr=ZW.avancarDia(c,{id:'x',tipo:'t',decidir(){throw new Error('falha')}}); ok('Falha no dia 10 desfaz o dia e preserva o histórico',!rr.ok&&c.dia===9&&ZW.hashMundo(c)===h9);
+    const z=ZW.criarMundo({id:'T',capitalInicial:0,seed:1}); ok('R$0: sem lançamento de capital e ROI não aplicável',z.ledger.tx.length===0&&ZW.financeiro(z).roi==='não aplicável');
+    let vazou=false; const esp={id:'e',tipo:'t',decidir(o){const j=JSON.stringify(o);if(ZW.CHAVES_PROIBIDAS.some(k=>j.includes('"'+k+'"')))vazou=true;return ZWPolitica.decidir(o)}};
+    const e=ZW.criarMundo({id:'T',capitalInicial:0,seed:5}); ZW.avancar(e,esp,30); ok('O agente não recebe dados ocultos nem a agenda futura',!vazou);
+    ok('Dia não simulado não é inventado',ZW.diaRegistrado(a,61).status==='NÃO SIMULADO');
+    out.innerHTML=r.join('');
+  },20);
+}
+
+function tabelaParams(curta){
+  const P=ZW.PARAMETROS;
+  const rows=Object.entries(P).map(([k,p])=>`<tr><td>${esc(p.desc)}</td><td class="n">${typeof p.v==='number'&&p.v>=100&&!/prob|fator|liquido|prazo|num/i.test(k)?brl(p.v):p.v}</td><td>${tag(p.tag)}</td><td class="wrap">${p.fonte?`<a href="${esc(p.fonte)}" target="_blank" rel="noopener">fonte</a>`:''} ${esc(p.nota||'')}</td></tr>`).join('');
+  return `<div class="card"><h2>${curta?'Dados e regras usados pelo motor':'Parâmetros'}</h2><p class="note">${tag('REAL')} vem de fonte pública, pesquisada em 03/11/2026 e conferida no resultado de busca, não na fonte primária. ${tag('ESTIMATIVA')} é um valor escolhido a partir de faixa de mercado ou suposição. ${tag('SINTETICA')} é uma regra inventada para o simulador funcionar. As vagas e os comércios são sintéticos: não existem de verdade.</p><div class="tbl"><table><thead><tr><th>Parâmetro</th><th class="n">Valor</th><th>Tipo</th><th>Fonte / nota</th></tr></thead><tbody>${rows}</tbody></table></div><p class="note">O cenário começa em 04/11/2026, e os dados são de 2026. Nenhum dado posterior à data virtual foi usado.</p></div>`;
+}
+function rParams(){$('#tab-params').innerHTML=tabelaParams(false)}
+
+// ------------------------------------------------------------ início
+const salvo=ler();
+if(salvo&&salvo.semente&&salvo.dia>0){
+  $('#semente').value=salvo.semente; S.semente=salvo.semente; S.mundos=ZWExp.criarRodada(salvo.semente);
+  status('reproduzindo '+salvo.dia+' dias a partir da semente…'); avancar(salvo.dia);
+} else nova(20261104);
+})();
+</script>
