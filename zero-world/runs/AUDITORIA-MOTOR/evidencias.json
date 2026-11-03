@@ -1,0 +1,612 @@
+{
+ "acoes": {
+  "acoesPorAgente": {
+   "DIGI-01 social_local": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "PROSPECTAR": 24,
+    "ESTUDAR": 30,
+    "PEDIR_RG": 1,
+    "PROPOR": 47,
+    "DORMIR": 27,
+    "CADUNICO": 1,
+    "TRABALHAR_CONTRATOS": 4,
+    "ABRIR_MEI": 1
+   },
+   "DIGI-02 google_local": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "PROSPECTAR": 24,
+    "ESTUDAR": 30,
+    "DORMIR": 28,
+    "PEDIR_RG": 1,
+    "PROPOR": 46,
+    "CADUNICO": 1,
+    "TRABALHAR_CONTRATOS": 2
+   },
+   "DIGI-03 sites": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "PROSPECTAR": 13,
+    "ESTUDAR": 26,
+    "DORMIR": 21,
+    "PEDIR_RG": 1,
+    "PROPOR": 80,
+    "CADUNICO": 1,
+    "TRABALHAR_CONTRATOS": 10,
+    "ABRIR_MEI": 1
+   },
+   "DIGI-04 freela": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "BUSCAR_FREELAS": 30,
+    "ESTUDAR": 30,
+    "DORMIR": 27,
+    "PEDIR_RG": 1,
+    "PROPOR_FREELA": 83,
+    "CADUNICO": 1,
+    "TRABALHAR_CONTRATOS": 13,
+    "ABRIR_MEI": 1,
+    "ALUGAR_QUARTO": 1
+   },
+   "DIGI-05 clipping": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "ESTUDAR": 30,
+    "DORMIR": 24,
+    "PEDIR_RG": 1,
+    "CLIPPING": 29,
+    "CADUNICO": 1
+   },
+   "DIGI-06 ugc": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "ESTUDAR": 30,
+    "DORMIR": 25,
+    "PEDIR_RG": 1,
+    "PRODUZIR_PORTFOLIO_UGC": 3,
+    "BUSCAR_CAMPANHAS": 29,
+    "CADUNICO": 1,
+    "CANDIDATAR_UGC": 21,
+    "TRABALHAR_CONTRATOS": 3
+   },
+   "DIGI-07 afiliado": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "ESTUDAR": 30,
+    "PEDIR_RG": 1,
+    "ATIVAR_AFILIADO": 1,
+    "POSTAR_CONTEUDO": 29,
+    "DORMIR": 24,
+    "CADUNICO": 1
+   },
+   "DIGI-08 produto": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "ESTUDAR": 30,
+    "DORMIR": 26,
+    "PEDIR_RG": 1,
+    "CRIAR_PRODUTO": 4,
+    "POSTAR_CONTEUDO": 29,
+    "CADUNICO": 1
+   },
+   "DIGI-09 online": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "PROSPECTAR_ONLINE": 30,
+    "ESTUDAR": 26,
+    "DORMIR": 22,
+    "PEDIR_RG": 1,
+    "PROPOR": 53,
+    "CADUNICO": 1,
+    "TRABALHAR_CONTRATOS": 5,
+    "ABRIR_MEI": 1
+   },
+   "DIGI-10 adaptativo": {
+    "COMER": 31,
+    "REGISTRAR_CENTRO_POP": 1,
+    "COMPRAR": 2,
+    "PROSPECTAR": 3,
+    "ESTUDAR": 30,
+    "DORMIR": 26,
+    "PEDIR_RG": 1,
+    "PROSPECTAR_ONLINE": 6,
+    "CADUNICO": 1,
+    "PROPOR": 42,
+    "BUSCAR_FREELAS": 5,
+    "CLIPPING": 5,
+    "PRODUZIR_PORTFOLIO_UGC": 3,
+    "BUSCAR_CAMPANHAS": 4,
+    "ATIVAR_AFILIADO": 1,
+    "POSTAR_CONTEUDO": 4,
+    "TRABALHAR_CONTRATOS": 5,
+    "ABRIR_MEI": 1,
+    "CANDIDATAR_UGC": 1,
+    "PROPOR_FREELA": 3
+   }
+  },
+  "compartilhadasPorTodos": [
+   "CADUNICO",
+   "COMER",
+   "COMPRAR",
+   "DORMIR",
+   "ESTUDAR",
+   "PEDIR_RG",
+   "REGISTRAR_CENTRO_POP"
+  ],
+  "usadasPorAte2Agentes": [
+   "ALUGAR_QUARTO",
+   "ATIVAR_AFILIADO",
+   "BUSCAR_CAMPANHAS",
+   "BUSCAR_FREELAS",
+   "CANDIDATAR_UGC",
+   "CLIPPING",
+   "CRIAR_PRODUTO",
+   "PRODUZIR_PORTFOLIO_UGC",
+   "PROPOR_FREELA",
+   "PROSPECTAR_ONLINE"
+  ]
+ },
+ "dia1": [
+  {
+   "id": "DIGI-01",
+   "carreira": "social_local",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "PROSPECTAR",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "PROSPECTAR 3h 9 comércio(s) visitado(s)",
+    "ESTUDAR 3h marketing → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h sem vaga no albergue; dormiu na rua"
+   ]
+  },
+  {
+   "id": "DIGI-02",
+   "carreira": "google_local",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "PROSPECTAR",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "PROSPECTAR 3h 9 comércio(s) visitado(s)",
+    "ESTUDAR 3h marketing → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  },
+  {
+   "id": "DIGI-03",
+   "carreira": "sites",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "PROSPECTAR",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "PROSPECTAR 3h 9 comércio(s) visitado(s)",
+    "ESTUDAR 3h programacao → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  },
+  {
+   "id": "DIGI-04",
+   "carreira": "freela",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "BUSCAR_FREELAS",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "BUSCAR_FREELAS 0.5h 9 projeto(s) novo(s) na plataforma",
+    "ESTUDAR 3h tecnologia → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  },
+  {
+   "id": "DIGI-05",
+   "carreira": "clipping",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "ESTUDAR 3h tecnologia → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  },
+  {
+   "id": "DIGI-06",
+   "carreira": "ugc",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "ESTUDAR 3h marketing → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  },
+  {
+   "id": "DIGI-07",
+   "carreira": "afiliado",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "ESTUDAR 3h marketing → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h sem vaga no albergue; dormiu na rua"
+   ]
+  },
+  {
+   "id": "DIGI-08",
+   "carreira": "produto",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "ESTUDAR 3h marketing → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  },
+  {
+   "id": "DIGI-09",
+   "carreira": "online",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "PROSPECTAR_ONLINE",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "PROSPECTAR_ONLINE 3h 45 mensagens, 8 resposta(s)",
+    "ESTUDAR 3h negocios → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  },
+  {
+   "id": "DIGI-10",
+   "carreira": "adaptativo",
+   "observacao": {
+    "caixa": 50000,
+    "fome": 75,
+    "energia": 60,
+    "centroPop": false,
+    "rg": false,
+    "celular": false,
+    "local": "rua"
+   },
+   "plano": [
+    "COMER:popular",
+    "COMER:popular",
+    "REGISTRAR_CENTRO_POP",
+    "COMPRAR:celular",
+    "COMPRAR:chip",
+    "PROSPECTAR",
+    "ESTUDAR",
+    "DORMIR"
+   ],
+   "resultados": [
+    "COMER 2h refeição R$3",
+    "COMER 2h refeição R$3",
+    "REGISTRAR_CENTRO_POP 3h registrado",
+    "COMPRAR 2h comprou celular",
+    "COMPRAR 0h comprou chip",
+    "PROSPECTAR 3h 9 comércio(s) visitado(s)",
+    "ESTUDAR 3h marketing → 4.15 (Wi-Fi BH)",
+    "DORMIR 0h vaga no albergue"
+   ]
+  }
+ ],
+ "checagens": [
+  {
+   "nome": "Dia 1: os 10 agentes recebem a mesma observação inicial",
+   "ok": true,
+   "det": "{\"caixa\":50000,\"fome\":75,\"energia\":60,\"centroPop\":false,\"rg\":false,\"celular\":false,\"local\":\"rua\"}"
+  },
+  {
+   "nome": "Dia 1: as 3 primeiras ações são iguais para todos (comer, comer, registrar)",
+   "ok": true,
+   "det": "COMER:popular>COMER:popular>REGISTRAR_CENTRO_POP"
+  },
+  {
+   "nome": "Dia 1: todos pagaram 2 refeições de R$3 antes de se registrar (ineficiência da política)",
+   "ok": true,
+   "det": ""
+  },
+  {
+   "nome": "A decisão é função só da observação (recalculada 300 vezes, sempre igual)",
+   "ok": true,
+   "det": "10 agentes × 30 dias"
+  },
+  {
+   "nome": "Nenhuma observação contém agenda, gerador ou dados ocultos",
+   "ok": true,
+   "det": "chaves proibidas: oculto, agenda, rngState, abertura, concorrentes, inscritos"
+  },
+  {
+   "nome": "Todas as observações estavam congeladas",
+   "ok": true,
+   "det": ""
+  },
+  {
+   "nome": "Mudar todo o estado oculto (futuro, orçamentos, concorrência, gerador) não muda observação nem decisão",
+   "ok": true,
+   "det": "10/10 agentes no dia 15"
+  },
+  {
+   "nome": "Toda decisão tem número de sequência menor que os resultados do dia",
+   "ok": true,
+   "det": ""
+  },
+  {
+   "nome": "Livro-caixa dos 10 mundos fecha nos 30 dias (fórmula e encadeamento)",
+   "ok": true,
+   "det": "167 transações"
+  },
+  {
+   "nome": "Adulteração detectada: mudar o valor de uma transação",
+   "ok": true,
+   "det": "saldo posterior não confere em DIGI-04-T00004"
+  },
+  {
+   "nome": "Adulteração detectada: apagar uma transação",
+   "ok": true,
+   "det": "saldo anterior não confere em DIGI-04-T00005"
+  },
+  {
+   "nome": "Adulteração detectada: trocar a ordem de duas transações",
+   "ok": true,
+   "det": "saldo anterior não confere em DIGI-04-T00005"
+  },
+  {
+   "nome": "Adulteração detectada: duplicar uma transação",
+   "ok": true,
+   "det": "id duplicado DIGI-04-T00004"
+  },
+  {
+   "nome": "Adulteração detectada: mudar o saldo sem transação",
+   "ok": true,
+   "det": "saldo registrado (57101) diverge do livro (57100)"
+  },
+  {
+   "nome": "Adulteração detectada: transformar capital inicial em receita",
+   "ok": true,
+   "det": "capital inicial no livro (0) diverge do declarado (50000)"
+  },
+  {
+   "nome": "Adulteração detectada: mudar o caixa final de um dia do histórico",
+   "ok": true,
+   "det": "caixa do dia 6 não fecha com as transações"
+  },
+  {
+   "nome": "Saída maior que o saldo é recusada (sem crédito)",
+   "ok": true,
+   "det": ""
+  },
+  {
+   "nome": "Cada mundo rodado sozinho dá o mesmo hash que dentro da rodada",
+   "ok": true,
+   "det": "10/10"
+  },
+  {
+   "nome": "Nenhum objeto de memória é compartilhado entre dois mundos",
+   "ok": true,
+   "det": "varredura de referências"
+  },
+  {
+   "nome": "A memória de nenhum agente cita outro agente",
+   "ok": true,
+   "det": ""
+  },
+  {
+   "nome": "Reabrir = reconstruir pela semente: mesmos 10 hashes",
+   "ok": true,
+   "det": ""
+  },
+  {
+   "nome": "Fechar no dia 12 e retomar do checkpoint até o dia 30: mesmos 10 hashes",
+   "ok": true,
+   "det": ""
+  },
+  {
+   "nome": "Retomar não duplica transações",
+   "ok": true,
+   "det": "167 ids únicos"
+  }
+ ],
+ "hashesD30": {
+  "DIGI-01": "f6c6ca1c",
+  "DIGI-02": "65c1b401",
+  "DIGI-03": "7e45f8da",
+  "DIGI-04": "c2365909",
+  "DIGI-05": "fa1216f3",
+  "DIGI-06": "e1cdcf6b",
+  "DIGI-07": "68ef4127",
+  "DIGI-08": "61f64a54",
+  "DIGI-09": "d700b691",
+  "DIGI-10": "aae8b4d0"
+ }
+}
