@@ -1,0 +1,274 @@
+<title>Zero World Digital</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Archivo+Narrow:wght@600;700&display=swap">
+/*CSS*/
+<style>
+.live{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:.8rem}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--bad);display:inline-block}
+@media (prefers-reduced-motion:no-preference){.live i{animation:pulse 1.6s infinite}}
+@keyframes pulse{50%{opacity:.25}}
+.relogio{font-family:var(--f-mono);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.agentes{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.ag{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;display:grid;gap:6px;min-width:0}
+.ag.sel{border-color:var(--accent)}
+.ag h3{display:flex;justify-content:space-between;gap:8px}
+.ag .agora{font-size:.85rem;padding:6px 8px;border-radius:6px;background:var(--soft)}
+.ag ol{margin:0;padding-left:0;list-style:none;display:grid;gap:3px;font-size:.78rem}
+.ag ol li{display:grid;grid-template-columns:3.2em 1fr;gap:6px}
+.ag ol li span:first-child{font-family:var(--f-mono);color:var(--muted)}
+.fut{color:var(--muted);font-style:italic}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Zero World · Carreiras digitais</h1>
+  <p class="muted">10 agentes de 30 anos em Belo Horizonte, cada um com R$500, começam do zero uma carreira digital diferente. Cada um vive num mundo independente, com semente, livro-caixa e memória próprios. O cérebro é uma <strong>política programada (regras fixas, não é IA)</strong>, e quem decide o resultado de cada ação é o motor do mundo. Tudo aqui é <strong>resultado simulado</strong>, com preços e taxas reais onde havia fonte.</p>
+  <div class="chips" id="chipsTopo"></div>
+</header>
+
+<div class="bar" role="toolbar" aria-label="Controle da simulação">
+  <div class="grp"><span>Modo</span><select id="modo" aria-label="Modo"><option value="aovivo">Ao vivo (24x)</option><option value="lab">Laboratório</option></select></div>
+  <div class="grp" id="ctlLive"><span class="live"><i></i>AO VIVO</span><span class="relogio" id="relogio">—</span></div>
+  <div class="grp" id="ctlLab" hidden><span>Semente</span><input type="number" id="semente" value="20261104" aria-label="Semente"><button id="btnNova">Nova rodada</button><button id="btnVida">+1 dia</button><button data-t="30">30</button><button data-t="90">90</button><button data-t="240" class="pri">240</button><button data-t="365">365</button></div>
+  <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+  <div class="status" id="status" role="status" aria-live="polite">—</div>
+</div>
+
+<nav class="tabs" role="tablist" id="tabs">
+  <button role="tab" data-tab="agora" aria-selected="true">Agora</button>
+  <button role="tab" data-tab="geral" aria-selected="false">Visão geral</button>
+  <button role="tab" data-tab="agente" aria-selected="false">Agente e replay</button>
+  <button role="tab" data-tab="comparar" aria-selected="false">Comparação</button>
+  <button role="tab" data-tab="auditoria" aria-selected="false">Auditoria e testes</button>
+  <button role="tab" data-tab="params" aria-selected="false">Dados e regras</button>
+</nav>
+<section class="panel" id="tab-agora"></section>
+<section class="panel" id="tab-geral" hidden></section>
+<section class="panel" id="tab-agente" hidden></section>
+<section class="panel" id="tab-comparar" hidden></section>
+<section class="panel" id="tab-auditoria" hidden></section>
+<section class="panel" id="tab-params" hidden></section>
+</div>
+
+<script>/*ENGINE*/</script>
+<script>/*POLICY*/</script>
+<script>/*EXPERIMENT*/</script>
+<script>
+const REF = /*REF*/;
+const AO_VIVO = /*AOVIVO*/;
+(function(){
+'use strict';
+const $=s=>document.querySelector(s), brl=ZW.brl, P=ZWPoliticaDigital;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tag=(t)=>`<span class="chip tag-${t}">${({REAL:'DADO REAL',ESTIMATIVA:'ESTIMATIVA',SINTETICA:'REGRA SINTÉTICA',SIM:'RESULTADO SIMULADO'}[t])}</span>`;
+const S={modo:'aovivo',semente:AO_VIVO.semente,mundos:[],hoje:[],sel:'DIGI-01',dia:null,tab:'agora',ocupado:false,concluida:false,multi:null};
+const INICIO=Date.parse(AO_VIVO.inicioReal);
+function status(t){$('#status').textContent=t} function prog(p){$('#progBar').style.width=(p*100).toFixed(1)+'%'}
+$('#chipsTopo').innerHTML=[`<span class="chip">${ZW.VERSAO_MOTOR}</span>`,`<span class="chip">cérebro: ${esc(P.tipo)}</span>`,tag('REAL'),tag('ESTIMATIVA'),tag('SINTETICA'),tag('SIM')].join('');
+function diaRelogio(){const t=Date.now()-INICIO; if(t<0)return 0; return Math.min(AO_VIVO.horizonte,Math.floor(t/3600000)+1)}
+function horaVirtual(){const t=Date.now()-INICIO; if(t<0)return null; if(Math.floor(t/3600000)+1>AO_VIVO.horizonte)return 24; return ((t%3600000)/3600000)*24}
+const hhmm=h=>String(Math.floor(h)).padStart(2,'0')+':'+String(Math.floor((h%1)*60)).padStart(2,'0');
+const dataDe=(dia)=>{const d=new Date(AO_VIVO.dataInicioVirtual+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+dia-1);return d.toISOString().slice(0,10).split('-').reverse().join('/')};
+
+// -------------------------------------------------- execução
+function novos(semente){return ZWExp.criarRodadaDigital(semente,{dataInicio:AO_VIVO.dataInicioVirtual})}
+function rodar(mundos,n,fim){
+  S.ocupado=true; botoes(); let k=0; const erros=[];
+  (function lote(){
+    const t0=performance.now();
+    while(k<n&&performance.now()-t0<40){for(const w of mundos){const r=ZW.avancarDia(w,P);if(!r.ok)erros.push(w.meta.id+': '+r.erro)}k++;if(erros.length)break}
+    prog(n?k/n:1); status(`processando dia ${mundos[0].dia} · 10 mundos`);
+    if(k<n&&!erros.length){setTimeout(lote,0);return}
+    S.ocupado=false; botoes(); if(erros.length)status('ERRO: '+erros[0]); fim(erros);
+  })();
+}
+function prepararHoje(){ // o dia em andamento é calculado num clone e revelado aos poucos
+  S.hoje=S.mundos.map(w=>{const c=ZW.desserializar(ZW.serializar(w));ZW.avancarDia(c,P);return c});
+}
+function iniciarAoVivo(){
+  S.semente=AO_VIVO.semente; S.mundos=novos(S.semente); S.concluida=false; S.hoje=[];
+  const d=diaRelogio();
+  if(d===0){status('a rodada ao vivo começa em '+new Date(INICIO).toLocaleString('pt-BR'));render();return}
+  rodar(S.mundos,d-1,()=>{prepararHoje();S.dia=S.mundos[0].dia||null;statusVivo();render()});
+}
+function tickVivo(){
+  if(S.modo!=='aovivo'||S.ocupado)return;
+  const d=diaRelogio();
+  if(d===0){status('começa em '+Math.ceil((INICIO-Date.now())/60000)+' min');relogio();return}
+  const feitos=S.mundos[0]?S.mundos[0].dia:0;
+  if(d-1>feitos){ // virou o dia: o dia que estava em andamento vira dia concluído
+    if(S.hoje.length&&S.hoje[0].dia===feitos+1&&d-1===feitos+1){S.mundos=S.hoje;prepararHoje();S.dia=S.mundos[0].dia;render();}
+    else {rodar(S.mundos,d-1-feitos,()=>{prepararHoje();S.dia=S.mundos[0].dia;render()});return}
+  } else if(!S.hoje.length) prepararHoje();
+  relogio(); statusVivo(); if(S.tab==='agora')rAgora();
+}
+function relogio(){const h=horaVirtual();const d=diaRelogio();$('#relogio').textContent=d?`D${d} · ${dataDe(d)} · ${hhmm(h)}`:'aguardando início'}
+function statusVivo(){const t=Date.now()-INICIO; if(t<0)return; const prox=3600000-(t%3600000); status(`1 hora real = 1 dia virtual · ${S.mundos[0].dia} dia(s) concluído(s) · próximo dia em ${Math.ceil(prox/60000)} min · só avança com a página aberta (ou com o comando 24x)`)}
+setInterval(tickVivo,15000);
+
+function botoes(){document.querySelectorAll('#ctlLab button').forEach(b=>b.disabled=S.ocupado)}
+$('#modo').onchange=e=>{S.modo=e.target.value;$('#ctlLive').hidden=S.modo!=='aovivo';$('#ctlLab').hidden=S.modo!=='lab';
+  if(S.modo==='aovivo')iniciarAoVivo(); else {S.semente=+$('#semente').value;S.mundos=novos(S.semente);S.hoje=[];S.concluida=false;status('laboratório · semente '+S.semente+' · dia 0');render()}};
+$('#btnNova').onclick=()=>{S.semente=+$('#semente').value;S.mundos=novos(S.semente);S.hoje=[];S.concluida=false;render()};
+const lab=n=>{if(S.ocupado)return;rodar(S.mundos,n,(er)=>{S.concluida=!er.length;S.dia=S.mundos[0].dia;status(`laboratório · semente ${S.semente} · dia ${S.mundos[0].dia}`);render()})};
+$('#btnVida').onclick=()=>lab(1); document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>lab(+b.dataset.t));
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;document.querySelectorAll('#tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));document.querySelectorAll('section.panel').forEach(p=>p.hidden=p.id!=='tab-'+S.tab);render()});
+
+// -------------------------------------------------- utilidades de exibição
+const mundo=id=>S.mundos.find(w=>w.meta.id===id);
+function med(xs){const v=xs.filter(x=>x!==null).sort((a,b)=>a-b);if(!v.length)return null;const m=Math.floor(v.length/2);return v.length%2?v[m]:Math.round((v[m-1]+v[m])/2)}
+function niceStep(r){const p=Math.pow(10,Math.floor(Math.log10(r||1)));for(const m of [1,2,2.5,5,10])if(m*p>=r)return m*p;return 10*p}
+function grafico(el,series,opt){
+  const W=760,H=opt.h||260,L=72,R=16,T=12,B=28;
+  const dias=Math.max(2,...series.map(s=>s.pts.length?s.pts[s.pts.length-1][0]:1));
+  let max=Math.max(1,...series.flatMap(s=>s.pts.map(p=>p[1]))),min=Math.min(0,...series.flatMap(s=>s.pts.map(p=>p[1])));
+  const passo=niceStep((max-min)/4);max=Math.ceil(max/passo)*passo;min=Math.floor(min/passo)*passo;
+  const x=d=>L+(W-L-R)*(d-1)/(dias-1),y=v=>T+(H-T-B)*(1-(v-min)/(max-min||1));
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.aria)}">`;
+  for(let v=min;v<=max+1;v+=passo)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${(v/100).toLocaleString('pt-BR',{maximumFractionDigits:0})}</text>`;
+  [1,Math.round(dias/4),Math.round(dias/2),Math.round(3*dias/4),dias].filter((v,i,a)=>v>=1&&a.indexOf(v)===i).forEach(d=>s+=`<text x="${x(d)}" y="${H-8}" text-anchor="middle">D${d}</text>`);
+  for(const se of series.filter(z=>!z.top).concat(series.filter(z=>z.top))){if(!se.pts.length)continue;s+=`<path d="${se.pts.map((p,i)=>(i?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[1]).toFixed(1)).join('')}" fill="none" stroke="${se.cor}" stroke-width="${se.w||2}" ${se.dash?'stroke-dasharray="5 4"':''} stroke-linejoin="round"/>`}
+  if(opt.marca)s+=`<line x1="${x(opt.marca)}" x2="${x(opt.marca)}" y1="${T}" y2="${H-B}" stroke="var(--ink)" stroke-dasharray="2 3"/>`;
+  s+=`<line class="cx" x1="0" x2="0" y1="${T}" y2="${H-B}" stroke="var(--muted)" visibility="hidden"/></svg><div class="tip" hidden></div>`;
+  el.innerHTML=s; const svg=el.querySelector('svg'),tip=el.querySelector('.tip'),cx=el.querySelector('.cx');
+  const diaDe=ev=>{const r=svg.getBoundingClientRect();return Math.max(1,Math.min(dias,Math.round(1+((ev.clientX-r.left)*W/r.width-L)/(W-L-R)*(dias-1))))};
+  svg.addEventListener('mousemove',ev=>{const d=diaDe(ev);cx.setAttribute('x1',x(d));cx.setAttribute('x2',x(d));cx.setAttribute('visibility','visible');tip.hidden=false;
+    tip.innerHTML=`<b>D${d}</b><br>`+series.filter(z=>z.rotulo).map(z=>{const p=z.pts[d-1];return p?`<span class="dot" style="background:${z.cor}"></span>${esc(z.rotulo)} ${brl(p[1])}`:''}).join('<br>');
+    const r=el.getBoundingClientRect();let lx=ev.clientX-r.left+12;if(lx>r.width-230)lx=ev.clientX-r.left-230;tip.style.left=Math.max(0,lx)+'px';tip.style.top='8px'});
+  svg.addEventListener('mouseleave',()=>{tip.hidden=true;cx.setAttribute('visibility','hidden')});
+  if(opt.clique)svg.addEventListener('click',ev=>opt.clique(diaDe(ev)));
+}
+const nomeCarreira=c=>P.CARREIRAS[c]||c;
+
+// agenda do dia: ações em sequência a partir das 07:00; pagamentos do motor ocorrem de madrugada
+function agendaDoDia(w,dia){
+  const d=ZW.diaRegistrado(w,dia); if(d.status!=='SIMULADO')return null;
+  let t=7; const itens=[];
+  const decSeq=d.plano.length?w.logs.decisoes.find(x=>x.dia===dia).seq:Infinity;
+  for(const tx of d.transacoes.filter(x=>x.seq<decSeq))itens.push({ini:0,fim:6,txt:(tx.direcao==='ENTRADA'?'+':'−')+brl(tx.valor)+' · '+tx.justificativa,tx:[tx]});
+  for(const e of d.eventos.filter(x=>x.seq<decSeq))itens.push({ini:0,fim:6,txt:e.texto,tx:[]});
+  let ultimoSeq=decSeq;
+  for(const r of d.resultados){
+    const ini=r.acao==='DORMIR'?Math.max(t,22):t, fim=r.acao==='DORMIR'?24:t+r.horas;
+    const txs=d.transacoes.filter(x=>x.seq>ultimoSeq&&x.seq<r.seq); ultimoSeq=r.seq;
+    itens.push({ini,fim,txt:(r.ok?'':'✗ ')+r.acao.replace(/_/g,' ').toLowerCase()+' — '+r.resultado,tx:txs});
+    if(r.acao!=='DORMIR')t+=r.horas;
+  }
+  const resto=d.transacoes.filter(x=>x.seq>ultimoSeq); if(resto.length)itens.push({ini:23.9,fim:24,txt:resto.map(x=>(x.direcao==='ENTRADA'?'+':'−')+brl(x.valor)+' '+x.justificativa).join('; '),tx:resto});
+  return {d,itens};
+}
+
+// -------------------------------------------------- abas
+function render(){ if(!S.mundos.length)return; ({agora:rAgora,geral:rGeral,agente:rAgente,comparar:rComparar,auditoria:rAuditoria,params:rParams})[S.tab]() }
+
+function rAgora(){
+  const el=$('#tab-agora');
+  const vivo=S.modo==='aovivo';
+  if(vivo&&diaRelogio()===0){el.innerHTML=`<div class="card"><h2>Começa em ${new Date(INICIO).toLocaleString('pt-BR')}</h2><p>A partir desse instante, cada hora real é um dia na vida dos 10 agentes. Volte a esta aba para ver o que cada um está fazendo na hora virtual atual.</p></div>`;return}
+  const fonte=vivo?S.hoje:S.mundos; if(!fonte.length||!fonte[0].dia){el.innerHTML='<div class="card"><p>Nenhum dia simulado ainda.</p></div>';return}
+  const dia=fonte[0].dia, h=vivo?horaVirtual():24;
+  el.innerHTML=`<div class="card"><h2>${vivo?'Agora':'Último dia simulado'}: D${dia} · ${dataDe(dia)} · ${hhmm(Math.min(h,23.99))}</h2><p class="note">${vivo?'O motor já resolveu o dia inteiro quando ele começou, mas aqui só aparece o que já aconteceu até a hora virtual atual. O resto fica oculto até chegar a hora.':'No laboratório o dia aparece inteiro.'} Clique num agente para abrir o histórico dele.</p></div>
+  <div class="agentes">${fonte.map(w=>{
+    const ag=agendaDoDia(w,dia); const base=mundo(w.meta.id)||w;
+    const feitos=ag?ag.itens.filter(i=>i.fim<=h):[]; const atual=ag?ag.itens.find(i=>i.ini<=h&&i.fim>h):null;
+    const caixa=(vivo?base.ledger.saldo:ag.d.caixaInicio)+feitos.flatMap(i=>i.tx).reduce((s,t)=>s+(t.direcao==='ENTRADA'?t.valor:-t.valor),0);
+    return `<div class="ag click${w.meta.id===S.sel?' sel':''}" data-id="${w.meta.id}" role="button" tabindex="0"><h3><span>${w.meta.id}</span><span class="mono">${brl(caixa)}</span></h3><div class="note">${esc(nomeCarreira(w.carreira))}</div>
+      <div class="agora">${atual?`<b>${hhmm(atual.ini)}</b> ${esc(atual.txt.split(' — ')[0])} <span class="muted">(em andamento)</span>`:'<span class="muted">entre atividades</span>'}</div>
+      <ol>${feitos.slice(-6).map(i=>`<li><span>${hhmm(i.ini)}</span><span>${esc(i.txt)}</span></li>`).join('')}${ag&&ag.itens.length>feitos.length+(atual?1:0)?`<li><span>…</span><span class="fut">${ag.itens.length-feitos.length-(atual?1:0)} atividade(s) ainda não aconteceram</span></li>`:''}</ol></div>`}).join('')}</div>`;
+  el.querySelectorAll('.ag').forEach(c=>{const go=()=>{S.sel=c.dataset.id;S.dia=null;document.querySelector('[data-tab=agente]').click()};c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter')go()}});
+}
+
+function vazio(){return !S.mundos[0]||S.mundos[0].dia===0}
+function rGeral(){
+  const el=$('#tab-geral');
+  if(vazio()){el.innerHTML='<div class="card"><p>Nenhum dia concluído ainda.</p></div>';return}
+  const ms=S.mundos.map(w=>Object.assign(ZWExp.metricas(w),{w}));
+  el.innerHTML=`<div class="card"><h2>Visão geral · ${S.mundos[0].dia} dia(s) concluído(s)</h2><p class="note">Todos começaram com R$500 e só podem ganhar dinheiro com trabalho digital. O ganho líquido desconta os R$500 iniciais. "Estável" é o primeiro dia em que a receita dos últimos 30 dias chegou a um salário mínimo e o caixa cobria um mês de quarto. ${tag('SIM')}</p>
+  <div class="tbl"><table><thead><tr><th>Agente</th><th>Carreira</th><th class="n">Patrimônio</th><th class="n">Ganho líquido</th><th class="n">ROI</th><th class="n">Receita</th><th class="n">Lucro</th><th class="n">Dívidas</th><th class="n">1ª receita</th><th class="n">Estável</th><th class="n">Clientes ativos</th><th class="n">Seguidores</th><th class="n">Negócios / fracassos</th><th>Moradia</th><th>Estratégia</th><th class="n">Menor caixa</th><th class="n">Custo</th></tr></thead><tbody>
+  ${ms.map(m=>`<tr class="click${m.id===S.sel?' sel':''}" data-id="${m.id}"><td>${m.id}</td><td>${esc(m.carreira)}</td><td class="n">${brl(m.patrimonio)}</td><td class="n">${brl(m.ganhoLiquido)}</td><td class="n">${typeof m.roi==='number'?(m.roi*100).toFixed(0)+'%':m.roi}</td><td class="n">${brl(m.receita)}</td><td class="n">${brl(m.lucro)}</td><td class="n">${brl(m.dividas)}</td><td class="n">${m.diaPrimeiraReceita?'D'+m.diaPrimeiraReceita:'ainda não'}</td><td class="n">${m.diaEstabilidade?'D'+m.diaEstabilidade:'ainda não'}</td><td class="n">${m.w.agente.contratos.filter(c=>c.status==='ativo').length}</td><td class="n">${m.seguidores||0}</td><td class="n">${m.negociosCriados} / ${m.negociosFracassados}</td><td>${esc(m.moradia)}</td><td>${esc(m.estrategiaFinal)}</td><td class="n">${brl(m.risco.menorCaixa)}</td><td class="n">${m.custo.ms} ms</td></tr>`).join('')}</tbody></table></div></div>`;
+  el.querySelectorAll('tr.click').forEach(tr=>tr.onclick=()=>{S.sel=tr.dataset.id;S.dia=null;document.querySelector('[data-tab=agente]').click()});
+}
+
+function rAgente(){
+  const el=$('#tab-agente'),w=mundo(S.sel);
+  const sel=`<select id="selAg" aria-label="Agente">${S.mundos.map(x=>`<option value="${x.meta.id}" ${x.meta.id===S.sel?'selected':''}>${x.meta.id} · ${esc(x.carreira)}</option>`).join('')}</select>`;
+  if(vazio()){el.innerHTML=`<div class="card"><h2>${sel}</h2><p>Nenhum dia concluído ainda.</p></div>`;$('#selAg').onchange=e=>{S.sel=e.target.value;render()};return}
+  if(!S.dia||S.dia>w.dia)S.dia=w.dia;
+  const d=ZW.diaRegistrado(w,S.dia),f=ZW.financeiro(w),sab=d.sabia;
+  el.innerHTML=`<div class="card"><h2>${sel}</h2><p class="note">${esc(nomeCarreira(w.carreira))} · semente <span class="mono">${w.meta.seed}</span> · ${tag('SIM')}</p>
+   <div class="legend"><span><span class="dot" style="background:var(--accent)"></span>patrimônio</span><span><span class="dot" style="background:var(--muted)"></span>caixa (tracejado)</span><span>clique no gráfico para abrir o dia</span></div>
+   <div class="chart" id="gAg"></div><label class="note" for="rng">Replay: dia <b class="mono">${S.dia}</b> de ${w.dia} (${dataDe(S.dia)})</label><input type="range" id="rng" min="1" max="${w.dia}" value="${S.dia}"></div>
+  <div class="cols"><div class="card"><h3>Dia ${d.dia}${d.internado?' · INTERNADO':''}</h3><dl class="kv"><dt>Caixa</dt><dd>${brl(d.caixaInicio)} → ${brl(d.caixaFim)}</dd><dt>Patrimônio</dt><dd>${brl(d.patrimonio)}</dd><dt>Dormiu</dt><dd>${esc(d.noite)}</dd><dt>Necessidades</dt><dd>fome ${d.necessidades.fome} · energia ${d.necessidades.energia} · saúde ${d.necessidades.saude}</dd><dt>Estratégia</dt><dd>${esc(d.estrategia)}</dd></dl>
+   <h3>O que sabia ao decidir</h3>${sab?`<dl class="kv"><dt>Caixa</dt><dd>${brl(sab.caixa)}</dd><dt>Onde estava</dt><dd>${esc(sab.local)}</dd><dt>Itens</dt><dd>${Object.entries(sab.itens).filter(e=>e[1]).map(e=>e[0]).join(', ')||'nenhum'}</dd><dt>Contratos ativos</dt><dd>${sab.contratosAtivos}</dd><dt>Pendências</dt><dd>${sab.pendencias}</dd><dt>Contatos conhecidos</dt><dd>${sab.leadsConhecidos}</dd></dl><ul class="plain">${sab.ultimosFatos.map(x=>`<li class="muted">D${x.dia}: ${esc(x.texto)}</li>`).join('')}</ul>`:'<p class="muted">sem decisão</p>'}</div>
+   <div class="card"><h3>Alternativas consideradas</h3><ul class="plain">${d.alternativas.map(a=>`<li>${a.escolhida?'✓':'✗'} <b>${esc(a.acao)}</b>${a.valorEsperadoPorHora!==undefined?` <span class="mono">(${brl(a.valorEsperadoPorHora)}/h medido)</span>`:''} <span class="muted">${esc(a.motivo||'')}</span></li>`).join('')||'<li class="muted">nenhuma registrada</li>'}</ul>
+   <h3>Agenda do dia</h3><ul class="plain">${agendaDoDia(w,S.dia).itens.map(i=>`<li><span class="mono">${hhmm(i.ini)}</span> ${esc(i.txt)}</li>`).join('')}</ul></div></div>
+  <div class="card"><h3>Transações do dia</h3>${d.transacoes.length?`<div class="tbl"><table><thead><tr><th>ID</th><th>Tipo</th><th class="n">Valor</th><th class="n">Antes</th><th class="n">Depois</th><th>Origem → destino</th><th>Justificativa</th></tr></thead><tbody>${d.transacoes.map(t=>`<tr><td class="mono">${t.id}</td><td>${t.tipo}</td><td class="n ${t.direcao==='ENTRADA'?'okc':''}">${t.direcao==='ENTRADA'?'+':'−'}${brl(t.valor)}</td><td class="n">${brl(t.saldoAnterior)}</td><td class="n">${brl(t.saldoPosterior)}</td><td>${esc(t.origem)} → ${esc(t.destino)}</td><td class="wrap">${esc(t.justificativa)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Nenhuma transação: o saldo não mudou.</p>'}</div>
+  <div class="cols"><div class="card"><h3>Linha do tempo</h3><div class="tbl tall"><table><tbody>${w.logs.eventos.slice().reverse().map(e=>`<tr class="click" data-dia="${e.dia}"><td class="mono">D${e.dia}</td><td>${esc(e.tipo)}</td><td class="wrap">${esc(e.texto)}</td></tr>`).join('')||'<tr><td class="muted">sem eventos</td></tr>'}</tbody></table></div></div>
+   <div class="card"><h3>Negócios e números</h3>${w.agente.negocios.length?`<div class="tbl"><table><thead><tr><th>Negócio</th><th class="n">Lançado</th><th class="n">Contratos</th><th class="n">Receita</th><th>Status</th></tr></thead><tbody>${w.agente.negocios.map(n=>`<tr><td>${esc(n.servico)}</td><td class="n">D${n.lancadoDia}</td><td class="n">${n.contratos}</td><td class="n">${brl(n.receita)}</td><td class="${n.status==='fracassado'?'badc':''}">${n.status}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">nenhum</p>'}
+   <dl class="kv"><dt>Receita</dt><dd>${brl(f.receita)}</dd><dt>Despesas (inclui taxas)</dt><dd>${brl(f.despesas)}</dd><dt>Ativos</dt><dd>${brl(f.ativos)}</dd><dt>Dívidas</dt><dd>${brl(f.dividas)}</dd><dt>Seguidores</dt><dd>${w.agente.audiencia?w.agente.audiencia.seguidores:0}</dd><dt>Avaliações na plataforma</dt><dd>${w.agente.plataforma?w.agente.plataforma.avaliacoes:0}</dd></dl></div></div>
+  <div class="card"><h3>Livro-caixa completo (${w.ledger.tx.length} transações)</h3><div class="tbl tall"><table><thead><tr><th>ID</th><th class="n">Dia</th><th>Tipo</th><th class="n">Valor</th><th>Origem → destino</th><th class="n">Saldo</th><th>Justificativa</th></tr></thead><tbody>${w.ledger.tx.slice().reverse().map(t=>`<tr class="click" data-dia="${t.dia}"><td class="mono">${t.id}</td><td class="n">${t.dia}</td><td>${t.tipo}</td><td class="n ${t.direcao==='ENTRADA'?'okc':''}">${t.direcao==='ENTRADA'?'+':'−'}${brl(t.valor)}</td><td>${esc(t.origem)} → ${esc(t.destino)}</td><td class="n">${brl(t.saldoPosterior)}</td><td class="wrap">${esc(t.justificativa)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  $('#selAg').onchange=e=>{S.sel=e.target.value;S.dia=null;render()};
+  $('#rng').oninput=e=>{S.dia=+e.target.value;render()};
+  el.querySelectorAll('tr[data-dia]').forEach(tr=>tr.onclick=()=>{const v=+tr.dataset.dia;if(v>=1){S.dia=v;render();window.scrollTo({top:0})}});
+  grafico($('#gAg'),[{pts:w.historico.map(h=>[h.dia,h.patrimonio]),cor:'var(--accent)',rotulo:'patrimônio',top:true},{pts:w.historico.map(h=>[h.dia,h.caixaFim]),cor:'var(--muted)',dash:true,w:1.5,rotulo:'caixa'}],{aria:'Patrimônio e caixa de '+w.meta.id,marca:S.dia,clique:dd=>{S.dia=dd;render()}});
+}
+
+function rComparar(){
+  const el=$('#tab-comparar');
+  if(vazio()){el.innerHTML='<div class="card"><p>Nenhum dia concluído ainda.</p></div>';return}
+  const ms=S.mundos.map(w=>Object.assign(ZWExp.metricas(w),{w})).sort((a,b)=>b.ganhoLiquido-a.ganhoLiquido);
+  const fim=S.modo==='lab'?S.concluida:S.mundos[0].dia>=AO_VIVO.horizonte;
+  let rel='<div class="card"><p class="muted">O relatório coletivo aparece só quando a rodada termina'+(S.modo==='aovivo'?` (dia ${AO_VIVO.horizonte} da rodada ao vivo)`:' (depois de uma execução Turbo)')+'. Durante a rodada nenhum agente vê dados dos outros.</p></div>';
+  if(fim){const a=ZWExp.analisar(S.mundos,S.mundos[0].dia);rel=`<div class="card"><h2>Relatório coletivo · rodada concluída no dia ${a.dias}</h2><p class="note">${esc(a.aviso)}</p><div class="cols"><div><h3>Negócios</h3><div class="tbl"><table><thead><tr><th>Negócio</th><th class="n">Lançado por</th><th class="n">Fracassou</th><th class="n">Propostas</th><th class="n">Aceite</th><th class="n">Receita</th></tr></thead><tbody>${a.negocios.map(n=>`<tr><td>${esc(n.servico)}</td><td class="n">${n.lancados}</td><td class="n">${n.fracassados}</td><td class="n">${n.propostas||'—'}</td><td class="n">${n.taxaAceite===null?'—':n.taxaAceite+'%'}</td><td class="n">${brl(n.receita)}</td></tr>`).join('')}</tbody></table></div></div><div><h3>Ações recusadas pelo motor</h3><div class="tbl"><table><tbody>${a.errosRecorrentes.map(e=>`<tr><td class="wrap">${esc(e.motivo)}</td><td class="n">${e.vezes}</td></tr>`).join('')}</tbody></table></div><h3>Eventos</h3><div class="tbl"><table><tbody>${Object.entries(a.eventos).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="n">${v}</td></tr>`).join('')}</tbody></table></div></div></div></div>`}
+  el.innerHTML=`<div class="card"><h2>Patrimônio por carreira</h2><div class="grp"><label for="selCmp" class="note">Destacar</label><select id="selCmp">${S.mundos.map(x=>`<option value="${x.meta.id}" ${x.meta.id===S.sel?'selected':''}>${x.meta.id} · ${esc(x.carreira)}</option>`).join('')}</select></div>
+   <div class="legend"><span><span class="dot" style="background:var(--accent)"></span>${S.sel} (destacado)</span><span><span class="dot" style="background:var(--line)"></span>os outros 9</span></div><div class="chart" id="gCmp"></div>
+   <h3>Ranking pelo ganho líquido</h3><div class="tbl"><table><thead><tr><th class="n">#</th><th>Agente</th><th>Carreira</th><th class="n">Ganho líquido</th><th class="n">1ª receita</th><th class="n">Estável</th><th class="n">Menor caixa</th></tr></thead><tbody>${ms.map((m,i)=>`<tr class="${m.id===S.sel?'sel':''}"><td class="n">${i+1}</td><td>${m.id}</td><td>${esc(m.carreira)}</td><td class="n">${brl(m.ganhoLiquido)}</td><td class="n">${m.diaPrimeiraReceita?'D'+m.diaPrimeiraReceita:'—'}</td><td class="n">${m.diaEstabilidade?'D'+m.diaEstabilidade:'—'}</td><td class="n">${brl(m.risco.menorCaixa)}</td></tr>`).join('')}</tbody></table></div><p class="note">Uma rodada é uma amostra só. O ranking de uma semente pode virar na outra: use "Várias rodadas" abaixo antes de concluir algo.</p></div>
+  ${rel}
+  <div class="card"><h2>Várias rodadas</h2><p>Roda as 10 carreiras em 5 sementes novas por 240 dias, sem mexer na rodada atual, e compara as medianas por carreira.</p><div class="grp"><button id="btnMulti">Rodar 5 rodadas × 240 dias</button><span class="status" id="stMulti"></span></div>
+  ${S.multi?`<div class="tbl"><table><thead><tr><th>Carreira</th><th class="n">Mediana do ganho</th><th class="n">Pior</th><th class="n">Melhor</th><th class="n">Mediana 1ª receita</th><th class="n">Estáveis</th></tr></thead><tbody>${S.multi.map(r=>`<tr><td>${esc(r.carreira)}</td><td class="n">${brl(r.med)}</td><td class="n">${brl(r.min)}</td><td class="n">${brl(r.max)}</td><td class="n">${r.pr===null?'—':'D'+r.pr}</td><td class="n">${r.est}/5</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Ainda não executado.</p>'}</div>`;
+  const desenhar=()=>grafico($('#gCmp'),S.mundos.map(w=>({pts:w.historico.map(h=>[h.dia,h.patrimonio]),cor:w.meta.id===S.sel?'var(--accent)':'var(--line)',w:w.meta.id===S.sel?2.5:1.2,rotulo:w.meta.id+' '+w.carreira,top:w.meta.id===S.sel})),{aria:'Patrimônio das 10 carreiras',h:300});
+  desenhar(); $('#selCmp').onchange=e=>{S.sel=e.target.value;render()}; $('#btnMulti').onclick=multi;
+}
+function multi(){
+  if(S.ocupado)return; S.ocupado=true; botoes(); const sementes=[0,1,2,3,4].map(i=>S.semente+5000+i),dias=240,res={};let i=0,ms=null,k=0;
+  (function passo(){const t0=performance.now();
+    while(performance.now()-t0<40){if(!ms){ms=novos(sementes[i]);k=0}for(const w of ms)ZW.avancarDia(w,P);k++;
+      if(k>=dias){for(const w of ms){const m=ZWExp.metricas(w);(res[w.carreira]=res[w.carreira]||[]).push(m)}ms=null;i++;if(i>=sementes.length)break}}
+    prog((i*dias+k)/(sementes.length*dias));$('#stMulti').textContent=`rodada ${Math.min(i+1,5)} de 5`;
+    if(i<sementes.length){setTimeout(passo,0);return}
+    S.multi=Object.entries(res).map(([c,xs])=>({carreira:c,med:med(xs.map(x=>x.ganhoLiquido)),min:Math.min(...xs.map(x=>x.ganhoLiquido)),max:Math.max(...xs.map(x=>x.ganhoLiquido)),pr:med(xs.map(x=>x.diaPrimeiraReceita)),est:xs.filter(x=>x.diaEstabilidade).length})).sort((a,b)=>b.med-a.med);
+    S.ocupado=false;botoes();prog(1);render()})();
+}
+
+function rAuditoria(){
+  const el=$('#tab-auditoria'),d0=S.mundos[0].dia,ref=S.modo==='lab'&&S.semente===REF.semente&&d0===REF.dias;
+  el.innerHTML=`<div class="card"><h2>Auditoria financeira · dia ${d0}</h2><p class="note">SALDO_FINAL = SALDO_INICIAL + ENTRADAS − SAÍDAS, recalculado transação por transação. O motor confere isso ao fim de cada dia e desfaz o dia inteiro se falhar.</p>
+  <div class="tbl"><table><thead><tr><th>Mundo</th><th>Auditoria</th><th class="n">Inicial</th><th class="n">Entradas</th><th class="n">Saídas</th><th class="n">Final</th><th class="n">Transações</th><th>Hash</th><th>Node (lab, semente ${REF.semente}, ${REF.dias} dias)</th></tr></thead><tbody>${S.mundos.map(w=>{const a=ZW.auditar(w),h=ZW.hashMundo(w),e=ref?REF.hashes[w.meta.id]:null;return `<tr><td>${w.meta.id}</td><td class="${a.ok?'okc':'badc'}">${a.ok?'OK':'FALHOU'}</td><td class="n">${brl(a.saldoInicial)}</td><td class="n">+${brl(a.entradasSemCapital)}</td><td class="n">−${brl(a.saidas)}</td><td class="n">${brl(a.saldo)}</td><td class="n">${w.ledger.tx.length}</td><td class="mono">${h}</td><td>${e?(e===h?'<span class="okc">igual ao Node ✓</span>':'<span class="badc">diferente</span>'):'<span class="muted">sem referência</span>'}</td></tr>`}).join('')}</tbody></table></div>
+  <p class="note">Para comparar com a execução em Node: modo Laboratório, semente ${REF.semente}, Turbo 240.</p></div>
+  <div class="card"><h2>Testes no navegador</h2><div class="grp"><button id="btnT">Rodar testes</button></div><ul class="plain" id="resT"></ul><p class="note">A bateria completa (15 testes) roda com <span class="mono">node --test zero-world/test.js</span>.</p></div>
+  <div class="card"><h2>O que é real e o que não é</h2><ul class="plain">
+   <li><b>Cérebro:</b> regras fixas escritas à mão, não é IA. As carreiras, o pivô depois de 45 dias sem receita e a escolha do adaptativo são todos regras.</li>
+   <li><b>Ao vivo 24x:</b> o dia virtual vem do relógio real (início ${new Date(INICIO).toLocaleString('pt-BR')}). A página só processa enquanto está aberta. Ao reabrir, ela reproduz todos os dias passados a partir da semente, com o mesmo resultado. Nada roda em segundo plano no Artifact.</li>
+   <li><b>Comércios, projetos de freela, campanhas UGC e seguidores</b> são sintéticos. Preços, taxas de plataforma, ônibus, salário mínimo, Bolsa Família, DAS e dólar vêm de fontes reais (aba Dados e regras).</li>
+   <li><b>Os agentes não fazem nada no mundo real:</b> não enviam mensagens, não abrem contas e não movimentam dinheiro de verdade.</li></ul></div>`;
+  $('#btnT').onclick=()=>{const out=$('#resT');out.innerHTML='<li class="muted">rodando…</li>';setTimeout(()=>{const r=[],ok=(n,c,x)=>r.push(`<li>${c?'<span class="okc">✓</span>':'<span class="badc">✗</span>'} ${n}${x?' <span class="muted">'+esc(x)+'</span>':''}</li>`);
+    const mk=()=>ZW.criarMundo({id:'T',capitalInicial:50000,seed:9,cenario:'digital',carreira:'freela'});
+    const a=mk();ZW.avancar(a,P,60);let b=mk();for(let i=0;i<60;i++){b=ZW.desserializar(ZW.serializar(b));ZW.avancarDia(b,P)}
+    ok('Turbo = Vida (60 dias, com recarga a cada dia)',ZW.hashMundo(a)===ZW.hashMundo(b),ZW.hashMundo(a)+' / '+ZW.hashMundo(b));
+    ok('Livro-caixa fecha',ZW.auditar(a).ok);
+    const x=ZW.desserializar(ZW.serializar(a));x.ledger.saldo+=1;ok('Adulteração detectada',!ZW.auditar(x).ok);
+    const c=mk();ZW.avancar(c,{id:'b',tipo:'t',decidir:()=>({plano:[{tipo:'DIARIA_BRACAL'}],alternativas:[]})},2);ok('Trabalho braçal recusado no cenário digital',c.logs.resultados.every(r=>!r.ok&&r.resultado==='fora do cenário digital'));
+    let vaz=false;const e=mk();ZW.avancar(e,{id:'e',tipo:'t',decidir(o){const j=JSON.stringify(o);if(ZW.CHAVES_PROIBIDAS.some(k=>j.includes('"'+k+'"')))vaz=true;return P.decidir(o)}},40);ok('O agente não vê dados ocultos',!vaz);
+    ok('Dia não simulado não é inventado',ZW.diaRegistrado(a,61).status==='NÃO SIMULADO');
+    out.innerHTML=r.join('')},20)};
+}
+
+function rParams(){
+  const rows=Object.entries(ZW.PARAMETROS).map(([k,p])=>`<tr><td>${esc(p.desc)}</td><td class="n mono">${esc(String(p.v))}</td><td>${tag(p.tag)}</td><td class="wrap">${p.fonte?`<a href="${esc(p.fonte)}" target="_blank" rel="noopener">fonte</a> `:''}${esc(p.nota||'')}</td></tr>`).join('');
+  $('#tab-params').innerHTML=`<div class="card"><h2>As 10 carreiras</h2><div class="tbl"><table><tbody>${ZWExp.AGENTES_DIGITAIS.map(([id,cap,c])=>`<tr><td>${id}</td><td>${esc(c)}</td><td class="wrap">${esc(nomeCarreira(c))}</td><td class="n">${brl(cap)}</td></tr>`).join('')}</tbody></table></div><p class="note">Todos têm 30 anos, as mesmas habilidades iniciais (negócios, tecnologia, marketing e programação), nenhum cliente e R$500. Se a carreira não render nada em 45 dias, a política abre uma segunda frente. O adaptativo testa 7 frentes por 28 dias e depois fica com as 2 que renderam mais por hora, segundo o que ele mesmo mediu.</p></div>
+  <div class="card"><h2>Parâmetros do motor</h2><p class="note">${tag('REAL')} vem de fonte pública pesquisada em 03/11/2026, conferida no resultado de busca e não na fonte primária. ${tag('ESTIMATIVA')} é uma faixa de mercado ou suposição. ${tag('SINTETICA')} é uma regra inventada para o simulador funcionar. Valores em centavos quando forem dinheiro.</p><div class="tbl"><table><thead><tr><th>Parâmetro</th><th class="n">Valor</th><th>Tipo</th><th>Fonte / nota</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+
+iniciarAoVivo(); relogio();
+})();
+</script>

@@ -116,3 +116,44 @@ node zero-world/build-dashboard.js                              # regenera o pai
 | 5. 10 mundos independentes | ✅ feito |
 | 6. Painel, replay e comparação | ✅ feito |
 | 7. Inteligência autônoma de verdade e aprendizado entre gerações | ⏳ não iniciada: só a interface e o resumo de aprendizados existem |
+
+---
+
+# Cenário digital: 10 carreiras ao vivo (24x)
+
+10 agentes (`DIGI-01` a `DIGI-10`), todos com 30 anos, R$500, as mesmas habilidades iniciais e nenhum cliente. Cada um começa uma carreira digital diferente, em um mundo independente:
+
+| Agente | Carreira |
+|---|---|
+| DIGI-01 | Social media para comércio local (visitas presenciais) |
+| DIGI-02 | Perfil da Empresa no Google para comércio local |
+| DIGI-03 | Sites (sem notebook, trabalha no telecentro) |
+| DIGI-04 | Freelancer em plataforma (estilo Workana/99Freelas) |
+| DIGI-05 | Editor de cortes (clipping) |
+| DIGI-06 | Criador UGC |
+| DIGI-07 | Afiliado Shopee com conteúdo próprio |
+| DIGI-08 | Produto digital (kit de posts) + audiência |
+| DIGI-09 | Prospecção online (WhatsApp/DM) |
+| DIGI-10 | Adaptativo: testa 7 frentes por 28 dias e fica com as 2 que renderam mais por hora |
+
+## O que é real
+
+- **Valores com fonte real:** ônibus de BH (R$6,25), dólar (R$5,20, projeção Focus), taxa de freela (20%), Kiwify (8,99% + R$2,49 por venda + R$3,67 por saque), salário mínimo, Bolsa Família, DAS MEI, Restaurante Popular, Wi-Fi BH e telecentros.
+- **Estimativas de mercado:** resposta à prospecção fria (15%), conversão de afiliado (2%), comissão (6%), UGC (R$120–210), clipping (US$1 por mil views), social media (R$500) e tráfego (R$500).
+- **Sintéticos (não existem de verdade):** comércios, projetos de freela, campanhas UGC, concorrentes e o modelo de crescimento de seguidores.
+- **No digital o motor recusa** trabalho braçal e CLT ("fora do cenário digital").
+- **Taxas no livro-caixa:** são lançadas como despesa separada da receita bruta (teste D3).
+- **O orçamento de projeto de freela é visível ao agente**, como nas plataformas reais. Concorrência, inscritos e o orçamento interno dos comércios ficam ocultos (teste D4).
+
+## Ao vivo: 1 hora real = 1 dia virtual
+
+- **Configuração:** `ao-vivo.json`, com semente 20261103, início real em **03/11/2026 17:00 UTC (14:00 de Brasília)**, dia virtual 1 em 04/11/2026 e horizonte de 365 dias.
+- **Painel (`dashboard-digital.html`):** calcula o dia pelo relógio, reproduz os dias concluídos a partir da semente e revela o dia em andamento hora a hora (1 hora virtual = 2,5 min reais). O que ainda não aconteceu na hora virtual fica oculto.
+- **`node zero-world/cli.js digital-agora`:** mostra o mesmo estado na linha de comando e grava `runs/AO-VIVO/estado-agora.json`.
+- **Limitação:** nada roda em segundo plano no Artifact. Como a rodada é determinística, abrir a página a qualquer hora mostra exatamente o estado daquele instante.
+
+## Rodada de referência (laboratório)
+
+`node zero-world/cli.js digital-rodada --semente 20261104 --dias 240` grava `runs/D20261104/`. No navegador (modo Laboratório, mesma semente, Turbo 240), os 10 hashes são iguais aos do Node.
+
+Testes: `node --test zero-world/test.js` → **15/15** (os 10 obrigatórios + D1 a D5 do cenário digital, incluindo a regressão do cenário clássico).

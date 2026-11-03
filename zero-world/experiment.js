@@ -23,6 +23,14 @@
     return AGENTES.map(([id, capital]) => ZW.criarMundo({ id, capitalInicial: capital, seed: sementeMundo(sementeRodada, id), dataInicio: o.dataInicio }));
   }
 
+  // Rodada digital: 10 carreiras diferentes, mesmo capital (R$500), mundos independentes.
+  const CARREIRAS_DIGITAIS = ['social_local', 'google_local', 'sites', 'freela', 'clipping', 'ugc', 'afiliado', 'produto', 'online', 'adaptativo'];
+  const AGENTES_DIGITAIS = CARREIRAS_DIGITAIS.map((c, i) => ['DIGI-' + String(i + 1).padStart(2, '0'), 50000, c]);
+  function criarRodadaDigital(sementeRodada, opcoes) {
+    const o = opcoes || {};
+    return AGENTES_DIGITAIS.map(([id, capital, carreira]) => ZW.criarMundo({ id, capitalInicial: capital, seed: ZW.hashSeed('DIGITAL:' + sementeRodada + ':' + id), dataInicio: o.dataInicio, cenario: 'digital', carreira }));
+  }
+
   function executar(mundos, cerebro, dias) {
     const erros = [];
     for (const w of mundos) { const r = ZW.avancar(w, cerebro, dias); if (!r.ok) erros.push({ id: w.meta.id, dia: w.dia + 1, erro: r.erro }); }
@@ -65,6 +73,8 @@
       negociosCriados: a.negocios.length, negociosFracassados: a.negocios.filter((n) => n.status === 'fracassado').length,
       mudancasEstrategia: a.memoria.mudancasEstrategia.length, estrategiaFinal: a.estrategia,
       emprego: a.emprego ? a.emprego.cargo : null, moradia: a.quarto ? 'quarto' : a.local,
+      carreira: w.carreira || null, seguidores: a.audiencia ? a.audiencia.seguidores : null,
+      receitaPorFonte: w.ledger.tx.filter((t) => t.tipo === 'RECEITA').reduce((acc, t) => { const k = t.origem.split(':')[0] === 'CLIENTE' ? 'clientes' : t.origem; acc[k] = (acc[k] || 0) + t.valor; return acc; }, {}),
       risco: { menorCaixa: Math.min(w.meta.capitalInicial, ...serie.map((s) => s.caixa)), diasCaixaAbaixoDe50: serie.filter((s) => s.caixa < 5000).length },
       custo: { ms: w.metricas.ms, ciclos: w.metricas.ciclos, decisoes: w.logs.decisoes.length, acoes: w.metricas.acoes, transacoes: w.ledger.tx.length, bytesEstado: ZW.serializar(w).length },
       hash: ZW.hashMundo(w),
@@ -131,6 +141,6 @@
     };
   }
 
-  const ZWExp = { AGENTES, sementeMundo, sementeAvaliacao, criarRodada, executar, metricas, serieDiaria, analisar, rodadas, aprendizados };
+  const ZWExp = { AGENTES, AGENTES_DIGITAIS, CARREIRAS_DIGITAIS, criarRodadaDigital, sementeMundo, sementeAvaliacao, criarRodada, executar, metricas, serieDiaria, analisar, rodadas, aprendizados };
   if (typeof module === 'object' && module.exports) module.exports = ZWExp; else g.ZWExp = ZWExp;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

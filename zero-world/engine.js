@@ -99,6 +99,28 @@
     probCalote: { v: 0.06, tag: T.SIN, desc: 'Chance de um cliente não pagar a entrega' },
     churnMensal: { v: 0.07, tag: T.SIN, desc: 'Chance de um cliente mensal cancelar' },
     numNegocios: { v: 80, tag: T.SIN, desc: 'Comércios sintéticos no mapa do agente' },
+    passagemOnibus: { v: 625, tag: T.REAL, desc: 'Passagem de ônibus em BH (2026)', fonte: 'https://diariodotransporte.com.br/2025/12/30/tarifas-de-onibus-em-belo-horizonte-aumentam-em-1o-de-janeiro-de-2026-confira-os-valores/' },
+    usdBrl: { v: 520, tag: T.REAL, desc: 'Dólar em reais (projeção Focus fim de 2026)', fonte: 'https://www.band.com.br/economia/noticias/dolar-no-fim-de-2026-segue-em-r-520-pela-oitava-semana-seguida-aponta-focus-202608100918', nota: 'em centavos por US$1' },
+    clippingUSDporMil: { v: 1.0, tag: T.EST, desc: 'Clipping: US$ por mil views', fonte: 'https://cut.pro/pt-BR/blog/economia-clipping-pago-um-dolar-mil-views-2026', nota: 'faixa relatada US$0,50–25' },
+    taxaWorkana: { v: 0.2, tag: T.REAL, desc: 'Taxa da plataforma de freela (Workana, até US$300 por cliente)', fonte: 'https://www.mobills.com.br/blog/ganhar-dinheiro/ganhar-dinheiro-na-workana/', nota: 'fontes divergem (12–20%)' },
+    kiwifyPct: { v: 0.0899, tag: T.REAL, desc: 'Taxa percentual da Kiwify por venda', fonte: 'https://viniensina.com.br/?p=4267' },
+    kiwifyFixa: { v: 249, tag: T.REAL, desc: 'Taxa fixa da Kiwify por venda', fonte: 'https://viniensina.com.br/?p=4267' },
+    kiwifySaque: { v: 367, tag: T.REAL, desc: 'Taxa de saque da Kiwify', fonte: 'https://herospark.com/blog/quanto-a-kiwify-cobra-por-venda/' },
+    respostaFrio: { v: 0.15, tag: T.EST, desc: 'Resposta a mensagem fria no WhatsApp/DM', fonte: 'https://www.campograndenews.com.br/artigos/prospeccao-ativa-em-2026-o-que-ainda-funciona-no-brasil', nota: 'dado de fornecedor, ~15–20%' },
+    afiliadoConversao: { v: 0.02, tag: T.EST, desc: 'Conversão de cliques de afiliado Shopee', fonte: 'https://www.divulganinja.com.br/blog/quanto-shopee-paga-comissao-afiliados-2026', nota: 'faixa 1,5–4% (blog comercial)' },
+    afiliadoComissao: { v: 0.06, tag: T.EST, desc: 'Comissão média de afiliado Shopee', fonte: 'https://www.divulganinja.com.br/blog/quanto-shopee-paga-comissao-afiliados-2026', nota: 'fontes citam 3% a 15%' },
+    ticketAfiliado: { v: 6000, tag: T.EST, desc: 'Ticket médio de compra via afiliado', fonte: 'https://www.divulganinja.com.br/blog/como-acompanhar-minhas-comissoes-shopee' },
+    ugcMin: { v: 12000, tag: T.EST, desc: 'Vídeo UGC iniciante, mínimo', fonte: 'https://influee.co/br/blog/ugc-price' },
+    ugcMax: { v: 21000, tag: T.EST, desc: 'Vídeo UGC iniciante, máximo', fonte: 'https://influee.co/br/blog/ugc-price' },
+    trafegoMes: { v: 50000, tag: T.EST, desc: 'Gestão de tráfego pago, iniciante por mês', fonte: 'https://trafius.com.br/blog/preco-de-gestor-de-trafego-em-2026-tabela-por-porte' },
+    precoProduto: { v: 4700, tag: T.EST, desc: 'Preço do produto digital (kit de posts)' },
+    horasProduto: { v: 15, tag: T.SIN, desc: 'Horas para criar o produto digital' },
+    liberacaoPlataforma: { v: 7, tag: T.SIN, desc: 'Dias para a plataforma de freela liberar o pagamento' },
+    pagamentoUGC: { v: 15, tag: T.SIN, desc: 'Dias para a marca pagar o UGC' },
+    pagamentoKiwify: { v: 7, tag: T.SIN, desc: 'Dias até o saque das vendas do produto' },
+    telecentroHoras: { v: 4, tag: T.SIN, desc: 'Horas máximas de computador no telecentro por dia' },
+    mensagensPorHora: { v: 15, tag: T.SIN, desc: 'Mensagens de prospecção online por hora' },
+    numOnline: { v: 300, tag: T.SIN, desc: 'Negócios da Grande BH alcançáveis por mensagem' },
     fatorAceite: { v: 0.3, tag: T.SIN, desc: 'Calibração do aceite de proposta a frio (aceite médio ~5–10%)', nota: 'calibrado em 03/11/2026: com 1,0 o aceite médio era ~20%, irrealista' },
   };
   const pv = (k) => PARAMETROS[k].v;
@@ -115,7 +137,16 @@
     perfil_google: { horas: 5, prazo: 7, mensal: false, requer: ['celular'] },
     social_media: { horas: 12, prazo: 30, mensal: true, requer: ['celular'] },
     site: { horas: 20, prazo: 21, mensal: false, requer: ['notebook'] },
+    trafego_pago: { horas: 8, prazo: 30, mensal: true, requer: ['celular'] },
+    ugc: { horas: 4, prazo: 5, mensal: false, requer: ['celular'] },
+    freela: { horas: 0, prazo: 0, mensal: false, requer: ['celular'] },
   };
+  const CATEGORIAS_FREELA = [
+    ['social_media', 30000, 80000, 12, 10, 'marketing'], ['edicao_video', 10000, 40000, 5, 5, 'tecnologia'],
+    ['site', 50000, 150000, 20, 15, 'programacao'], ['design', 8000, 30000, 3, 4, 'marketing'],
+  ];
+  const BAIRROS_GRANDE_BH = BAIRROS.concat(['Contagem', 'Betim', 'Nova Lima', 'Venda Nova', 'Pampulha', 'Barreiro', 'Buritis', 'Savassi']);
+  const ACOES_SO_CLASSICO = ['DIARIA_BRACAL', 'BUSCAR_VAGAS', 'CANDIDATAR', 'TRABALHAR_EMPREGO'];
   const ENTRADAS = ['CAPITAL_INICIAL', 'RECEITA', 'BENEFICIO', 'EMPRESTIMO'];
   const SAIDAS = ['DESPESA', 'COMPRA_ATIVO', 'DEPOSITO_CAUCAO', 'PERDA', 'IMPOSTO', 'PAGAMENTO_DIVIDA'];
 
@@ -156,7 +187,8 @@
       w.mundo.negocios.push({ id: nid, nome: tipo + ' #' + i, tipo, bairro: BAIRROS[rInt(w, 0, BAIRROS.length - 1)], temPerfilGoogle: rChance(w, 0.45), instagramAtivo: rChance(w, 0.4) });
       w.oculto.negocios[nid] = { orcamento: Math.round(rInt(w, lo, hi) / 1000) * 1000, abertura: Math.round(rng(w) * 1000) / 1000 };
     }
-    for (let i = 0; i < 3; i++) novaVaga(w);
+    if (cfg.cenario === 'digital') { w.tipoCenario = 'digital'; w.carreira = cfg.carreira || null; iniciarDigital(w); }
+    else for (let i = 0; i < 3; i++) novaVaga(w);
     if (capital > 0) lancar(w, { tipo: 'CAPITAL_INICIAL', valor: capital, origem: 'PATRIMONIO_INICIAL', destino: w.agente.conta, justificativa: 'Capital inicial do experimento (não é receita)' });
     return w;
   }
@@ -185,8 +217,10 @@
   const pagar = (w, tipo, valor, destino, just) => lancar(w, { tipo, valor, origem: w.agente.conta, destino, justificativa: just });
   const receber = (w, tipo, valor, origem, just) => lancar(w, { tipo, valor, origem, destino: w.agente.conta, justificativa: just });
 
-  function registrarReceitaMemoria(w, fonte, valor) {
-    w.agente.memoria.receitas.push({ dia: w.dia, fonte, valor });
+  function registrarReceitaMemoria(w, fonte, valor, frente) {
+    const r = { dia: w.dia, fonte, valor };
+    if (frente) r.frente = frente;
+    w.agente.memoria.receitas.push(r);
   }
 
   function auditar(w) {
@@ -246,8 +280,59 @@
     w.oculto.vagas[id] = { concorrentes: rInt(w, 4, 40) };
   }
 
+  // ------------------------------------------------------------ cenário digital
+  const digital = (w) => w.tipoCenario === 'digital';
+  function iniciarDigital(w) {
+    const a = w.agente;
+    a.audiencia = { seguidores: 0, posts: 0 };
+    a.plataforma = { avaliacoes: 0, somaNotas: 0 };
+    a.produto = null; a.produtoHoras = 0; a.afiliado = false; a.portfolioUGC = 0; a.pendenteAfiliado = 0;
+    a.memoria.projetos = {}; a.memoria.campanhas = {}; a.memoria.horasPorFrente = {};
+    w.mundo.online = []; w.mundo.projetos = []; w.mundo.campanhas = [];
+    w.oculto.projetos = {}; w.oculto.campanhas = {};
+    w.contadores.proj = 0; w.contadores.camp = 0;
+    for (let i = 1; i <= pv('numOnline'); i++) {
+      const [tipo, lo, hi] = TIPOS_NEGOCIO[rInt(w, 0, TIPOS_NEGOCIO.length - 1)];
+      const nid = 'O' + String(i).padStart(3, '0');
+      w.mundo.online.push({ id: nid, nome: tipo + ' online #' + i, tipo, bairro: BAIRROS_GRANDE_BH[rInt(w, 0, BAIRROS_GRANDE_BH.length - 1)], temPerfilGoogle: rChance(w, 0.5), instagramAtivo: rChance(w, 0.45), canal: 'online' });
+      w.oculto.negocios[nid] = { orcamento: Math.round(rInt(w, lo, hi) / 1000) * 1000, abertura: Math.round(rng(w) * 1000) / 1000 };
+    }
+    for (let i = 0; i < 4; i++) novoProjeto(w);
+  }
+  function novoProjeto(w) {
+    const [cat, lo, hi, horas, prazo] = CATEGORIAS_FREELA[rInt(w, 0, CATEGORIAS_FREELA.length - 1)];
+    const id = 'J' + String(++w.contadores.proj).padStart(4, '0');
+    w.mundo.projetos.push({ id, categoria: cat, orcamento: Math.round(rInt(w, lo, hi) / 1000) * 1000, horas, prazo, abertoAte: w.dia + rInt(w, 3, 7), propostasAtuais: rInt(w, 0, 10), fechado: false, origem: 'SINTETICA' });
+    w.oculto.projetos[id] = { concorrentes: rInt(w, 8, 60) };
+  }
+  function novaCampanha(w) {
+    const id = 'U' + String(++w.contadores.camp).padStart(4, '0');
+    w.mundo.campanhas.push({ id, marca: 'marca sintética #' + w.contadores.camp, valor: Math.round(rInt(w, pv('ugcMin'), pv('ugcMax')) / 1000) * 1000, abertaAte: w.dia + rInt(w, 4, 8), fechada: false, origem: 'SINTETICA' });
+    w.oculto.campanhas[id] = { inscritos: rInt(w, 10, 80) };
+  }
+  function diaDigital(w) {
+    const n = rInt(w, 2, 5);
+    for (let i = 0; i < n; i++) novoProjeto(w);
+    if (rChance(w, 0.6)) novaCampanha(w);
+    w.mundo.projetos = w.mundo.projetos.filter((p) => p.abertoAte >= w.dia - 10);
+    w.mundo.campanhas = w.mundo.campanhas.filter((c) => c.abertaAte >= w.dia - 10);
+  }
+  function negocioPorId(w, id) {
+    return (id[0] === 'O' ? w.mundo.online : w.mundo.negocios).find((n) => n.id === id);
+  }
+  function binomial(w, n, p) {
+    if (n <= 0 || p <= 0) return 0;
+    if (n <= 30) { let k = 0; for (let i = 0; i < n; i++) if (rng(w) < p) k++; return k; }
+    return Math.max(0, Math.round(n * p + Math.sqrt(n * p * (1 - p)) * rNormal(w)));
+  }
+  function receberBrutoComTaxa(w, bruto, taxa, origem, destinoTaxa, just, fonte, frente) {
+    receber(w, 'RECEITA', bruto, origem, just + ' (bruto)');
+    registrarReceitaMemoria(w, fonte, bruto, frente);
+    if (taxa > 0) pagar(w, 'DESPESA', Math.min(taxa, w.ledger.saldo), destinoTaxa, 'Taxa da plataforma: ' + just);
+  }
+
   // ------------------------------------------------------------ observação
-  const CHAVES_PROIBIDAS = ['oculto', 'agenda', 'rngState', 'orcamento', 'abertura', 'concorrentes'];
+  const CHAVES_PROIBIDAS = ['oculto', 'agenda', 'rngState', 'abertura', 'concorrentes', 'inscritos'];
   function trabalhaHoje(a, dia) {
     return !!(a.emprego && dia >= a.emprego.inicio && (dia - a.emprego.inicio) % 7 !== 6);
   }
@@ -273,6 +358,13 @@
         salarioMinimo: pv('salarioMinimo'), dasMei: pv('dasMei'), bolsaFamilia: pv('bolsaFamilia'),
       },
     };
+    if (digital(w)) {
+      o.cenario = 'digital'; o.carreira = w.carreira;
+      o.agente.audiencia = a.audiencia; o.agente.plataforma = a.plataforma; o.agente.produto = a.produto;
+      o.agente.produtoHoras = a.produtoHoras; o.agente.afiliado = a.afiliado; o.agente.portfolioUGC = a.portfolioUGC;
+      o.precos.passagemOnibus = pv('passagemOnibus'); o.precos.trafegoMes = pv('trafegoMes'); o.precos.precoProduto = pv('precoProduto');
+      o.precos.horasProduto = pv('horasProduto');
+    }
     return deepFreeze(clone(o));
   }
   function resumoObs(o) {
@@ -412,28 +504,40 @@
       const horas = clamp(p.horas | 0, 1, 6);
       if (a.necessidades.energia < 5 * horas) return falha('sem energia');
       const desconhecidos = w.mundo.negocios.filter((n) => !a.memoria.leads[n.id]);
-      let n = 0;
-      for (let i = 0; i < horas * 3 && desconhecidos.length; i++) {
+      let n = 0, porHora = 3, aPe = false;
+      if (digital(w)) {
+        const ida = pv('passagemOnibus') * 2;
+        if (w.ledger.saldo >= ida) pagar(w, 'DESPESA', ida, 'TRANSPORTE:onibus_bh', 'Ônibus ida e volta para prospectar');
+        else { porHora = 2; aPe = true; }
+      }
+      for (let i = 0; i < horas * porHora && desconhecidos.length; i++) {
         const idx = rInt(w, 0, desconhecidos.length - 1);
         const neg = desconhecidos.splice(idx, 1)[0];
         a.memoria.leads[neg.id] = { id: neg.id, nome: neg.nome, tipo: neg.tipo, bairro: neg.bairro, temPerfilGoogle: neg.temPerfilGoogle, instagramAtivo: neg.instagramAtivo, visitadoDia: w.dia, propostas: [] };
         n++;
       }
-      gastarEnergia(a, 5 * horas);
-      return { ok: true, horas, resultado: n + ' comércio(s) visitado(s)' };
+      gastarEnergia(a, (aPe ? 7 : 5) * horas);
+      return { ok: true, horas, resultado: n + ' comércio(s) visitado(s)' + (aPe ? ' a pé (sem dinheiro para ônibus)' : '') };
     },
     PROPOR(w, a, p) {
       const lead = a.memoria.leads[p.leadId];
       if (!lead) return falha('comércio não conhecido');
       const s = SERVICOS[p.servico];
-      if (!s) return falha('serviço inválido');
-      for (const r of s.requer) if (!a.itens[r]) return falha('precisa de ' + r);
+      if (!s || p.servico === 'freela' || p.servico === 'ugc') return falha('serviço inválido');
+      if ((p.servico === 'trafego_pago') && !digital(w)) return falha('serviço inválido');
+      if (p.servico === 'trafego_pago') {
+        if (a.skills.marketing < 6) return falha('tráfego pago exige marketing ≥ 6');
+        if (!a.contratos.some((c) => c.status === 'ativo' && c.clienteId === lead.id && c.servico === 'social_media')) return falha('tráfego só para cliente de social media');
+      }
+      for (const r of s.requer) if (!a.itens[r] && !(digital(w) && r === 'notebook')) return falha('precisa de ' + r);
       if (!Number.isInteger(p.preco) || p.preco <= 0) return falha('preço inválido');
       if (lead.propostas.some((x) => x.resultado === 'pendente')) return falha('já existe proposta pendente');
       if (a.contratos.some((c) => c.status === 'ativo' && c.clienteId === lead.id && c.servico === p.servico)) return falha('já é cliente desse serviço');
       negocioDoServico(w, p.servico);
       const pid = 'P' + (++w.contadores.prop);
-      lead.propostas.push({ id: pid, dia: w.dia, servico: p.servico, preco: p.preco, resultado: 'pendente' });
+      const prop = { id: pid, dia: w.dia, servico: p.servico, preco: p.preco, resultado: 'pendente' };
+      if (p.frente) prop.frente = p.frente;
+      lead.propostas.push(prop);
       a.memoria.crencas.propostas.enviadas++;
       a.pendencias.push({ tipo: 'proposta', propostaId: pid, leadId: lead.id, desde: w.dia });
       agendar(w, w.dia + rInt(w, 1, 5), 'resposta_proposta', { propostaId: pid, leadId: lead.id });
@@ -444,17 +548,25 @@
       let horas = clamp(Number(p.horas) || 0, 0, 10);
       const ativos = a.contratos.filter((c) => c.status === 'ativo' && c.horasFeitas < c.horasNecessarias).sort((x, y) => x.prazoDia - y.prazoDia);
       if (!ativos.length) return falha('nenhum contrato com horas pendentes');
-      let usadas = 0;
+      let usadas = 0, horasPC = 0, viagem = 0;
       for (const c of ativos) {
         if (horas <= 0) break;
-        const req = SERVICOS[c.servico].requer;
-        if (req.some((r) => !a.itens[r])) continue;
-        const h = Math.min(horas, c.horasNecessarias - c.horasFeitas);
+        const req = (SERVICOS[c.servico] || SERVICOS.freela).requer;
+        const viaTelecentro = digital(w) && req.includes('notebook') && !a.itens.notebook;
+        if (req.some((r) => !a.itens[r] && !(viaTelecentro && r === 'notebook'))) continue;
+        let h = Math.min(horas, c.horasNecessarias - c.horasFeitas);
+        if (viaTelecentro) {
+          if (!viagem && horas < 2) continue;
+          if (!viagem) { viagem = 1; horas -= 1; }
+          h = Math.min(h, horas, pv('telecentroHoras') - horasPC);
+          if (h <= 0) continue;
+          horasPC += h;
+        }
         c.horasFeitas += h; horas -= h; usadas += h;
         if (!c.mensal && c.horasFeitas >= c.horasNecessarias) concluirAvulso(w, c);
       }
       gastarEnergia(a, 3 * usadas);
-      return { ok: usadas > 0, horas: usadas, resultado: usadas + 'h entregues' };
+      return { ok: usadas > 0, horas: usadas + (usadas > 0 ? viagem : 0), resultado: usadas + 'h entregues' + (viagem ? ' (computador do telecentro)' : '') };
     },
     CLIPPING(w, a, p) {
       if (!a.itens.celular) return falha('precisa de celular');
@@ -477,6 +589,129 @@
       if (!pagar(w, 'PAGAMENTO_DIVIDA', d.saldo, d.credor, 'Quitação: ' + d.descricao)) return falha('sem dinheiro');
       d.saldo = 0;
       return { ok: true, horas: 0.5, resultado: 'dívida quitada' };
+    },
+    PROSPECTAR_ONLINE(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      const msgs = clamp(p.mensagens | 0, 1, 45);
+      const pool = w.mundo.online.filter((n) => !a.memoria.leads[n.id] && !(a.memoria.contatadosOnline || {})[n.id]);
+      a.memoria.contatadosOnline = a.memoria.contatadosOnline || {};
+      let enviadas = 0, respostas = 0;
+      for (let i = 0; i < msgs && pool.length; i++) {
+        const neg = pool.splice(rInt(w, 0, pool.length - 1), 1)[0];
+        a.memoria.contatadosOnline[neg.id] = w.dia; enviadas++;
+        if (rChance(w, pv('respostaFrio'))) {
+          respostas++;
+          a.memoria.leads[neg.id] = { id: neg.id, nome: neg.nome, tipo: neg.tipo, bairro: neg.bairro, temPerfilGoogle: neg.temPerfilGoogle, instagramAtivo: neg.instagramAtivo, visitadoDia: w.dia, propostas: [], canal: 'online' };
+        }
+      }
+      gastarEnergia(a, 2 * Math.ceil(msgs / pv('mensagensPorHora')));
+      return { ok: true, horas: Math.ceil(enviadas / pv('mensagensPorHora')) || 1, resultado: enviadas + ' mensagens, ' + respostas + ' resposta(s)' };
+    },
+    BUSCAR_FREELAS(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      let n = 0;
+      for (const pj of w.mundo.projetos) if (!pj.fechado && pj.abertoAte >= w.dia && !a.memoria.projetos[pj.id]) {
+        a.memoria.projetos[pj.id] = { id: pj.id, categoria: pj.categoria, orcamento: pj.orcamento, horas: pj.horas, prazo: pj.prazo, abertoAte: pj.abertoAte, propostasQuandoViu: pj.propostasAtuais, vistoDia: w.dia, proposta: null };
+        n++;
+      }
+      return { ok: true, horas: 0.5, resultado: n + ' projeto(s) novo(s) na plataforma' };
+    },
+    PROPOR_FREELA(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      const m = a.memoria.projetos[p.projetoId];
+      if (!m) return falha('projeto desconhecido');
+      const pj = w.mundo.projetos.find((x) => x.id === p.projetoId);
+      if (!pj || pj.fechado || pj.abertoAte < w.dia) return falha('projeto encerrado');
+      if (m.proposta) return falha('já enviou proposta');
+      if (!Number.isInteger(p.preco) || p.preco <= 0) return falha('preço inválido');
+      const hoje = Object.values(a.memoria.projetos).filter((x) => x.proposta && x.proposta.dia === w.dia).length;
+      if (hoje >= 10) return falha('limite de 10 propostas por dia na plataforma');
+      m.proposta = { dia: w.dia, preco: p.preco, resultado: 'pendente', frente: p.frente || 'freela' };
+      a.pendencias.push({ tipo: 'proposta_freela', projetoId: pj.id, desde: w.dia });
+      agendar(w, w.dia + rInt(w, 2, 6), 'resultado_freela', { projetoId: pj.id });
+      negocioDoServico(w, 'freela');
+      return { ok: true, horas: 0.5, resultado: 'proposta enviada para ' + pj.id };
+    },
+    PRODUZIR_PORTFOLIO_UGC(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      if (a.portfolioUGC >= 5) return falha('portfólio já completo');
+      a.portfolioUGC++; gastarEnergia(a, 8);
+      return { ok: true, horas: 3, resultado: 'vídeo de portfólio ' + a.portfolioUGC + '/5' };
+    },
+    BUSCAR_CAMPANHAS(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      let n = 0;
+      for (const c of w.mundo.campanhas) if (!c.fechada && c.abertaAte >= w.dia && !a.memoria.campanhas[c.id]) { a.memoria.campanhas[c.id] = { id: c.id, marca: c.marca, valor: c.valor, abertaAte: c.abertaAte, candidatado: false }; n++; }
+      return { ok: true, horas: 0.5, resultado: n + ' campanha(s) UGC nova(s)' };
+    },
+    CANDIDATAR_UGC(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      const m = a.memoria.campanhas[p.campanhaId];
+      if (!m) return falha('campanha desconhecida');
+      const c = w.mundo.campanhas.find((x) => x.id === p.campanhaId);
+      if (!c || c.fechada || c.abertaAte < w.dia) return falha('campanha encerrada');
+      if (m.candidatado) return falha('já candidatado');
+      if (a.portfolioUGC < 2) return falha('precisa de ao menos 2 vídeos de portfólio');
+      m.candidatado = true;
+      a.pendencias.push({ tipo: 'candidatura_ugc', campanhaId: c.id, desde: w.dia });
+      agendar(w, w.dia + rInt(w, 2, 6), 'resultado_ugc', { campanhaId: c.id });
+      negocioDoServico(w, 'ugc');
+      return { ok: true, horas: 0.5, resultado: 'candidatura enviada para ' + c.marca };
+    },
+    POSTAR_CONTEUDO(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      const posts = clamp(p.posts | 0, 1, 4);
+      let ganho = 0, viral = 0;
+      for (let i = 0; i < posts; i++) {
+        ganho += Math.round(Math.exp(1.2 + 0.9 * rNormal(w))) + Math.floor(a.audiencia.seguidores * 0.003);
+        if (rChance(w, 0.02)) viral += rInt(w, 200, 3000);
+      }
+      a.audiencia.seguidores += ganho + Math.round(viral * 0.05);
+      a.audiencia.posts += posts;
+      const alcance = a.audiencia.seguidores * 0.2 * posts + viral;
+      let txt = '+' + (ganho + Math.round(viral * 0.05)) + ' seguidores' + (viral ? ' (um post viralizou)' : '');
+      if (a.afiliado) {
+        const cliques = Math.round(alcance * 0.03);
+        const vendas = binomial(w, cliques, pv('afiliadoConversao'));
+        const comissao = Math.round(vendas * pv('ticketAfiliado') * pv('afiliadoComissao'));
+        a.pendenteAfiliado += comissao;
+        txt += '; ' + cliques + ' cliques, ' + vendas + ' venda(s) de afiliado (comissão ' + brl(comissao) + ' a receber)';
+      }
+      if (a.produto) {
+        const visitas = Math.round(alcance * 0.01);
+        const vendas = binomial(w, visitas, 0.01);
+        if (vendas > 0) { agendar(w, w.dia + pv('pagamentoKiwify'), 'pagamento_produto', { vendas }); a.pendencias.push({ tipo: 'saque_produto', desde: w.dia, vendas }); }
+        txt += '; ' + visitas + ' visita(s) na página, ' + vendas + ' venda(s) do produto';
+      }
+      gastarEnergia(a, 3 * posts);
+      return { ok: true, horas: posts, resultado: txt };
+    },
+    ATIVAR_AFILIADO(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      if (a.afiliado) return falha('já é afiliado');
+      a.afiliado = true; agendar(w, w.dia + 30, 'pagamento_afiliado'); negocioDoServico(w, 'afiliado');
+      lembrar(w, 'Cadastrou-se como afiliado Shopee. Comissão paga por mês.');
+      return { ok: true, horas: 1, resultado: 'afiliado ativo' };
+    },
+    CRIAR_PRODUTO(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      if (a.produto) return falha('produto já publicado');
+      const h = clamp(Number(p.horas) || 3, 1, 6);
+      a.produtoHoras += h; gastarEnergia(a, 3 * h);
+      if (a.produtoHoras >= pv('horasProduto')) {
+        a.produto = { preco: pv('precoProduto'), publicadoDia: w.dia, vendas: 0 };
+        negocioDoServico(w, 'produto_digital');
+        lembrar(w, 'Publicou o produto digital por ' + brl(pv('precoProduto')) + ' na Kiwify.');
+        return { ok: true, horas: h, resultado: 'produto publicado' };
+      }
+      return { ok: true, horas: h, resultado: 'produto ' + a.produtoHoras + '/' + pv('horasProduto') + 'h' };
     },
     DESCANSAR(w, a, p) {
       const h = clamp(Number(p.horas) || 2, 1, 8);
@@ -504,6 +739,18 @@
     const a = w.agente;
     c.status = 'concluido';
     a.portfolio++;
+    if (c.plataforma) {
+      const nota = rChance(w, 0.85) ? 5 : 4;
+      a.plataforma.avaliacoes++; a.plataforma.somaNotas += nota;
+      agendar(w, w.dia + pv('liberacaoPlataforma'), 'liberacao_freela', { contratoId: c.id });
+      lembrar(w, 'Entregou ' + c.id + ' na plataforma (nota ' + nota + '). Pagamento liberado em ' + pv('liberacaoPlataforma') + ' dias.');
+      return;
+    }
+    if (c.servico === 'ugc') {
+      agendar(w, w.dia + pv('pagamentoUGC'), 'pagamento_ugc', { contratoId: c.id });
+      lembrar(w, 'Entregou o vídeo UGC ' + c.id + '. A marca paga em ' + pv('pagamentoUGC') + ' dias.');
+      return;
+    }
     const neg = a.negocios.find((x) => x.servico === c.servico);
     const aPagar = c.valor - c.pago;
     if (aPagar > 0) {
@@ -512,7 +759,7 @@
         lembrar(w, 'Calote de ' + brl(aPagar) + ' em ' + c.servico + '.');
       } else {
         receber(w, 'RECEITA', aPagar, 'CLIENTE:' + c.clienteId, 'Entrega de ' + c.servico + ' (' + c.id + ')');
-        registrarReceitaMemoria(w, c.servico, aPagar); c.pago += aPagar; if (neg) neg.receita += aPagar;
+        registrarReceitaMemoria(w, c.servico, aPagar, c.frente); c.pago += aPagar; if (neg) neg.receita += aPagar;
         lembrar(w, 'Entregou ' + c.servico + ' para ' + c.clienteId + ' e recebeu ' + brl(aPagar) + '.');
       }
     }
@@ -559,8 +806,9 @@
           let views = 0;
           const habil = (a.skills.marketing + a.skills.tecnologia) / 20;
           for (let i = 0; i < d.posts; i++) { if (rChance(w, 0.35)) continue; views += Math.round(Math.exp(5.5 + 1.5 * habil + 1.2 * rNormal(w))); }
-          const valor = Math.round(views / 1000 * pv('clippingPorMil'));
-          if (valor > 0) { receber(w, 'RECEITA', valor, 'PLATAFORMA:clipping', 'Clipping: ' + views + ' views em ' + d.posts + ' cortes'); registrarReceitaMemoria(w, 'clipping', valor); const n = negocioDoServico(w, 'clipping'); n.receita += valor; }
+          const porMil = digital(w) ? Math.round(pv('clippingUSDporMil') * pv('usdBrl')) : pv('clippingPorMil');
+          const valor = Math.round(views / 1000 * porMil);
+          if (valor > 0) { receber(w, 'RECEITA', valor, 'PLATAFORMA:clipping', 'Clipping: ' + views + ' views em ' + d.posts + ' cortes'); registrarReceitaMemoria(w, 'clipping', valor, digital(w) ? 'clipping' : undefined); const n = negocioDoServico(w, 'clipping'); n.receita += valor; }
           lembrar(w, 'Cortes do dia ' + d.diaPost + ': ' + views + ' views, ' + brl(valor) + '.');
           break;
         }
@@ -582,6 +830,39 @@
             lembrar(w, 'DAS não pago: virou dívida.');
           }
           agendar(w, w.dia + 30, 'das'); break;
+        case 'resultado_freela': resolverFreela(w, d); break;
+        case 'resultado_ugc': resolverUGC(w, d); break;
+        case 'liberacao_freela': {
+          const c = a.contratos.find((x) => x.id === d.contratoId);
+          const taxa = Math.round(c.valor * pv('taxaWorkana'));
+          receberBrutoComTaxa(w, c.valor, taxa, 'PLATAFORMA:freela', 'PLATAFORMA:taxa_freela', 'Projeto ' + c.projetoId, 'freela', c.frente);
+          c.pago = c.valor; const neg = a.negocios.find((x) => x.servico === 'freela'); if (neg) neg.receita += c.valor - taxa;
+          lembrar(w, 'Plataforma liberou ' + brl(c.valor - taxa) + ' líquidos do projeto ' + c.projetoId + '.');
+          break;
+        }
+        case 'pagamento_ugc': {
+          const c = a.contratos.find((x) => x.id === d.contratoId);
+          if (rChance(w, pv('probCalote'))) { evento(w, 'CALOTE', 'Marca não pagou o UGC ' + c.id); lembrar(w, 'A marca não pagou o UGC ' + c.id + '.'); break; }
+          receber(w, 'RECEITA', c.valor, 'MARCA:' + c.clienteId, 'Vídeo UGC (' + c.id + ')'); registrarReceitaMemoria(w, 'ugc', c.valor, c.frente);
+          c.pago = c.valor; const neg = a.negocios.find((x) => x.servico === 'ugc'); if (neg) neg.receita += c.valor;
+          lembrar(w, 'Recebeu ' + brl(c.valor) + ' do UGC ' + c.id + '.');
+          break;
+        }
+        case 'pagamento_afiliado': {
+          const v = a.pendenteAfiliado;
+          if (v > 0) { receber(w, 'RECEITA', v, 'PLATAFORMA:shopee_afiliados', 'Comissões de afiliado do mês'); registrarReceitaMemoria(w, 'afiliado', v, 'afiliado'); a.pendenteAfiliado = 0; const neg = a.negocios.find((x) => x.servico === 'afiliado'); if (neg) neg.receita += v; }
+          lembrar(w, 'Fechamento de afiliado: ' + brl(v) + '.');
+          agendar(w, w.dia + 30, 'pagamento_afiliado'); break;
+        }
+        case 'pagamento_produto': {
+          { const desde = w.dia - pv('pagamentoKiwify'); const i = a.pendencias.findIndex((p) => p.tipo === 'saque_produto' && p.desde === desde && p.vendas === d.vendas); if (i >= 0) a.pendencias.splice(i, 1); }
+          const bruto = d.vendas * a.produto.preco;
+          const taxa = d.vendas * (Math.round(a.produto.preco * pv('kiwifyPct')) + pv('kiwifyFixa')) + pv('kiwifySaque');
+          receberBrutoComTaxa(w, bruto, taxa, 'PLATAFORMA:kiwify', 'PLATAFORMA:taxa_kiwify', d.vendas + ' venda(s) do produto digital', 'produto_digital', 'produto');
+          a.produto.vendas += d.vendas; const neg = a.negocios.find((x) => x.servico === 'produto_digital'); if (neg) neg.receita += bruto - taxa;
+          lembrar(w, 'Saque de ' + d.vendas + ' venda(s) do produto: ' + brl(bruto - taxa) + ' líquidos.');
+          break;
+        }
         default: throw new Error('evento de agenda desconhecido: ' + e.tipo);
       }
     }
@@ -596,10 +877,10 @@
     a.pendencias = a.pendencias.filter((p) => p.propostaId !== d.propostaId);
     const lead = a.memoria.leads[d.leadId];
     const prop = lead.propostas.find((x) => x.id === d.propostaId);
-    const pub = w.mundo.negocios.find((n) => n.id === d.leadId);
+    const pub = negocioPorId(w, d.leadId);
     const hid = w.oculto.negocios[d.leadId];
-    const need = { perfil_google: pub.temPerfilGoogle ? 0.15 : 0.9, social_media: pub.instagramAtivo ? 0.3 : 0.7, site: 0.25 }[prop.servico];
-    const orc = { perfil_google: hid.orcamento * 0.5, social_media: hid.orcamento, site: hid.orcamento * 1.2 }[prop.servico];
+    const need = { perfil_google: pub.temPerfilGoogle ? 0.15 : 0.9, social_media: pub.instagramAtivo ? 0.3 : 0.7, site: 0.25, trafego_pago: 0.5 }[prop.servico];
+    const orc = { perfil_google: hid.orcamento * 0.5, social_media: hid.orcamento, site: hid.orcamento * 1.2, trafego_pago: hid.orcamento * 0.8 }[prop.servico];
     const fatorPreco = clamp(orc / prop.preco, 0, 1.5);
     const habil = (a.skills.marketing + a.skills.tecnologia + a.skills.negocios) / 30;
     const prova = Math.min(a.portfolio, 6) / 6;
@@ -613,18 +894,19 @@
     prop.resultado = 'aceita'; crencas.aceitas++; a.memoria.crencas.rejeicoesSeguidas = 0;
     const s = SERVICOS[prop.servico];
     const c = { id: 'C' + (++w.contadores.ctr), clienteId: lead.id, servico: prop.servico, valor: prop.preco, pago: 0, horasFeitas: 0, horasNecessarias: s.horas, inicioDia: w.dia, prazoDia: w.dia + s.prazo, mensal: s.mensal, status: 'ativo', ciclos: 0 };
+    if (prop.frente) c.frente = prop.frente;
     a.contratos.push(c);
     const neg = negocioDoServico(w, prop.servico); neg.contratos++;
     evento(w, 'CONTRATO', lead.nome + ' fechou ' + prop.servico + ' por ' + brl(prop.preco), { contrato: c.id });
     lembrar(w, lead.nome + ' aceitou ' + prop.servico + ' por ' + brl(prop.preco) + '.');
     if (s.mensal) {
       receber(w, 'RECEITA', c.valor, 'CLIENTE:' + lead.id, '1º mês adiantado de ' + prop.servico + ' (' + c.id + ')');
-      registrarReceitaMemoria(w, prop.servico, c.valor); c.pago += c.valor; neg.receita += c.valor;
+      registrarReceitaMemoria(w, prop.servico, c.valor, c.frente); c.pago += c.valor; neg.receita += c.valor;
       agendar(w, w.dia + 30, 'ciclo_contrato', { contratoId: c.id });
     } else if (prop.servico === 'site') {
       const sinal = Math.round(c.valor / 2);
       receber(w, 'RECEITA', sinal, 'CLIENTE:' + lead.id, 'Sinal de 50% do site (' + c.id + ')');
-      registrarReceitaMemoria(w, 'site', sinal); c.pago += sinal; neg.receita += sinal;
+      registrarReceitaMemoria(w, 'site', sinal, c.frente); c.pago += sinal; neg.receita += sinal;
     }
   }
 
@@ -646,7 +928,7 @@
     if (rChance(w, pv('probCalote'))) { lembrar(w, 'Cliente ' + c.clienteId + ' atrasou a mensalidade e não pagou.'); evento(w, 'CALOTE', 'Mensalidade não paga ' + c.id); }
     else {
       receber(w, 'RECEITA', c.valor, 'CLIENTE:' + c.clienteId, 'Mensalidade de ' + c.servico + ' (' + c.id + ')');
-      registrarReceitaMemoria(w, c.servico, c.valor); c.pago += c.valor;
+      registrarReceitaMemoria(w, c.servico, c.valor, c.frente); c.pago += c.valor;
       const neg = a.negocios.find((x) => x.servico === c.servico); if (neg) neg.receita += c.valor;
     }
     agendar(w, w.dia + 30, 'ciclo_contrato', d);
@@ -667,6 +949,43 @@
     lembrar(w, 'Aprovado como ' + v.cargo + ', salário ' + brl(v.salario) + '. Começa no dia ' + a.emprego.inicio + '.');
   }
 
+  function resolverFreela(w, d) {
+    const a = w.agente;
+    a.pendencias = a.pendencias.filter((p) => !(p.tipo === 'proposta_freela' && p.projetoId === d.projetoId));
+    const m = a.memoria.projetos[d.projetoId];
+    const pj = w.mundo.projetos.find((x) => x.id === d.projetoId) || { fechado: true };
+    if (pj.fechado) { m.proposta.resultado = 'perdida'; lembrar(w, 'Projeto ' + d.projetoId + ' fechou com outra pessoa.'); return; }
+    const cat = CATEGORIAS_FREELA.find((c) => c[0] === pj.categoria);
+    const habil = a.skills[cat[5]] / 10;
+    const aval = Math.min(a.plataforma.avaliacoes, 10) / 10;
+    const conc = w.oculto.projetos[d.projetoId].concorrentes;
+    const fatorPreco = clamp(pj.orcamento / m.proposta.preco, 0, 1.3);
+    const p = clamp((1 / (1 + conc / 6)) * (0.3 + 0.5 * habil + 0.2 * aval) * Math.pow(fatorPreco, 1.5) * (a.plataforma.avaliacoes === 0 ? 0.6 : 1), 0, 0.5);
+    if (!rChance(w, p)) { m.proposta.resultado = 'perdida'; if (rChance(w, 0.5)) pj.fechado = true; lembrar(w, 'Não ganhou o projeto ' + pj.id + ' (' + pj.categoria + ').'); return; }
+    pj.fechado = true; m.proposta.resultado = 'ganha';
+    const c = { id: 'C' + (++w.contadores.ctr), clienteId: 'PLATAFORMA', projetoId: pj.id, servico: 'freela', categoria: pj.categoria, valor: m.proposta.preco, pago: 0, horasFeitas: 0, horasNecessarias: pj.horas, inicioDia: w.dia, prazoDia: w.dia + pj.prazo, mensal: false, status: 'ativo', ciclos: 0, plataforma: true, frente: m.proposta.frente };
+    a.contratos.push(c);
+    const neg = negocioDoServico(w, 'freela'); neg.contratos++;
+    evento(w, 'CONTRATO', 'Ganhou o projeto ' + pj.id + ' (' + pj.categoria + ') por ' + brl(c.valor), { contrato: c.id });
+    lembrar(w, 'Ganhou o projeto ' + pj.id + ' (' + pj.categoria + ') por ' + brl(c.valor) + '.');
+  }
+  function resolverUGC(w, d) {
+    const a = w.agente;
+    a.pendencias = a.pendencias.filter((p) => !(p.tipo === 'candidatura_ugc' && p.campanhaId === d.campanhaId));
+    const camp = w.mundo.campanhas.find((x) => x.id === d.campanhaId) || { fechada: true };
+    if (camp.fechada) { lembrar(w, 'Campanha ' + d.campanhaId + ' encerrada.'); return; }
+    const insc = w.oculto.campanhas[d.campanhaId].inscritos;
+    const p = clamp((1 / (1 + insc / 8)) * (0.4 + 0.12 * Math.min(a.portfolioUGC, 5)) * (0.5 + a.skills.marketing / 10), 0, 0.5);
+    if (!rChance(w, p)) { lembrar(w, 'Não foi escolhido na campanha de ' + camp.marca + '.'); return; }
+    camp.fechada = true;
+    const s = SERVICOS.ugc;
+    const c = { id: 'C' + (++w.contadores.ctr), clienteId: camp.id, servico: 'ugc', valor: camp.valor, pago: 0, horasFeitas: 0, horasNecessarias: s.horas, inicioDia: w.dia, prazoDia: w.dia + s.prazo, mensal: false, status: 'ativo', ciclos: 0, frente: 'ugc' };
+    a.contratos.push(c);
+    const neg = negocioDoServico(w, 'ugc'); neg.contratos++;
+    evento(w, 'CONTRATO', 'Selecionado para UGC de ' + camp.marca + ' por ' + brl(c.valor), { contrato: c.id });
+    lembrar(w, 'Selecionado para UGC de ' + camp.marca + ' (' + brl(c.valor) + ').');
+  }
+
   // ------------------------------------------------------------ ciclo diário
   function cicloDia(w, cerebro) {
     w.dia++;
@@ -676,7 +995,8 @@
     a.refeicoesHoje = 0;
     a.noite = 'rua';
     resolverAgenda(w);
-    if (rChance(w, pv('probNovaVaga'))) novaVaga(w);
+    if (digital(w)) diaDigital(w);
+    else if (rChance(w, pv('probNovaVaga'))) novaVaga(w);
     a.necessidades.fome = clamp(a.necessidades.fome + 35, 0, 100);
     if (rChance(w, pv('probDoenca'))) { a.necessidades.saude = clamp(a.necessidades.saude - 30, 0, 100); evento(w, 'DOENCA', 'Adoeceu'); lembrar(w, 'Adoeceu.'); }
 
@@ -705,10 +1025,12 @@
         if (!fn) r = falha('ação inexistente');
         else {
           const custoMin = acao.tipo === 'DORMIR' ? 0 : 0.5;
-          r = horas < custoMin ? falha('sem horas no dia') : fn(w, a, acao);
+          if (digital(w) && ACOES_SO_CLASSICO.includes(acao.tipo)) r = falha('fora do cenário digital');
+          else r = horas < custoMin ? falha('sem horas no dia') : fn(w, a, acao);
           if (r.horas > horas) { r = { ok: false, horas: 0, resultado: 'sem horas no dia' }; }
         }
         horas -= r.horas;
+        if (digital(w) && acao.frente && r.horas > 0) a.memoria.horasPorFrente[acao.frente] = (a.memoria.horasPorFrente[acao.frente] || 0) + r.horas;
         w.metricas.acoes++;
         w.logs.resultados.push({ seq: ++w.seq, dia, decisaoSeq, acao: acao.tipo, params: clone(acao), ok: r.ok, resultado: r.resultado, horas: r.horas });
       }
@@ -825,7 +1147,7 @@
   const ZW = {
     VERSAO_MOTOR, PARAMETROS, SERVICOS, CHAVES_PROIBIDAS,
     criarMundo, avancarDia, avancar, auditar, financeiro, diaRegistrado, observar,
-    hashMundo, serializar, desserializar, hashSeed, fnv1a, brl, lancar,
+    hashMundo, serializar, desserializar, hashSeed, fnv1a, brl, lancar, CATEGORIAS_FREELA,
   };
   if (typeof module === 'object' && module.exports) module.exports = ZW; else g.ZW = ZW;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

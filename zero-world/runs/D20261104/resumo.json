@@ -1,0 +1,730 @@
+{
+ "motor": "zero-world-motor-0.1.0",
+ "politica": "politica-programada-v2-digital",
+ "tipoCerebro": "POLÍTICA PROGRAMADA v2-digital (regras fixas, não é IA)",
+ "semente": 20261104,
+ "dias": 240,
+ "msTotal": 16994,
+ "hashes": {
+  "DIGI-01": "510c18d0",
+  "DIGI-02": "dde8e5e6",
+  "DIGI-03": "cd068cb5",
+  "DIGI-04": "02f49554",
+  "DIGI-05": "7987e708",
+  "DIGI-06": "8b939db7",
+  "DIGI-07": "676e1954",
+  "DIGI-08": "1d1cd043",
+  "DIGI-09": "7f782484",
+  "DIGI-10": "37960d2e"
+ },
+ "carreiras": {
+  "DIGI-01": "social_local",
+  "DIGI-02": "google_local",
+  "DIGI-03": "sites",
+  "DIGI-04": "freela",
+  "DIGI-05": "clipping",
+  "DIGI-06": "ugc",
+  "DIGI-07": "afiliado",
+  "DIGI-08": "produto",
+  "DIGI-09": "online",
+  "DIGI-10": "adaptativo"
+ },
+ "analise": {
+  "dias": 240,
+  "mundos": 10,
+  "metricas": [
+   {
+    "id": "DIGI-01",
+    "seed": 946277796,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 575315,
+    "patrimonio": 658315,
+    "receita": 1638000,
+    "beneficios": 0,
+    "despesas": 962485,
+    "perdas": 55200,
+    "lucro": 620315,
+    "dividas": 0,
+    "ganhoLiquido": 608315,
+    "roi": 12.1663,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 1,
+    "diaPrimeiraReceita": 7,
+    "diaEstabilidade": 37,
+    "negociosCriados": 2,
+    "negociosFracassados": 1,
+    "mudancasEstrategia": 1,
+    "estrategiaFinal": "CARREIRA: social_local",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "social_local",
+    "seguidores": 0,
+    "receitaPorFonte": {
+     "clientes": 1638000
+    },
+    "risco": {
+     "menorCaixa": 12900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 352,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 875,
+     "transacoes": 517,
+     "bytesEstado": 825383
+    },
+    "hash": "510c18d0",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-02",
+    "seed": 996610653,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 944265,
+    "patrimonio": 1027265,
+    "receita": 1938000,
+    "beneficios": 0,
+    "despesas": 948735,
+    "perdas": 0,
+    "lucro": 989265,
+    "dividas": 0,
+    "ganhoLiquido": 977265,
+    "roi": 19.5453,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 7,
+    "diaEstabilidade": 30,
+    "negociosCriados": 3,
+    "negociosFracassados": 1,
+    "mudancasEstrategia": 1,
+    "estrategiaFinal": "CARREIRA: google_local",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "google_local",
+    "seguidores": 0,
+    "receitaPorFonte": {
+     "clientes": 1938000
+    },
+    "risco": {
+     "menorCaixa": 12900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 363,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 921,
+     "transacoes": 516,
+     "bytesEstado": 841988
+    },
+    "hash": "dde8e5e6",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-03",
+    "seed": 979833034,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 229715,
+    "patrimonio": 366715,
+    "receita": 1080000,
+    "beneficios": 0,
+    "despesas": 715285,
+    "perdas": 0,
+    "lucro": 364715,
+    "dividas": 0,
+    "ganhoLiquido": 316715,
+    "roi": 6.3343,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 8,
+    "diaEstabilidade": 30,
+    "negociosCriados": 3,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 2,
+    "estrategiaFinal": "CARREIRA: sites + PIVÔ online",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "sites",
+    "seguidores": 0,
+    "receitaPorFonte": {
+     "clientes": 1080000
+    },
+    "risco": {
+     "menorCaixa": 14150,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 537,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1143,
+     "transacoes": 416,
+     "bytesEstado": 930684
+    },
+    "hash": "cd068cb5",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-04",
+    "seed": 895944939,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 1414365,
+    "patrimonio": 1551365,
+    "receita": 2688000,
+    "beneficios": 0,
+    "despesas": 1138635,
+    "perdas": 0,
+    "lucro": 1549365,
+    "dividas": 0,
+    "ganhoLiquido": 1501365,
+    "roi": 30.0273,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 14,
+    "diaEstabilidade": 35,
+    "negociosCriados": 1,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 1,
+    "estrategiaFinal": "CARREIRA: freela",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "freela",
+    "seguidores": 0,
+    "receitaPorFonte": {
+     "PLATAFORMA:freela": 2688000
+    },
+    "risco": {
+     "menorCaixa": 17900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 970,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1525,
+     "transacoes": 429,
+     "bytesEstado": 1235324
+    },
+    "hash": "02f49554",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-05",
+    "seed": 879167320,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 394094,
+    "patrimonio": 412094,
+    "receita": 397194,
+    "beneficios": 0,
+    "despesas": 23100,
+    "perdas": 0,
+    "lucro": 374094,
+    "dividas": 0,
+    "ganhoLiquido": 362094,
+    "roi": 7.24188,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 23,
+    "diaEstabilidade": null,
+    "negociosCriados": 1,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 1,
+    "estrategiaFinal": "CARREIRA: clipping",
+    "emprego": null,
+    "moradia": "albergue",
+    "carreira": "clipping",
+    "seguidores": 0,
+    "receitaPorFonte": {
+     "PLATAFORMA:clipping": 397194
+    },
+    "risco": {
+     "menorCaixa": 17900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 224,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 759,
+     "transacoes": 228,
+     "bytesEstado": 696518
+    },
+    "hash": "7987e708",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-06",
+    "seed": 929500177,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 669570,
+    "patrimonio": 752570,
+    "receita": 1173000,
+    "beneficios": 60000,
+    "despesas": 518430,
+    "perdas": 0,
+    "lucro": 714570,
+    "dividas": 0,
+    "ganhoLiquido": 702570,
+    "roi": 14.0514,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 51,
+    "diaEstabilidade": 58,
+    "negociosCriados": 4,
+    "negociosFracassados": 2,
+    "mudancasEstrategia": 2,
+    "estrategiaFinal": "CARREIRA: ugc + PIVÔ online",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "ugc",
+    "seguidores": 0,
+    "receitaPorFonte": {
+     "clientes": 686000,
+     "MARCA:U0027": 12000,
+     "MARCA:U0035": 18000,
+     "MARCA:U0039": 16000,
+     "MARCA:U0047": 14000,
+     "MARCA:U0066": 14000,
+     "MARCA:U0069": 19000,
+     "MARCA:U0073": 14000,
+     "MARCA:U0080": 13000,
+     "MARCA:U0087": 17000,
+     "MARCA:U0085": 18000,
+     "MARCA:U0092": 16000,
+     "MARCA:U0095": 16000,
+     "MARCA:U0096": 13000,
+     "MARCA:U0098": 14000,
+     "MARCA:U0100": 19000,
+     "MARCA:U0104": 18000,
+     "MARCA:U0105": 18000,
+     "MARCA:U0106": 16000,
+     "MARCA:U0109": 21000,
+     "MARCA:U0111": 17000,
+     "MARCA:U0113": 16000,
+     "MARCA:U0117": 18000,
+     "MARCA:U0118": 16000,
+     "MARCA:U0121": 19000,
+     "MARCA:U0124": 14000,
+     "MARCA:U0126": 20000,
+     "MARCA:U0127": 18000,
+     "MARCA:U0134": 16000,
+     "MARCA:U0133": 15000,
+     "MARCA:U0135": 12000
+    },
+    "risco": {
+     "menorCaixa": 14900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 380,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1221,
+     "transacoes": 254,
+     "bytesEstado": 901349
+    },
+    "hash": "8b939db7",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-07",
+    "seed": 912722558,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 484900,
+    "patrimonio": 567900,
+    "receita": 266400,
+    "beneficios": 360000,
+    "despesas": 96500,
+    "perdas": 0,
+    "lucro": 529900,
+    "dividas": 0,
+    "ganhoLiquido": 517900,
+    "roi": 10.358,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 32,
+    "diaEstabilidade": null,
+    "negociosCriados": 1,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 1,
+    "estrategiaFinal": "CARREIRA: afiliado",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "afiliado",
+    "seguidores": 33667,
+    "receitaPorFonte": {
+     "PLATAFORMA:shopee_afiliados": 266400
+    },
+    "risco": {
+     "menorCaixa": 14900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 117,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 761,
+     "transacoes": 55,
+     "bytesEstado": 633108
+    },
+    "hash": "676e1954",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-08",
+    "seed": 828834463,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 1017898,
+    "patrimonio": 1100898,
+    "receita": 1658400,
+    "beneficios": 60000,
+    "despesas": 648052,
+    "perdas": 7450,
+    "lucro": 1062898,
+    "dividas": 0,
+    "ganhoLiquido": 1050898,
+    "roi": 21.01796,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 1,
+    "diaPrimeiraReceita": 48,
+    "diaEstabilidade": 60,
+    "negociosCriados": 4,
+    "negociosFracassados": 1,
+    "mudancasEstrategia": 2,
+    "estrategiaFinal": "CARREIRA: produto + PIVÔ online",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "produto",
+    "seguidores": 31850,
+    "receitaPorFonte": {
+     "PLATAFORMA:kiwify": 667400,
+     "clientes": 991000
+    },
+    "risco": {
+     "menorCaixa": 7450,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 479,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1058,
+     "transacoes": 416,
+     "bytesEstado": 891458
+    },
+    "hash": "1d1cd043",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-09",
+    "seed": 812056844,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 80065,
+    "patrimonio": 163065,
+    "receita": 724000,
+    "beneficios": 0,
+    "despesas": 598935,
+    "perdas": 0,
+    "lucro": 125065,
+    "dividas": 0,
+    "ganhoLiquido": 113065,
+    "roi": 2.2613,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 0,
+    "diaPrimeiraReceita": 8,
+    "diaEstabilidade": null,
+    "negociosCriados": 2,
+    "negociosFracassados": 0,
+    "mudancasEstrategia": 1,
+    "estrategiaFinal": "CARREIRA: online",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "online",
+    "seguidores": 0,
+    "receitaPorFonte": {
+     "clientes": 724000
+    },
+    "risco": {
+     "menorCaixa": 17900,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 372,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 833,
+     "transacoes": 246,
+     "bytesEstado": 711999
+    },
+    "hash": "7f782484",
+    "auditoria": true
+   },
+   {
+    "id": "DIGI-10",
+    "seed": 862242606,
+    "capitalInicial": 50000,
+    "diasSimulados": 240,
+    "saldo": 1318375,
+    "patrimonio": 1455375,
+    "receita": 2464527,
+    "beneficios": 0,
+    "despesas": 915585,
+    "perdas": 95567,
+    "lucro": 1453375,
+    "dividas": 0,
+    "ganhoLiquido": 1405375,
+    "roi": 28.1075,
+    "diasSobrevividos": 240,
+    "colapsos": 0,
+    "furtos": 1,
+    "diaPrimeiraReceita": 12,
+    "diaEstabilidade": 33,
+    "negociosCriados": 6,
+    "negociosFracassados": 1,
+    "mudancasEstrategia": 51,
+    "estrategiaFinal": "FOCO: social_local + freela",
+    "emprego": null,
+    "moradia": "quarto",
+    "carreira": "adaptativo",
+    "seguidores": 86,
+    "receitaPorFonte": {
+     "clientes": 2456000,
+     "PLATAFORMA:clipping": 8167,
+     "PLATAFORMA:shopee_afiliados": 360
+    },
+    "risco": {
+     "menorCaixa": 15400,
+     "diasCaixaAbaixoDe50": 0
+    },
+    "custo": {
+     "ms": 748,
+     "ciclos": 240,
+     "decisoes": 240,
+     "acoes": 1196,
+     "transacoes": 540,
+     "bytesEstado": 1231198
+    },
+    "hash": "37960d2e",
+    "auditoria": true
+   }
+  ],
+  "efeitoCapital": [
+   {
+    "capitalInicial": 50000,
+    "n": 10,
+    "medianaGanhoLiquido": 655443,
+    "medianaPatrimonio": 705443,
+    "medianaDiaPrimeiraReceita": 13,
+    "medianaDiaEstabilidade": 35,
+    "semEstabilidade": 3
+   }
+  ],
+  "negocios": [
+   {
+    "servico": "social_media",
+    "lancados": 7,
+    "fracassados": 0,
+    "receita": 8302000,
+    "propostas": 245,
+    "aceitas": 29,
+    "taxaAceite": 11.8
+   },
+   {
+    "servico": "trafego_pago",
+    "lancados": 5,
+    "fracassados": 4,
+    "receita": 400000,
+    "propostas": 24,
+    "aceitas": 2,
+    "taxaAceite": 8.3
+   },
+   {
+    "servico": "perfil_google",
+    "lancados": 6,
+    "fracassados": 0,
+    "receita": 475000,
+    "propostas": 195,
+    "aceitas": 31,
+    "taxaAceite": 15.9
+   },
+   {
+    "servico": "site",
+    "lancados": 1,
+    "fracassados": 0,
+    "receita": 336000,
+    "propostas": 121,
+    "aceitas": 7,
+    "taxaAceite": 5.8
+   },
+   {
+    "servico": "freela",
+    "lancados": 2,
+    "fracassados": 1,
+    "receita": 2150400,
+    "propostas": 0,
+    "aceitas": 0,
+    "taxaAceite": null
+   },
+   {
+    "servico": "clipping",
+    "lancados": 2,
+    "fracassados": 0,
+    "receita": 405361,
+    "propostas": 0,
+    "aceitas": 0,
+    "taxaAceite": null
+   },
+   {
+    "servico": "ugc",
+    "lancados": 1,
+    "fracassados": 1,
+    "receita": 487000,
+    "propostas": 0,
+    "aceitas": 0,
+    "taxaAceite": null
+   },
+   {
+    "servico": "afiliado",
+    "lancados": 2,
+    "fracassados": 0,
+    "receita": 266760,
+    "propostas": 0,
+    "aceitas": 0,
+    "taxaAceite": null
+   },
+   {
+    "servico": "produto_digital",
+    "lancados": 1,
+    "fracassados": 0,
+    "receita": 537478,
+    "propostas": 0,
+    "aceitas": 0,
+    "taxaAceite": null
+   }
+  ],
+  "errosRecorrentes": [
+   {
+    "motivo": "DORMIR: sem vaga no albergue; dormiu na rua",
+    "vezes": 133
+   },
+   {
+    "motivo": "PROPOR: já existe proposta pendente",
+    "vezes": 18
+   }
+  ],
+  "tempoEmEstrategia": {
+   "CARREIRA: social_local": 240,
+   "CARREIRA: google_local": 240,
+   "CARREIRA: sites": 71,
+   "CARREIRA: sites + PIVÔ online": 169,
+   "CARREIRA: freela": 240,
+   "CARREIRA: clipping": 240,
+   "CARREIRA: ugc": 44,
+   "CARREIRA: ugc + PIVÔ online": 196,
+   "CARREIRA: afiliado": 240,
+   "CARREIRA: produto": 44,
+   "CARREIRA: produto + PIVÔ online": 196,
+   "CARREIRA: online": 240,
+   "EXPLORANDO (rodízio de frentes)": 28,
+   "FOCO: social_local + google_local": 57,
+   "FOCO: social_local + freela": 19,
+   "FOCO: social_local + online": 133,
+   "FOCO: social_local + ugc": 3
+  },
+  "eventos": {
+   "NEGOCIO_CRIADO": 27,
+   "CONTRATO": 199,
+   "FURTO": 3,
+   "DOENCA": 28,
+   "RG_PRONTO": 10,
+   "BF_NEGADO": 7,
+   "NEGOCIO_FRACASSADO": 6,
+   "CANCELAMENTO": 7,
+   "CALOTE": 8,
+   "BF_APROVADO": 3,
+   "BF_ENCERRADO": 3
+  },
+  "adaptacao": [
+   {
+    "id": "DIGI-01",
+    "mudancasEstrategia": 1,
+    "furtos": 1,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-02",
+    "mudancasEstrategia": 1,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-03",
+    "mudancasEstrategia": 2,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-04",
+    "mudancasEstrategia": 1,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-05",
+    "mudancasEstrategia": 1,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-06",
+    "mudancasEstrategia": 2,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-07",
+    "mudancasEstrategia": 1,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-08",
+    "mudancasEstrategia": 2,
+    "furtos": 1,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-09",
+    "mudancasEstrategia": 1,
+    "furtos": 0,
+    "colapsos": 0
+   },
+   {
+    "id": "DIGI-10",
+    "mudancasEstrategia": 51,
+    "furtos": 1,
+    "colapsos": 0
+   }
+  ],
+  "aviso": "Resultados de RESULTADO SIMULADO sob regras SINTÉTICAS e uma POLÍTICA PROGRAMADA (não é IA). Não são previsões do mundo real."
+ }
+}

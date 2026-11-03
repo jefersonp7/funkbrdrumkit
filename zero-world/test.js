@@ -166,3 +166,64 @@ test('10. resultados não são inventados para completar relatórios', () => {
   ZW.avancar(rodada[0], Politica, 10);
   assert.throws(() => Exp.analisar(rodada, 10), /rodada não concluída/);
 });
+
+// ---------------------------------------------------------------- cenário digital
+const PD = require('./policy-digital.js');
+const digital = (seed, carreira) => ZW.criarMundo({ id: 'DIG', capitalInicial: 50000, seed, cenario: 'digital', carreira: carreira || 'adaptativo' });
+
+test('D1. no cenário digital, trabalho braçal e CLT são recusados pelo motor', () => {
+  const w = digital(201);
+  const bracal = { id: 'b', tipo: 'teste', decidir: () => ({ plano: [{ tipo: 'DIARIA_BRACAL' }, { tipo: 'BUSCAR_VAGAS' }, { tipo: 'DORMIR', onde: 'rua' }], alternativas: [] }) };
+  ZW.avancar(w, bracal, 3);
+  const res = w.logs.resultados.filter((r) => r.acao === 'DIARIA_BRACAL' || r.acao === 'BUSCAR_VAGAS');
+  assert.equal(res.length, 6);
+  assert.ok(res.every((r) => !r.ok && r.resultado === 'fora do cenário digital'));
+  assert.equal(w.ledger.tx.filter((t) => t.tipo === 'RECEITA').length, 0);
+});
+
+test('D2. 10 carreiras: Turbo = Vida, auditoria fecha e mundos isolados', () => {
+  const rodada = Exp.criarRodadaDigital(7);
+  for (const w of rodada) {
+    let vida = ZW.desserializar(ZW.serializar(w));
+    ZW.avancar(w, PD, 60);
+    for (let d = 0; d < 60; d++) { vida = ZW.desserializar(ZW.serializar(vida)); assert.equal(ZW.avancarDia(vida, PD).ok, true); }
+    assert.equal(ZW.hashMundo(vida), ZW.hashMundo(w), w.meta.id);
+    assert.equal(ZW.auditar(w).ok, true);
+  }
+  const outro = Exp.criarRodadaDigital(7).find((w) => w.meta.id === 'DIGI-04');
+  ZW.avancar(outro, PD, 60);
+  assert.equal(ZW.hashMundo(outro), ZW.hashMundo(rodada.find((w) => w.meta.id === 'DIGI-04')));
+});
+
+test('D3. taxas reais das plataformas são lançadas no livro', () => {
+  let freela = 0, produto = 0;
+  for (const seed of [1, 2, 3]) {
+    for (const [carreira, ok] of [['freela', 'f'], ['produto', 'p']]) {
+      const w = digital(seed, carreira);
+      ZW.avancar(w, PD, 200);
+      const tx = w.ledger.tx;
+      tx.forEach((t, i) => {
+        if (t.origem === 'PLATAFORMA:freela') { const taxa = tx[i + 1]; assert.equal(taxa.destino, 'PLATAFORMA:taxa_freela'); assert.equal(taxa.valor, Math.round(t.valor * 0.2)); freela++; }
+        if (t.origem === 'PLATAFORMA:kiwify') {
+          const taxa = tx[i + 1]; const vendas = t.valor / 4700;
+          assert.ok(Number.isInteger(vendas));
+          assert.equal(taxa.valor, vendas * (Math.round(4700 * 0.0899) + 249) + 367); produto++;
+        }
+      });
+      void ok;
+    }
+  }
+  assert.ok(freela > 0 && produto > 0, 'esperava pelo menos um pagamento de cada plataforma');
+});
+
+test('D4. no digital o agente não vê concorrência, inscritos nem orçamento oculto', () => {
+  const espiao = { id: 'e', tipo: 't', decidir(o) { const j = JSON.stringify(o); for (const k of ZW.CHAVES_PROIBIDAS) assert.equal(j.includes('"' + k + '"'), false, k); return PD.decidir(o); } };
+  for (const c of ['freela', 'ugc', 'online']) { const w = digital(301, c); assert.equal(ZW.avancar(w, espiao, 60).ok, true); }
+});
+
+test('D5. o cenário clássico não mudou: hashes da rodada de referência', () => {
+  const ref = require('./runs/R20261104/resumo.json');
+  const rodada = Exp.criarRodada(20261104);
+  Exp.executar(rodada, Politica, 240);
+  for (const w of rodada) assert.equal(ZW.hashMundo(w), ref.hashes[w.meta.id], w.meta.id);
+});

@@ -1,0 +1,1844 @@
+<title>Zero World Digital</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Archivo+Narrow:wght@600;700&display=swap">
+<style>
+/* Layout: console de laboratório — barra de controle fixa no topo, abas, tabelas densas com números em mono */
+:root{
+  --bg:#F4F5F3; --surface:#FFFFFF; --ink:#141714; --muted:#5A615B; --line:#DADFDA; --soft:#ECEFEC;
+  --accent:#1E5E3B; --accent-ink:#FFFFFF;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --t-real:#1F5FAE; --t-est:#9A5B00; --t-sin:#6B4FB8; --t-sim:#1E6B45;
+  --ok:#1E7A3E; --bad:#B3261E;
+  --f-display:"Archivo Narrow","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111412; --surface:#191D1A; --ink:#E7EBE7; --muted:#9DA69F; --line:#2C332E; --soft:#212622;
+  --accent:#5FC48C; --accent-ink:#0E1A12; --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --t-real:#7FB0F0; --t-est:#E2A65A; --t-sin:#B3A1EE; --t-sim:#6FD39E; --ok:#6FD39E; --bad:#F08A80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111412; --surface:#191D1A; --ink:#E7EBE7; --muted:#9DA69F; --line:#2C332E; --soft:#212622;
+  --accent:#5FC48C; --accent-ink:#0E1A12; --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --t-real:#7FB0F0; --t-est:#E2A65A; --t-sin:#B3A1EE; --t-sim:#6FD39E; --ok:#6FD39E; --bad:#F08A80; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:18px}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:2rem} h2{font-size:1.35rem} h3{font-size:1.05rem}
+p{margin:0;max-width:75ch}
+.muted{color:var(--muted)} .mono,td.n,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+header{display:grid;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:4px;border:1px solid var(--line);background:var(--surface);overflow-wrap:anywhere}
+.tag-REAL{color:var(--t-real);border-color:var(--t-real)} .tag-ESTIMATIVA{color:var(--t-est);border-color:var(--t-est)}
+.tag-SINTETICA{color:var(--t-sin);border-color:var(--t-sin)} .tag-SIM{color:var(--t-sim);border-color:var(--t-sim)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.grp{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.grp>span{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+button,select,input{font:inherit;color:inherit}
+button{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer}
+button:hover{border-color:var(--muted)} button.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input[type=number]{width:8.5em;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+select{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+.status{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.prog{height:4px;background:var(--soft);border-radius:2px;overflow:hidden;flex:1 1 120px;min-width:80px}
+.prog i{display:block;height:100%;width:0;background:var(--accent)}
+nav.tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line)}
+nav.tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;background:none;padding:8px 10px;color:var(--muted)}
+nav.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+.panel{display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:grid;gap:10px;min-width:0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.cols>*{min-width:0}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;max-width:100%}
+.tbl.tall{max-height:420px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:.82rem}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;white-space:nowrap}
+td.wrap{white-space:normal;min-width:220px}
+th{position:sticky;top:0;background:var(--soft);font-weight:500;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+td.n,th.n{text-align:right}
+tr.sel td{background:var(--soft)}
+tr.click{cursor:pointer}
+.okc{color:var(--ok)} .badc{color:var(--bad)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:var(--f-mono);font-size:10px;fill:var(--muted)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:.75rem;font-family:var(--f-mono);box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;z-index:3}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:.85rem}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-family:var(--f-mono)}
+ul.plain{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:.85rem}
+.note{font-size:.8rem;color:var(--muted)}
+.warn{border-left:3px solid var(--t-est);padding:8px 12px;background:var(--surface);border-radius:4px;font-size:.85rem}
+input[type=range]{width:100%}
+a{color:var(--t-real)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+.live{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:.8rem}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--bad);display:inline-block}
+@media (prefers-reduced-motion:no-preference){.live i{animation:pulse 1.6s infinite}}
+@keyframes pulse{50%{opacity:.25}}
+.relogio{font-family:var(--f-mono);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.agentes{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.ag{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;display:grid;gap:6px;min-width:0}
+.ag.sel{border-color:var(--accent)}
+.ag h3{display:flex;justify-content:space-between;gap:8px}
+.ag .agora{font-size:.85rem;padding:6px 8px;border-radius:6px;background:var(--soft)}
+.ag ol{margin:0;padding-left:0;list-style:none;display:grid;gap:3px;font-size:.78rem}
+.ag ol li{display:grid;grid-template-columns:3.2em 1fr;gap:6px}
+.ag ol li span:first-child{font-family:var(--f-mono);color:var(--muted)}
+.fut{color:var(--muted);font-style:italic}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Zero World · Carreiras digitais</h1>
+  <p class="muted">10 agentes de 30 anos em Belo Horizonte, cada um com R$500, começam do zero uma carreira digital diferente. Cada um vive num mundo independente, com semente, livro-caixa e memória próprios. O cérebro é uma <strong>política programada (regras fixas, não é IA)</strong>, e quem decide o resultado de cada ação é o motor do mundo. Tudo aqui é <strong>resultado simulado</strong>, com preços e taxas reais onde havia fonte.</p>
+  <div class="chips" id="chipsTopo"></div>
+</header>
+
+<div class="bar" role="toolbar" aria-label="Controle da simulação">
+  <div class="grp"><span>Modo</span><select id="modo" aria-label="Modo"><option value="aovivo">Ao vivo (24x)</option><option value="lab">Laboratório</option></select></div>
+  <div class="grp" id="ctlLive"><span class="live"><i></i>AO VIVO</span><span class="relogio" id="relogio">—</span></div>
+  <div class="grp" id="ctlLab" hidden><span>Semente</span><input type="number" id="semente" value="20261104" aria-label="Semente"><button id="btnNova">Nova rodada</button><button id="btnVida">+1 dia</button><button data-t="30">30</button><button data-t="90">90</button><button data-t="240" class="pri">240</button><button data-t="365">365</button></div>
+  <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+  <div class="status" id="status" role="status" aria-live="polite">—</div>
+</div>
+
+<nav class="tabs" role="tablist" id="tabs">
+  <button role="tab" data-tab="agora" aria-selected="true">Agora</button>
+  <button role="tab" data-tab="geral" aria-selected="false">Visão geral</button>
+  <button role="tab" data-tab="agente" aria-selected="false">Agente e replay</button>
+  <button role="tab" data-tab="comparar" aria-selected="false">Comparação</button>
+  <button role="tab" data-tab="auditoria" aria-selected="false">Auditoria e testes</button>
+  <button role="tab" data-tab="params" aria-selected="false">Dados e regras</button>
+</nav>
+<section class="panel" id="tab-agora"></section>
+<section class="panel" id="tab-geral" hidden></section>
+<section class="panel" id="tab-agente" hidden></section>
+<section class="panel" id="tab-comparar" hidden></section>
+<section class="panel" id="tab-auditoria" hidden></section>
+<section class="panel" id="tab-params" hidden></section>
+</div>
+
+<script>/*
+ * ZERO WORLD — World Engine (motor do mundo)
+ *
+ * Responsável por: estado do mundo, regras econômicas, validação de ações,
+ * sorteios (RNG com seed), livro-caixa e auditoria.
+ * O cérebro do agente (policy.js) NÃO tem acesso a este estado: ele recebe
+ * apenas uma observação congelada, montada por observar().
+ *
+ * Valores monetários: inteiros em centavos.
+ */
+(function (g) {
+  'use strict';
+
+  const VERSAO_MOTOR = 'zero-world-motor-0.1.0';
+
+  // ---------------------------------------------------------------- utilidades
+  function fnv1a(str) {
+    let h = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+    return (h >>> 0).toString(16).padStart(8, '0');
+  }
+  const hashSeed = (s) => parseInt(fnv1a(String(s)), 16) >>> 0;
+  const clone = (x) => JSON.parse(JSON.stringify(x));
+  function deepFreeze(o) {
+    if (o && typeof o === 'object' && !Object.isFrozen(o)) {
+      Object.freeze(o);
+      for (const k of Object.keys(o)) deepFreeze(o[k]);
+    }
+    return o;
+  }
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  function brl(c) {
+    const s = (Math.abs(c) / 100).toFixed(2).split('.');
+    s[0] = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return (c < 0 ? '-' : '') + 'R$ ' + s[0] + ',' + s[1];
+  }
+  function dataVirtual(inicioISO, dia) {
+    const d = new Date(inicioISO + 'T12:00:00Z');
+    d.setUTCDate(d.getUTCDate() + dia - 1);
+    return d.toISOString().slice(0, 10);
+  }
+
+  // ------------------------------------------------- RNG (mulberry32, oculto)
+  // O estado do gerador vive em world.oculto e só o motor o usa.
+  function rng(w) {
+    let a = w.oculto.rngState | 0;
+    a = (a + 0x6D2B79F5) | 0;
+    w.oculto.rngState = a;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+  const rInt = (w, lo, hi) => lo + Math.floor(rng(w) * (hi - lo + 1));
+  const rChance = (w, p) => rng(w) < p;
+  function rNormal(w) {
+    const u = Math.max(rng(w), 1e-12), v = rng(w);
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
+  // ----------------------------------------------------------- parâmetros
+  // tag: REAL = fonte pública citada (pesquisa web em 03/11/2026, conferida no
+  //             resultado de busca, não na fonte primária)
+  //      ESTIMATIVA = valor escolhido a partir de faixa de mercado ou suposição
+  //      SINTETICA = regra inventada para o simulador funcionar
+  const T = { REAL: 'REAL', EST: 'ESTIMATIVA', SIN: 'SINTETICA' };
+  const PARAMETROS = {
+    salarioMinimo: { v: 162100, tag: T.REAL, desc: 'Salário mínimo 2026', fonte: 'https://www.serasaexperian.com.br/carreiras/blog-carreiras/salario-minimo-2026/' },
+    restPopRefeicao: { v: 300, tag: T.REAL, desc: 'Refeição no Restaurante Popular de BH', fonte: 'https://prefeitura.pbh.gov.br/noticias/restaurante-popular-oferece-refeicoes-saudaveis-e-baixo-custo', nota: 'data da fonte incerta' },
+    restPopGratisRua: { v: 1, tag: T.REAL, desc: 'Refeição 100% subsidiada para população de rua', fonte: 'https://prefeitura.pbh.gov.br/noticias/restaurante-popular-oferece-refeicoes-saudaveis-e-baixo-custo' },
+    bolsaFamilia: { v: 60000, tag: T.REAL, desc: 'Bolsa Família, valor mínimo por família', fonte: 'https://www.opovo.com.br/trends/governo-decidiu-o-valor-do-bolsa-familia-para-2026/' },
+    bolsaFamiliaLimite: { v: 21800, tag: T.REAL, desc: 'Limite de renda por pessoa para o Bolsa Família', fonte: 'https://www.opovo.com.br/trends/governo-decidiu-o-valor-do-bolsa-familia-para-2026/' },
+    meioSalarioMinimo: { v: 81050, tag: T.REAL, desc: 'Meio salário mínimo (limite do CadÚnico)', fonte: 'https://www.opovo.com.br/trends/governo-decidiu-o-valor-do-bolsa-familia-para-2026/' },
+    dasMei: { v: 8605, tag: T.REAL, desc: 'DAS MEI de serviços 2026', fonte: 'https://www.opovo.com.br/noticias/economia/2026/01/02/contribuicao-mensal-do-mei-sobe-para-rs-8105-em-2026.html' },
+    wifiGratis: { v: 1, tag: T.REAL, desc: 'Wi-Fi BH gratuito com CPF', fonte: 'https://prefeitura.pbh.gov.br/noticias/wi-fi-bh-gratuito-segue-em-expansao-pela-cidade-e-alcanca-mais-de-7-milhoes-de-usuarios' },
+    telecentros: { v: 1, tag: T.REAL, desc: 'Telecentros com computador gratuito', fonte: 'https://prefeitura.pbh.gov.br/transparencia/duvidas-frequentes/pontos-de-acesso-livre-internet' },
+    socialMediaMes: { v: 50000, tag: T.EST, desc: 'Gestão de Instagram, preço inicial por mês', fonte: 'https://www.cronoshare.com.br/quanto-custa/servico-gerenciamento-midia-social', nota: 'faixa R$500–1.000 em blog comercial' },
+    clippingPorMil: { v: 500, tag: T.EST, desc: 'Pagamento de clipping por mil views (~US$1)', fonte: 'https://cut.pro/pt-BR/blog/economia-clipping-pago-um-dolar-mil-views-2026' },
+    diariaMin: { v: 12000, tag: T.EST, desc: 'Diária braçal, mínimo', fonte: 'https://catracalivre.com.br/noticias/quanto-custa-contratar-pedreiro-por-um-dia/', nota: 'guia nacional R$120–190' },
+    diariaMax: { v: 19000, tag: T.EST, desc: 'Diária braçal, máximo', fonte: 'https://catracalivre.com.br/noticias/quanto-custa-contratar-pedreiro-por-um-dia/' },
+    refeicaoComum: { v: 1800, tag: T.EST, desc: 'Marmita/PF comum' },
+    celularUsado: { v: 30000, tag: T.EST, desc: 'Celular usado com câmera razoável' },
+    chip: { v: 1500, tag: T.EST, desc: 'Chip pré-pago' },
+    planoCelular: { v: 3000, tag: T.EST, desc: 'Recarga mensal de dados' },
+    notebookUsado: { v: 90000, tag: T.EST, desc: 'Notebook usado' },
+    quartoMes: { v: 65000, tag: T.EST, desc: 'Quarto alugado por mês' },
+    pensaoNoite: { v: 5000, tag: T.EST, desc: 'Pernoite em pensão' },
+    perfilGoogle: { v: 18000, tag: T.EST, desc: 'Configurar Perfil da Empresa no Google', nota: 'preço não pesquisado; definido pelo autor' },
+    siteSimples: { v: 60000, tag: T.EST, desc: 'Site simples de uma página', nota: 'preço não pesquisado' },
+    salarioVagaMin: { v: 162100, tag: T.EST, desc: 'Salário das vagas sintéticas (mínimo)' },
+    salarioVagaMax: { v: 200000, tag: T.EST, desc: 'Salário das vagas sintéticas (máximo)' },
+    liquidoCLT: { v: 0.88, tag: T.EST, desc: 'Fração líquida do salário (INSS/VT)' },
+    probDiaria: { v: 0.5, tag: T.SIN, desc: 'Chance de conseguir diária ao procurar' },
+    probVagaAlbergue: { v: 0.85, tag: T.SIN, desc: 'Chance de vaga no albergue na noite' },
+    probFurtoRua: { v: 0.03, tag: T.SIN, desc: 'Chance de furto dormindo na rua (perde metade do dinheiro)' },
+    probDoenca: { v: 0.008, tag: T.SIN, desc: 'Chance diária de adoecer' },
+    prazoRG: { v: 20, tag: T.SIN, desc: 'Dias até o RG ficar pronto (gratuidade assumida)' },
+    prazoAnaliseBF: { v: 45, tag: T.SIN, desc: 'Dias até a análise do Bolsa Família' },
+    probNovaVaga: { v: 0.3, tag: T.SIN, desc: 'Chance diária de surgir uma vaga sintética' },
+    probCalote: { v: 0.06, tag: T.SIN, desc: 'Chance de um cliente não pagar a entrega' },
+    churnMensal: { v: 0.07, tag: T.SIN, desc: 'Chance de um cliente mensal cancelar' },
+    numNegocios: { v: 80, tag: T.SIN, desc: 'Comércios sintéticos no mapa do agente' },
+    passagemOnibus: { v: 625, tag: T.REAL, desc: 'Passagem de ônibus em BH (2026)', fonte: 'https://diariodotransporte.com.br/2025/12/30/tarifas-de-onibus-em-belo-horizonte-aumentam-em-1o-de-janeiro-de-2026-confira-os-valores/' },
+    usdBrl: { v: 520, tag: T.REAL, desc: 'Dólar em reais (projeção Focus fim de 2026)', fonte: 'https://www.band.com.br/economia/noticias/dolar-no-fim-de-2026-segue-em-r-520-pela-oitava-semana-seguida-aponta-focus-202608100918', nota: 'em centavos por US$1' },
+    clippingUSDporMil: { v: 1.0, tag: T.EST, desc: 'Clipping: US$ por mil views', fonte: 'https://cut.pro/pt-BR/blog/economia-clipping-pago-um-dolar-mil-views-2026', nota: 'faixa relatada US$0,50–25' },
+    taxaWorkana: { v: 0.2, tag: T.REAL, desc: 'Taxa da plataforma de freela (Workana, até US$300 por cliente)', fonte: 'https://www.mobills.com.br/blog/ganhar-dinheiro/ganhar-dinheiro-na-workana/', nota: 'fontes divergem (12–20%)' },
+    kiwifyPct: { v: 0.0899, tag: T.REAL, desc: 'Taxa percentual da Kiwify por venda', fonte: 'https://viniensina.com.br/?p=4267' },
+    kiwifyFixa: { v: 249, tag: T.REAL, desc: 'Taxa fixa da Kiwify por venda', fonte: 'https://viniensina.com.br/?p=4267' },
+    kiwifySaque: { v: 367, tag: T.REAL, desc: 'Taxa de saque da Kiwify', fonte: 'https://herospark.com/blog/quanto-a-kiwify-cobra-por-venda/' },
+    respostaFrio: { v: 0.15, tag: T.EST, desc: 'Resposta a mensagem fria no WhatsApp/DM', fonte: 'https://www.campograndenews.com.br/artigos/prospeccao-ativa-em-2026-o-que-ainda-funciona-no-brasil', nota: 'dado de fornecedor, ~15–20%' },
+    afiliadoConversao: { v: 0.02, tag: T.EST, desc: 'Conversão de cliques de afiliado Shopee', fonte: 'https://www.divulganinja.com.br/blog/quanto-shopee-paga-comissao-afiliados-2026', nota: 'faixa 1,5–4% (blog comercial)' },
+    afiliadoComissao: { v: 0.06, tag: T.EST, desc: 'Comissão média de afiliado Shopee', fonte: 'https://www.divulganinja.com.br/blog/quanto-shopee-paga-comissao-afiliados-2026', nota: 'fontes citam 3% a 15%' },
+    ticketAfiliado: { v: 6000, tag: T.EST, desc: 'Ticket médio de compra via afiliado', fonte: 'https://www.divulganinja.com.br/blog/como-acompanhar-minhas-comissoes-shopee' },
+    ugcMin: { v: 12000, tag: T.EST, desc: 'Vídeo UGC iniciante, mínimo', fonte: 'https://influee.co/br/blog/ugc-price' },
+    ugcMax: { v: 21000, tag: T.EST, desc: 'Vídeo UGC iniciante, máximo', fonte: 'https://influee.co/br/blog/ugc-price' },
+    trafegoMes: { v: 50000, tag: T.EST, desc: 'Gestão de tráfego pago, iniciante por mês', fonte: 'https://trafius.com.br/blog/preco-de-gestor-de-trafego-em-2026-tabela-por-porte' },
+    precoProduto: { v: 4700, tag: T.EST, desc: 'Preço do produto digital (kit de posts)' },
+    horasProduto: { v: 15, tag: T.SIN, desc: 'Horas para criar o produto digital' },
+    liberacaoPlataforma: { v: 7, tag: T.SIN, desc: 'Dias para a plataforma de freela liberar o pagamento' },
+    pagamentoUGC: { v: 15, tag: T.SIN, desc: 'Dias para a marca pagar o UGC' },
+    pagamentoKiwify: { v: 7, tag: T.SIN, desc: 'Dias até o saque das vendas do produto' },
+    telecentroHoras: { v: 4, tag: T.SIN, desc: 'Horas máximas de computador no telecentro por dia' },
+    mensagensPorHora: { v: 15, tag: T.SIN, desc: 'Mensagens de prospecção online por hora' },
+    numOnline: { v: 300, tag: T.SIN, desc: 'Negócios da Grande BH alcançáveis por mensagem' },
+    fatorAceite: { v: 0.3, tag: T.SIN, desc: 'Calibração do aceite de proposta a frio (aceite médio ~5–10%)', nota: 'calibrado em 03/11/2026: com 1,0 o aceite médio era ~20%, irrealista' },
+  };
+  const pv = (k) => PARAMETROS[k].v;
+
+  const TIPOS_NEGOCIO = [
+    ['barbearia', 30000, 90000], ['padaria', 30000, 80000], ['oficina', 30000, 100000],
+    ['restaurante', 50000, 150000], ['salão', 30000, 90000], ['pet shop', 40000, 120000],
+    ['academia', 50000, 150000], ['clínica', 80000, 200000], ['loja de roupa', 30000, 100000],
+    ['lanchonete', 20000, 70000],
+  ];
+  const BAIRROS = ['Centro', 'Lagoinha', 'Floresta', 'Santa Tereza', 'Barro Preto', 'Carlos Prates', 'Santa Efigênia', 'Funcionários'];
+  const CARGOS = ['ajudante de carga', 'auxiliar de limpeza', 'atendente', 'repositor', 'auxiliar de cozinha', 'porteiro'];
+  const SERVICOS = {
+    perfil_google: { horas: 5, prazo: 7, mensal: false, requer: ['celular'] },
+    social_media: { horas: 12, prazo: 30, mensal: true, requer: ['celular'] },
+    site: { horas: 20, prazo: 21, mensal: false, requer: ['notebook'] },
+    trafego_pago: { horas: 8, prazo: 30, mensal: true, requer: ['celular'] },
+    ugc: { horas: 4, prazo: 5, mensal: false, requer: ['celular'] },
+    freela: { horas: 0, prazo: 0, mensal: false, requer: ['celular'] },
+  };
+  const CATEGORIAS_FREELA = [
+    ['social_media', 30000, 80000, 12, 10, 'marketing'], ['edicao_video', 10000, 40000, 5, 5, 'tecnologia'],
+    ['site', 50000, 150000, 20, 15, 'programacao'], ['design', 8000, 30000, 3, 4, 'marketing'],
+  ];
+  const BAIRROS_GRANDE_BH = BAIRROS.concat(['Contagem', 'Betim', 'Nova Lima', 'Venda Nova', 'Pampulha', 'Barreiro', 'Buritis', 'Savassi']);
+  const ACOES_SO_CLASSICO = ['DIARIA_BRACAL', 'BUSCAR_VAGAS', 'CANDIDATAR', 'TRABALHAR_EMPREGO'];
+  const ENTRADAS = ['CAPITAL_INICIAL', 'RECEITA', 'BENEFICIO', 'EMPRESTIMO'];
+  const SAIDAS = ['DESPESA', 'COMPRA_ATIVO', 'DEPOSITO_CAUCAO', 'PERDA', 'IMPOSTO', 'PAGAMENTO_DIVIDA'];
+
+  // ------------------------------------------------------------ criação
+  function criarMundo(cfg) {
+    const id = cfg.id;
+    const capital = cfg.capitalInicial | 0;
+    if (capital < 0) throw new Error('capital inicial negativo');
+    const w = {
+      meta: { id, versaoMotor: VERSAO_MOTOR, seed: cfg.seed >>> 0, capitalInicial: capital, dataInicio: cfg.dataInicio || '2026-11-04', cenario: 'Belo Horizonte, MG — parâmetros de 2026 pesquisados em 03/11/2026' },
+      dia: 0,
+      seq: 0,
+      agente: {
+        id, idade: 30, conta: 'CAIXA:' + id, limiteCredito: 0,
+        local: 'rua', noite: 'rua', status: 'ativo', internadoAte: 0,
+        necessidades: { fome: 40, energia: 60, saude: 90 },
+        registros: { centroPop: false, cadunico: false },
+        docs: { cpf: true, rg: false, rgPedido: false },
+        itens: { celular: false, chip: false, notebook: false },
+        skills: { negocios: 4, tecnologia: 4, marketing: 4, programacao: 4 },
+        portfolio: 0, mei: false, estrategia: 'INICIO',
+        emprego: null, contratos: [], pendencias: [], dividas: [], ativos: [],
+        quarto: null, beneficios: { bf: 'nao_solicitado' },
+        negocios: [], refeicoesHoje: 0, colapsos: 0, furtos: 0,
+        memoria: { fatos: [], leads: {}, vagas: {}, receitas: [], crencas: { diaria: { tentativas: 0, sucessos: 0, soma: 0 }, propostas: { enviadas: 0, aceitas: 0, recusadas: 0 }, rejeicoesSeguidas: 0 }, mudancasEstrategia: [], ultimaBuscaVagas: -99 },
+      },
+      mundo: { negocios: [], vagas: [] },
+      oculto: { rngState: cfg.seed | 0, negocios: {}, vagas: {}, agenda: [] },
+      ledger: { tx: [], saldo: 0 },
+      logs: { decisoes: [], resultados: [], eventos: [] },
+      historico: [],
+      contadores: { tx: 0, prop: 0, ctr: 0, vaga: 0, ag: 0 },
+      metricas: { ciclos: 0, acoes: 0, ms: 0 },
+    };
+    for (let i = 1; i <= pv('numNegocios'); i++) {
+      const [tipo, lo, hi] = TIPOS_NEGOCIO[rInt(w, 0, TIPOS_NEGOCIO.length - 1)];
+      const nid = 'N' + String(i).padStart(3, '0');
+      w.mundo.negocios.push({ id: nid, nome: tipo + ' #' + i, tipo, bairro: BAIRROS[rInt(w, 0, BAIRROS.length - 1)], temPerfilGoogle: rChance(w, 0.45), instagramAtivo: rChance(w, 0.4) });
+      w.oculto.negocios[nid] = { orcamento: Math.round(rInt(w, lo, hi) / 1000) * 1000, abertura: Math.round(rng(w) * 1000) / 1000 };
+    }
+    if (cfg.cenario === 'digital') { w.tipoCenario = 'digital'; w.carreira = cfg.carreira || null; iniciarDigital(w); }
+    else for (let i = 0; i < 3; i++) novaVaga(w);
+    if (capital > 0) lancar(w, { tipo: 'CAPITAL_INICIAL', valor: capital, origem: 'PATRIMONIO_INICIAL', destino: w.agente.conta, justificativa: 'Capital inicial do experimento (não é receita)' });
+    return w;
+  }
+
+  // ------------------------------------------------------------ livro-caixa
+  // Única função que altera o saldo.
+  function lancar(w, { tipo, valor, origem, destino, justificativa }) {
+    if (!Number.isInteger(valor) || valor <= 0) throw new Error('valor inválido: ' + valor);
+    const conta = w.agente.conta;
+    const entrada = destino === conta, saida = origem === conta;
+    if (entrada === saida) throw new Error('transação precisa ter o caixa do agente em exatamente um lado');
+    if (entrada && !ENTRADAS.includes(tipo)) throw new Error('tipo inválido para entrada: ' + tipo);
+    if (saida && !SAIDAS.includes(tipo)) throw new Error('tipo inválido para saída: ' + tipo);
+    const ant = w.ledger.saldo;
+    const pos = entrada ? ant + valor : ant - valor;
+    if (pos < -w.agente.limiteCredito) return null; // rejeitada: sem saldo e sem crédito
+    const tx = {
+      id: w.meta.id + '-T' + String(++w.contadores.tx).padStart(5, '0'), seq: ++w.seq,
+      agente: w.meta.id, dia: w.dia, tipo, direcao: entrada ? 'ENTRADA' : 'SAIDA', valor,
+      origem, destino, justificativa, saldoAnterior: ant, saldoPosterior: pos,
+    };
+    w.ledger.tx.push(tx);
+    w.ledger.saldo = pos;
+    return tx;
+  }
+  const pagar = (w, tipo, valor, destino, just) => lancar(w, { tipo, valor, origem: w.agente.conta, destino, justificativa: just });
+  const receber = (w, tipo, valor, origem, just) => lancar(w, { tipo, valor, origem, destino: w.agente.conta, justificativa: just });
+
+  function registrarReceitaMemoria(w, fonte, valor, frente) {
+    const r = { dia: w.dia, fonte, valor };
+    if (frente) r.frente = frente;
+    w.agente.memoria.receitas.push(r);
+  }
+
+  function auditar(w) {
+    const erros = [];
+    let s = 0, ent = 0, sai = 0, capital = 0, prevSeq = 0;
+    const ids = new Set();
+    for (const t of w.ledger.tx) {
+      if (ids.has(t.id)) erros.push('id duplicado ' + t.id);
+      ids.add(t.id);
+      if (!Number.isInteger(t.valor) || t.valor <= 0) erros.push('valor inválido em ' + t.id);
+      if (t.saldoAnterior !== s) erros.push('saldo anterior não confere em ' + t.id);
+      const d = t.direcao === 'ENTRADA' ? t.valor : -t.valor;
+      if (t.saldoPosterior !== s + d) erros.push('saldo posterior não confere em ' + t.id);
+      s += d;
+      if (d > 0) ent += t.valor; else sai += t.valor;
+      if (t.tipo === 'CAPITAL_INICIAL') capital += t.valor;
+      if (t.seq <= prevSeq) erros.push('ordem de sequência quebrada em ' + t.id);
+      prevSeq = t.seq;
+      if (s < -w.agente.limiteCredito) erros.push('saldo negativo sem crédito em ' + t.id);
+    }
+    if (s !== w.ledger.saldo) erros.push('saldo registrado (' + w.ledger.saldo + ') diverge do livro (' + s + ')');
+    if (capital !== w.meta.capitalInicial) erros.push('capital inicial no livro (' + capital + ') diverge do declarado (' + w.meta.capitalInicial + ')');
+    const formula = w.meta.capitalInicial + (ent - capital) - sai;
+    if (formula !== s) erros.push('SALDO_FINAL ≠ SALDO_INICIAL + ENTRADAS − SAÍDAS');
+    if (w.historico.length !== w.dia) erros.push('histórico com ' + w.historico.length + ' ciclos para ' + w.dia + ' dias');
+    w.historico.forEach((h, i) => { if (h.dia !== i + 1) erros.push('ciclo fora de ordem no índice ' + i); });
+    const porId = new Map(w.ledger.tx.map((t) => [t.id, t]));
+    let antes = w.meta.capitalInicial;
+    for (const h of w.historico) {
+      if (h.caixaInicio !== antes) erros.push('caixa de início do dia ' + h.dia + ' não confere');
+      const delta = h.txIds.reduce((acc, id) => { const t = porId.get(id); if (!t) { erros.push('transação ' + id + ' ausente'); return acc; } return acc + (t.direcao === 'ENTRADA' ? t.valor : -t.valor); }, 0);
+      if (h.caixaInicio + delta !== h.caixaFim) erros.push('caixa do dia ' + h.dia + ' não fecha com as transações');
+      antes = h.caixaFim;
+    }
+    return { ok: erros.length === 0, erros, saldo: s, entradas: ent, saidas: sai, capital, saldoInicial: w.meta.capitalInicial, entradasSemCapital: ent - capital };
+  }
+
+  // ------------------------------------------------------------ agenda oculta
+  function agendar(w, dia, tipo, dados) {
+    w.oculto.agenda.push({ id: 'A' + (++w.contadores.ag), dia, tipo, dados: dados || {} });
+  }
+  function evento(w, tipo, texto, dados) {
+    const e = { seq: ++w.seq, dia: w.dia, tipo, texto, dados: dados || {} };
+    w.logs.eventos.push(e);
+    return e;
+  }
+  function lembrar(w, texto) {
+    const f = w.agente.memoria.fatos;
+    f.push({ dia: w.dia, texto });
+    if (f.length > 60) f.splice(0, f.length - 60);
+  }
+
+  function novaVaga(w) {
+    const id = 'V' + String(++w.contadores.vaga).padStart(3, '0');
+    const salario = Math.round(rInt(w, pv('salarioVagaMin'), pv('salarioVagaMax')) / 1000) * 1000;
+    w.mundo.vagas.push({ id, cargo: CARGOS[rInt(w, 0, CARGOS.length - 1)], salario, requisitos: ['rg', 'celular', 'endereco'], abertaAte: w.dia + rInt(w, 7, 15), preenchida: false, origem: 'SINTETICA' });
+    w.oculto.vagas[id] = { concorrentes: rInt(w, 4, 40) };
+  }
+
+  // ------------------------------------------------------------ cenário digital
+  const digital = (w) => w.tipoCenario === 'digital';
+  function iniciarDigital(w) {
+    const a = w.agente;
+    a.audiencia = { seguidores: 0, posts: 0 };
+    a.plataforma = { avaliacoes: 0, somaNotas: 0 };
+    a.produto = null; a.produtoHoras = 0; a.afiliado = false; a.portfolioUGC = 0; a.pendenteAfiliado = 0;
+    a.memoria.projetos = {}; a.memoria.campanhas = {}; a.memoria.horasPorFrente = {};
+    w.mundo.online = []; w.mundo.projetos = []; w.mundo.campanhas = [];
+    w.oculto.projetos = {}; w.oculto.campanhas = {};
+    w.contadores.proj = 0; w.contadores.camp = 0;
+    for (let i = 1; i <= pv('numOnline'); i++) {
+      const [tipo, lo, hi] = TIPOS_NEGOCIO[rInt(w, 0, TIPOS_NEGOCIO.length - 1)];
+      const nid = 'O' + String(i).padStart(3, '0');
+      w.mundo.online.push({ id: nid, nome: tipo + ' online #' + i, tipo, bairro: BAIRROS_GRANDE_BH[rInt(w, 0, BAIRROS_GRANDE_BH.length - 1)], temPerfilGoogle: rChance(w, 0.5), instagramAtivo: rChance(w, 0.45), canal: 'online' });
+      w.oculto.negocios[nid] = { orcamento: Math.round(rInt(w, lo, hi) / 1000) * 1000, abertura: Math.round(rng(w) * 1000) / 1000 };
+    }
+    for (let i = 0; i < 4; i++) novoProjeto(w);
+  }
+  function novoProjeto(w) {
+    const [cat, lo, hi, horas, prazo] = CATEGORIAS_FREELA[rInt(w, 0, CATEGORIAS_FREELA.length - 1)];
+    const id = 'J' + String(++w.contadores.proj).padStart(4, '0');
+    w.mundo.projetos.push({ id, categoria: cat, orcamento: Math.round(rInt(w, lo, hi) / 1000) * 1000, horas, prazo, abertoAte: w.dia + rInt(w, 3, 7), propostasAtuais: rInt(w, 0, 10), fechado: false, origem: 'SINTETICA' });
+    w.oculto.projetos[id] = { concorrentes: rInt(w, 8, 60) };
+  }
+  function novaCampanha(w) {
+    const id = 'U' + String(++w.contadores.camp).padStart(4, '0');
+    w.mundo.campanhas.push({ id, marca: 'marca sintética #' + w.contadores.camp, valor: Math.round(rInt(w, pv('ugcMin'), pv('ugcMax')) / 1000) * 1000, abertaAte: w.dia + rInt(w, 4, 8), fechada: false, origem: 'SINTETICA' });
+    w.oculto.campanhas[id] = { inscritos: rInt(w, 10, 80) };
+  }
+  function diaDigital(w) {
+    const n = rInt(w, 2, 5);
+    for (let i = 0; i < n; i++) novoProjeto(w);
+    if (rChance(w, 0.6)) novaCampanha(w);
+    w.mundo.projetos = w.mundo.projetos.filter((p) => p.abertoAte >= w.dia - 10);
+    w.mundo.campanhas = w.mundo.campanhas.filter((c) => c.abertaAte >= w.dia - 10);
+  }
+  function negocioPorId(w, id) {
+    return (id[0] === 'O' ? w.mundo.online : w.mundo.negocios).find((n) => n.id === id);
+  }
+  function binomial(w, n, p) {
+    if (n <= 0 || p <= 0) return 0;
+    if (n <= 30) { let k = 0; for (let i = 0; i < n; i++) if (rng(w) < p) k++; return k; }
+    return Math.max(0, Math.round(n * p + Math.sqrt(n * p * (1 - p)) * rNormal(w)));
+  }
+  function receberBrutoComTaxa(w, bruto, taxa, origem, destinoTaxa, just, fonte, frente) {
+    receber(w, 'RECEITA', bruto, origem, just + ' (bruto)');
+    registrarReceitaMemoria(w, fonte, bruto, frente);
+    if (taxa > 0) pagar(w, 'DESPESA', Math.min(taxa, w.ledger.saldo), destinoTaxa, 'Taxa da plataforma: ' + just);
+  }
+
+  // ------------------------------------------------------------ observação
+  const CHAVES_PROIBIDAS = ['oculto', 'agenda', 'rngState', 'abertura', 'concorrentes', 'inscritos'];
+  function trabalhaHoje(a, dia) {
+    return !!(a.emprego && dia >= a.emprego.inicio && (dia - a.emprego.inicio) % 7 !== 6);
+  }
+  function observar(w) {
+    const a = w.agente;
+    const o = {
+      dia: w.dia, data: dataVirtual(w.meta.dataInicio, w.dia), horasDisponiveis: 16,
+      agente: {
+        id: a.id, idade: a.idade, caixa: w.ledger.saldo, local: a.local, necessidades: a.necessidades,
+        registros: a.registros, docs: a.docs, itens: a.itens, skills: a.skills, portfolio: a.portfolio,
+        mei: a.mei, estrategia: a.estrategia, beneficios: a.beneficios, dividas: a.dividas,
+        emprego: a.emprego ? { cargo: a.emprego.cargo, salario: a.emprego.salario, inicio: a.emprego.inicio, faltas: a.emprego.faltas, trabalhaHoje: trabalhaHoje(a, w.dia) } : null,
+        contratos: a.contratos.filter((c) => c.status === 'ativo').map((c) => ({ id: c.id, clienteId: c.clienteId, servico: c.servico, valor: c.valor, horasFeitas: c.horasFeitas, horasNecessarias: c.horasNecessarias, prazoDia: c.prazoDia, mensal: c.mensal })),
+        pendencias: a.pendencias,
+        quarto: a.quarto ? { proximoVencimento: a.quarto.proximoVencimento } : null,
+        negocios: a.negocios,
+      },
+      memoria: a.memoria,
+      precos: {
+        restPopRefeicao: pv('restPopRefeicao'), refeicaoComum: pv('refeicaoComum'), celularUsado: pv('celularUsado'),
+        chip: pv('chip'), notebookUsado: pv('notebookUsado'), quartoMes: pv('quartoMes'), pensaoNoite: pv('pensaoNoite'),
+        perfilGoogle: pv('perfilGoogle'), socialMediaMes: pv('socialMediaMes'), siteSimples: pv('siteSimples'),
+        salarioMinimo: pv('salarioMinimo'), dasMei: pv('dasMei'), bolsaFamilia: pv('bolsaFamilia'),
+      },
+    };
+    if (digital(w)) {
+      o.cenario = 'digital'; o.carreira = w.carreira;
+      o.agente.audiencia = a.audiencia; o.agente.plataforma = a.plataforma; o.agente.produto = a.produto;
+      o.agente.produtoHoras = a.produtoHoras; o.agente.afiliado = a.afiliado; o.agente.portfolioUGC = a.portfolioUGC;
+      o.precos.passagemOnibus = pv('passagemOnibus'); o.precos.trafegoMes = pv('trafegoMes'); o.precos.precoProduto = pv('precoProduto');
+      o.precos.horasProduto = pv('horasProduto');
+    }
+    return deepFreeze(clone(o));
+  }
+  function resumoObs(o) {
+    const a = o.agente;
+    return {
+      caixa: a.caixa, local: a.local, necessidades: a.necessidades, docs: a.docs, itens: a.itens, estrategia: a.estrategia,
+      emprego: a.emprego ? a.emprego.cargo : null, contratosAtivos: a.contratos.length, pendencias: a.pendencias.length,
+      leadsConhecidos: Object.keys(o.memoria.leads).length, vagasConhecidas: Object.keys(o.memoria.vagas).length,
+      ultimosFatos: o.memoria.fatos.slice(-5),
+    };
+  }
+
+  // ------------------------------------------------------------ ações
+  function falha(motivo) { return { ok: false, horas: 0, resultado: motivo }; }
+  function gastarEnergia(a, e) { a.necessidades.energia = clamp(a.necessidades.energia - e, 0, 100); }
+  function temEndereco(a) { return a.registros.centroPop || !!a.quarto; }
+  function negocioDoServico(w, servico) {
+    let n = w.agente.negocios.find((x) => x.servico === servico);
+    if (!n) { n = { servico, lancadoDia: w.dia, contratos: 0, receita: 0, status: 'ativo' }; w.agente.negocios.push(n); evento(w, 'NEGOCIO_CRIADO', 'Lançou o serviço ' + servico); }
+    return n;
+  }
+
+  const ACOES = {
+    REGISTRAR_CENTRO_POP(w, a) {
+      if (a.registros.centroPop) return falha('já registrado');
+      a.registros.centroPop = true; gastarEnergia(a, 6);
+      lembrar(w, 'Registrado no Centro POP: endereço de referência, albergue e Restaurante Popular gratuito.');
+      return { ok: true, horas: 3, resultado: 'registrado' };
+    },
+    PEDIR_RG(w, a) {
+      if (a.docs.rg || a.docs.rgPedido) return falha('RG já pedido');
+      if (!a.registros.centroPop) return falha('precisa da declaração do Centro POP para gratuidade');
+      a.docs.rgPedido = true; agendar(w, w.dia + pv('prazoRG'), 'rg_pronto'); gastarEnergia(a, 6);
+      a.pendencias.push({ tipo: 'rg', desde: w.dia });
+      return { ok: true, horas: 3, resultado: 'pedido feito' };
+    },
+    CADUNICO(w, a) {
+      if (a.registros.cadunico) return falha('já cadastrado');
+      if (!temEndereco(a)) return falha('sem endereço de referência');
+      a.registros.cadunico = true; a.beneficios.bf = 'em_analise';
+      agendar(w, w.dia + pv('prazoAnaliseBF'), 'analise_bf'); gastarEnergia(a, 6);
+      a.pendencias.push({ tipo: 'bolsa_familia', desde: w.dia });
+      return { ok: true, horas: 3, resultado: 'cadastrado' };
+    },
+    COMER(w, a, p) {
+      if (a.refeicoesHoje >= 3) return falha('limite de refeições');
+      if (p.opcao === 'popular') {
+        if (a.refeicoesHoje >= 2) return falha('Restaurante Popular: no máximo 2 refeições/dia');
+        const gratis = a.registros.centroPop && (a.local === 'rua' || a.local === 'albergue');
+        if (!gratis && !pagar(w, 'DESPESA', pv('restPopRefeicao'), 'MERCADO:restaurante_popular', 'Refeição no Restaurante Popular')) return falha('sem dinheiro');
+        a.necessidades.fome = clamp(a.necessidades.fome - 45, 0, 100); a.refeicoesHoje++;
+        return { ok: true, horas: 2, resultado: gratis ? 'refeição gratuita' : 'refeição R$3' };
+      }
+      if (!pagar(w, 'DESPESA', pv('refeicaoComum'), 'MERCADO:alimentacao', 'Marmita')) return falha('sem dinheiro');
+      a.necessidades.fome = clamp(a.necessidades.fome - 45, 0, 100); a.refeicoesHoje++;
+      return { ok: true, horas: 0.5, resultado: 'marmita' };
+    },
+    COMPRAR(w, a, p) {
+      const tabela = { celular: ['celularUsado', true], chip: ['chip', false], notebook: ['notebookUsado', true] };
+      const t = tabela[p.item];
+      if (!t) return falha('item desconhecido');
+      if (a.itens[p.item]) return falha('já possui');
+      if (p.item === 'chip' && !a.itens.celular) return falha('sem celular');
+      const preco = pv(t[0]);
+      if (!pagar(w, t[1] ? 'COMPRA_ATIVO' : 'DESPESA', preco, 'MERCADO:' + p.item, 'Compra de ' + p.item)) return falha('sem dinheiro');
+      a.itens[p.item] = true;
+      if (t[1]) a.ativos.push({ item: p.item, custo: preco, valorContabil: Math.round(preco * 0.6), compradoDia: w.dia, nota: 'valor de revenda estimado em 60%' });
+      if (p.item === 'chip') agendar(w, w.dia + 30, 'plano_celular');
+      return { ok: true, horas: p.item === 'chip' ? 0 : 2, resultado: 'comprou ' + p.item };
+    },
+    ALUGAR_QUARTO(w, a) {
+      if (a.quarto) return falha('já tem quarto');
+      if (!a.docs.rg) return falha('proprietário exige documento com foto');
+      const q = pv('quartoMes');
+      if (w.ledger.saldo < 2 * q) return falha('precisa de caução + 1º mês');
+      pagar(w, 'DEPOSITO_CAUCAO', q, 'LOCADOR:quarto', 'Caução do quarto (devolvível)');
+      pagar(w, 'DESPESA', q, 'LOCADOR:quarto', 'Aluguel do 1º mês');
+      a.ativos.push({ item: 'caucao', custo: q, valorContabil: q, compradoDia: w.dia, nota: 'depósito devolvível' });
+      a.quarto = { desde: w.dia, proximoVencimento: w.dia + 30 };
+      a.local = 'quarto'; agendar(w, w.dia + 30, 'aluguel');
+      lembrar(w, 'Alugou um quarto por ' + brl(q) + '/mês.');
+      return { ok: true, horas: 3, resultado: 'quarto alugado' };
+    },
+    DIARIA_BRACAL(w, a) {
+      if (a.necessidades.energia < 40) return falha('sem energia para trabalho braçal');
+      const c = a.memoria.crencas.diaria;
+      c.tentativas++; gastarEnergia(a, 45);
+      if (!rChance(w, pv('probDiaria'))) { lembrar(w, 'Procurou diária e não conseguiu.'); return { ok: true, horas: 5, resultado: 'não conseguiu diária' }; }
+      const valor = Math.round(rInt(w, pv('diariaMin'), pv('diariaMax')) / 500) * 500;
+      receber(w, 'RECEITA', valor, 'CONTRATANTE:diaria', 'Diária braçal');
+      registrarReceitaMemoria(w, 'diaria', valor);
+      c.sucessos++; c.soma += valor;
+      lembrar(w, 'Conseguiu diária: ' + brl(valor) + '.');
+      return { ok: true, horas: 10, resultado: 'diária ' + brl(valor) };
+    },
+    BUSCAR_VAGAS(w, a) {
+      const horas = a.itens.celular ? 1 : 2;
+      a.memoria.ultimaBuscaVagas = w.dia;
+      let n = 0;
+      for (const v of w.mundo.vagas) {
+        if (!v.preenchida && v.abertaAte >= w.dia && !a.memoria.vagas[v.id]) { a.memoria.vagas[v.id] = { id: v.id, cargo: v.cargo, salario: v.salario, requisitos: v.requisitos, abertaAte: v.abertaAte, vistaDia: w.dia, candidatado: false }; n++; }
+      }
+      return { ok: true, horas, resultado: n + ' vaga(s) nova(s) vista(s)' };
+    },
+    CANDIDATAR(w, a, p) {
+      const m = a.memoria.vagas[p.vagaId];
+      if (!m) return falha('vaga desconhecida');
+      const v = w.mundo.vagas.find((x) => x.id === p.vagaId);
+      if (!v || v.preenchida || v.abertaAte < w.dia) return falha('vaga encerrada');
+      if (m.candidatado) return falha('já candidatado');
+      if (a.emprego) return falha('já empregado');
+      const faltam = [];
+      if (!a.docs.rg) faltam.push('rg');
+      if (!a.itens.celular) faltam.push('celular');
+      if (!temEndereco(a)) faltam.push('endereco');
+      if (faltam.length) return falha('requisitos faltando: ' + faltam.join(', '));
+      m.candidatado = true;
+      a.pendencias.push({ tipo: 'candidatura', vagaId: v.id, desde: w.dia });
+      agendar(w, w.dia + rInt(w, 3, 8), 'resultado_candidatura', { vagaId: v.id });
+      return { ok: true, horas: 1, resultado: 'candidatura enviada' };
+    },
+    TRABALHAR_EMPREGO(w, a) {
+      if (!trabalhaHoje(a, w.dia)) return falha('não é dia de trabalho');
+      if (a.emprego.trabalhouDia === w.dia) return falha('já trabalhou hoje');
+      a.emprego.trabalhouDia = w.dia; a.emprego.diasCiclo++; gastarEnergia(a, 40);
+      return { ok: true, horas: 9, resultado: 'trabalhou' };
+    },
+    ESTUDAR(w, a, p) {
+      const area = p.area;
+      if (!(area in a.skills)) return falha('área inválida');
+      const viaTelecentro = !a.itens.celular;
+      const ganho = 0.15;
+      a.skills[area] = Math.round(clamp(a.skills[area] + ganho, 0, 10) * 100) / 100; gastarEnergia(a, 8);
+      return { ok: true, horas: viaTelecentro ? 4 : 3, resultado: area + ' → ' + a.skills[area] + (viaTelecentro ? ' (telecentro)' : ' (Wi-Fi BH)') };
+    },
+    PROSPECTAR(w, a, p) {
+      const horas = clamp(p.horas | 0, 1, 6);
+      if (a.necessidades.energia < 5 * horas) return falha('sem energia');
+      const desconhecidos = w.mundo.negocios.filter((n) => !a.memoria.leads[n.id]);
+      let n = 0, porHora = 3, aPe = false;
+      if (digital(w)) {
+        const ida = pv('passagemOnibus') * 2;
+        if (w.ledger.saldo >= ida) pagar(w, 'DESPESA', ida, 'TRANSPORTE:onibus_bh', 'Ônibus ida e volta para prospectar');
+        else { porHora = 2; aPe = true; }
+      }
+      for (let i = 0; i < horas * porHora && desconhecidos.length; i++) {
+        const idx = rInt(w, 0, desconhecidos.length - 1);
+        const neg = desconhecidos.splice(idx, 1)[0];
+        a.memoria.leads[neg.id] = { id: neg.id, nome: neg.nome, tipo: neg.tipo, bairro: neg.bairro, temPerfilGoogle: neg.temPerfilGoogle, instagramAtivo: neg.instagramAtivo, visitadoDia: w.dia, propostas: [] };
+        n++;
+      }
+      gastarEnergia(a, (aPe ? 7 : 5) * horas);
+      return { ok: true, horas, resultado: n + ' comércio(s) visitado(s)' + (aPe ? ' a pé (sem dinheiro para ônibus)' : '') };
+    },
+    PROPOR(w, a, p) {
+      const lead = a.memoria.leads[p.leadId];
+      if (!lead) return falha('comércio não conhecido');
+      const s = SERVICOS[p.servico];
+      if (!s || p.servico === 'freela' || p.servico === 'ugc') return falha('serviço inválido');
+      if ((p.servico === 'trafego_pago') && !digital(w)) return falha('serviço inválido');
+      if (p.servico === 'trafego_pago') {
+        if (a.skills.marketing < 6) return falha('tráfego pago exige marketing ≥ 6');
+        if (!a.contratos.some((c) => c.status === 'ativo' && c.clienteId === lead.id && c.servico === 'social_media')) return falha('tráfego só para cliente de social media');
+      }
+      for (const r of s.requer) if (!a.itens[r] && !(digital(w) && r === 'notebook')) return falha('precisa de ' + r);
+      if (!Number.isInteger(p.preco) || p.preco <= 0) return falha('preço inválido');
+      if (lead.propostas.some((x) => x.resultado === 'pendente')) return falha('já existe proposta pendente');
+      if (a.contratos.some((c) => c.status === 'ativo' && c.clienteId === lead.id && c.servico === p.servico)) return falha('já é cliente desse serviço');
+      negocioDoServico(w, p.servico);
+      const pid = 'P' + (++w.contadores.prop);
+      const prop = { id: pid, dia: w.dia, servico: p.servico, preco: p.preco, resultado: 'pendente' };
+      if (p.frente) prop.frente = p.frente;
+      lead.propostas.push(prop);
+      a.memoria.crencas.propostas.enviadas++;
+      a.pendencias.push({ tipo: 'proposta', propostaId: pid, leadId: lead.id, desde: w.dia });
+      agendar(w, w.dia + rInt(w, 1, 5), 'resposta_proposta', { propostaId: pid, leadId: lead.id });
+      gastarEnergia(a, 3);
+      return { ok: true, horas: 1, resultado: 'proposta ' + pid + ' enviada' };
+    },
+    TRABALHAR_CONTRATOS(w, a, p) {
+      let horas = clamp(Number(p.horas) || 0, 0, 10);
+      const ativos = a.contratos.filter((c) => c.status === 'ativo' && c.horasFeitas < c.horasNecessarias).sort((x, y) => x.prazoDia - y.prazoDia);
+      if (!ativos.length) return falha('nenhum contrato com horas pendentes');
+      let usadas = 0, horasPC = 0, viagem = 0;
+      for (const c of ativos) {
+        if (horas <= 0) break;
+        const req = (SERVICOS[c.servico] || SERVICOS.freela).requer;
+        const viaTelecentro = digital(w) && req.includes('notebook') && !a.itens.notebook;
+        if (req.some((r) => !a.itens[r] && !(viaTelecentro && r === 'notebook'))) continue;
+        let h = Math.min(horas, c.horasNecessarias - c.horasFeitas);
+        if (viaTelecentro) {
+          if (!viagem && horas < 2) continue;
+          if (!viagem) { viagem = 1; horas -= 1; }
+          h = Math.min(h, horas, pv('telecentroHoras') - horasPC);
+          if (h <= 0) continue;
+          horasPC += h;
+        }
+        c.horasFeitas += h; horas -= h; usadas += h;
+        if (!c.mensal && c.horasFeitas >= c.horasNecessarias) concluirAvulso(w, c);
+      }
+      gastarEnergia(a, 3 * usadas);
+      return { ok: usadas > 0, horas: usadas + (usadas > 0 ? viagem : 0), resultado: usadas + 'h entregues' + (viagem ? ' (computador do telecentro)' : '') };
+    },
+    CLIPPING(w, a, p) {
+      if (!a.itens.celular) return falha('precisa de celular');
+      const posts = clamp(p.posts | 0, 1, 4);
+      agendar(w, w.dia + 21, 'pagamento_clipping', { posts, diaPost: w.dia });
+      a.pendencias.push({ tipo: 'clipping', desde: w.dia, posts });
+      gastarEnergia(a, 3 * posts);
+      return { ok: true, horas: posts, resultado: posts + ' corte(s) postado(s); pagamento só depois da apuração' };
+    },
+    ABRIR_MEI(w, a) {
+      if (a.mei) return falha('já é MEI');
+      if (!a.itens.celular) return falha('precisa de celular para o portal');
+      a.mei = true; agendar(w, w.dia + 30, 'das');
+      lembrar(w, 'Abriu MEI. DAS mensal ' + brl(pv('dasMei')) + '.');
+      return { ok: true, horas: 1, resultado: 'MEI aberto' };
+    },
+    PAGAR_DIVIDA(w, a, p) {
+      const d = a.dividas.find((x) => x.id === p.dividaId && x.saldo > 0);
+      if (!d) return falha('dívida não encontrada');
+      if (!pagar(w, 'PAGAMENTO_DIVIDA', d.saldo, d.credor, 'Quitação: ' + d.descricao)) return falha('sem dinheiro');
+      d.saldo = 0;
+      return { ok: true, horas: 0.5, resultado: 'dívida quitada' };
+    },
+    PROSPECTAR_ONLINE(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      const msgs = clamp(p.mensagens | 0, 1, 45);
+      const pool = w.mundo.online.filter((n) => !a.memoria.leads[n.id] && !(a.memoria.contatadosOnline || {})[n.id]);
+      a.memoria.contatadosOnline = a.memoria.contatadosOnline || {};
+      let enviadas = 0, respostas = 0;
+      for (let i = 0; i < msgs && pool.length; i++) {
+        const neg = pool.splice(rInt(w, 0, pool.length - 1), 1)[0];
+        a.memoria.contatadosOnline[neg.id] = w.dia; enviadas++;
+        if (rChance(w, pv('respostaFrio'))) {
+          respostas++;
+          a.memoria.leads[neg.id] = { id: neg.id, nome: neg.nome, tipo: neg.tipo, bairro: neg.bairro, temPerfilGoogle: neg.temPerfilGoogle, instagramAtivo: neg.instagramAtivo, visitadoDia: w.dia, propostas: [], canal: 'online' };
+        }
+      }
+      gastarEnergia(a, 2 * Math.ceil(msgs / pv('mensagensPorHora')));
+      return { ok: true, horas: Math.ceil(enviadas / pv('mensagensPorHora')) || 1, resultado: enviadas + ' mensagens, ' + respostas + ' resposta(s)' };
+    },
+    BUSCAR_FREELAS(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      let n = 0;
+      for (const pj of w.mundo.projetos) if (!pj.fechado && pj.abertoAte >= w.dia && !a.memoria.projetos[pj.id]) {
+        a.memoria.projetos[pj.id] = { id: pj.id, categoria: pj.categoria, orcamento: pj.orcamento, horas: pj.horas, prazo: pj.prazo, abertoAte: pj.abertoAte, propostasQuandoViu: pj.propostasAtuais, vistoDia: w.dia, proposta: null };
+        n++;
+      }
+      return { ok: true, horas: 0.5, resultado: n + ' projeto(s) novo(s) na plataforma' };
+    },
+    PROPOR_FREELA(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      const m = a.memoria.projetos[p.projetoId];
+      if (!m) return falha('projeto desconhecido');
+      const pj = w.mundo.projetos.find((x) => x.id === p.projetoId);
+      if (!pj || pj.fechado || pj.abertoAte < w.dia) return falha('projeto encerrado');
+      if (m.proposta) return falha('já enviou proposta');
+      if (!Number.isInteger(p.preco) || p.preco <= 0) return falha('preço inválido');
+      const hoje = Object.values(a.memoria.projetos).filter((x) => x.proposta && x.proposta.dia === w.dia).length;
+      if (hoje >= 10) return falha('limite de 10 propostas por dia na plataforma');
+      m.proposta = { dia: w.dia, preco: p.preco, resultado: 'pendente', frente: p.frente || 'freela' };
+      a.pendencias.push({ tipo: 'proposta_freela', projetoId: pj.id, desde: w.dia });
+      agendar(w, w.dia + rInt(w, 2, 6), 'resultado_freela', { projetoId: pj.id });
+      negocioDoServico(w, 'freela');
+      return { ok: true, horas: 0.5, resultado: 'proposta enviada para ' + pj.id };
+    },
+    PRODUZIR_PORTFOLIO_UGC(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      if (a.portfolioUGC >= 5) return falha('portfólio já completo');
+      a.portfolioUGC++; gastarEnergia(a, 8);
+      return { ok: true, horas: 3, resultado: 'vídeo de portfólio ' + a.portfolioUGC + '/5' };
+    },
+    BUSCAR_CAMPANHAS(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      let n = 0;
+      for (const c of w.mundo.campanhas) if (!c.fechada && c.abertaAte >= w.dia && !a.memoria.campanhas[c.id]) { a.memoria.campanhas[c.id] = { id: c.id, marca: c.marca, valor: c.valor, abertaAte: c.abertaAte, candidatado: false }; n++; }
+      return { ok: true, horas: 0.5, resultado: n + ' campanha(s) UGC nova(s)' };
+    },
+    CANDIDATAR_UGC(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      const m = a.memoria.campanhas[p.campanhaId];
+      if (!m) return falha('campanha desconhecida');
+      const c = w.mundo.campanhas.find((x) => x.id === p.campanhaId);
+      if (!c || c.fechada || c.abertaAte < w.dia) return falha('campanha encerrada');
+      if (m.candidatado) return falha('já candidatado');
+      if (a.portfolioUGC < 2) return falha('precisa de ao menos 2 vídeos de portfólio');
+      m.candidatado = true;
+      a.pendencias.push({ tipo: 'candidatura_ugc', campanhaId: c.id, desde: w.dia });
+      agendar(w, w.dia + rInt(w, 2, 6), 'resultado_ugc', { campanhaId: c.id });
+      negocioDoServico(w, 'ugc');
+      return { ok: true, horas: 0.5, resultado: 'candidatura enviada para ' + c.marca };
+    },
+    POSTAR_CONTEUDO(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      const posts = clamp(p.posts | 0, 1, 4);
+      let ganho = 0, viral = 0;
+      for (let i = 0; i < posts; i++) {
+        ganho += Math.round(Math.exp(1.2 + 0.9 * rNormal(w))) + Math.floor(a.audiencia.seguidores * 0.003);
+        if (rChance(w, 0.02)) viral += rInt(w, 200, 3000);
+      }
+      a.audiencia.seguidores += ganho + Math.round(viral * 0.05);
+      a.audiencia.posts += posts;
+      const alcance = a.audiencia.seguidores * 0.2 * posts + viral;
+      let txt = '+' + (ganho + Math.round(viral * 0.05)) + ' seguidores' + (viral ? ' (um post viralizou)' : '');
+      if (a.afiliado) {
+        const cliques = Math.round(alcance * 0.03);
+        const vendas = binomial(w, cliques, pv('afiliadoConversao'));
+        const comissao = Math.round(vendas * pv('ticketAfiliado') * pv('afiliadoComissao'));
+        a.pendenteAfiliado += comissao;
+        txt += '; ' + cliques + ' cliques, ' + vendas + ' venda(s) de afiliado (comissão ' + brl(comissao) + ' a receber)';
+      }
+      if (a.produto) {
+        const visitas = Math.round(alcance * 0.01);
+        const vendas = binomial(w, visitas, 0.01);
+        if (vendas > 0) { agendar(w, w.dia + pv('pagamentoKiwify'), 'pagamento_produto', { vendas }); a.pendencias.push({ tipo: 'saque_produto', desde: w.dia, vendas }); }
+        txt += '; ' + visitas + ' visita(s) na página, ' + vendas + ' venda(s) do produto';
+      }
+      gastarEnergia(a, 3 * posts);
+      return { ok: true, horas: posts, resultado: txt };
+    },
+    ATIVAR_AFILIADO(w, a) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      if (a.afiliado) return falha('já é afiliado');
+      a.afiliado = true; agendar(w, w.dia + 30, 'pagamento_afiliado'); negocioDoServico(w, 'afiliado');
+      lembrar(w, 'Cadastrou-se como afiliado Shopee. Comissão paga por mês.');
+      return { ok: true, horas: 1, resultado: 'afiliado ativo' };
+    },
+    CRIAR_PRODUTO(w, a, p) {
+      if (!digital(w)) return falha('ação do cenário digital');
+      if (!a.itens.celular) return falha('precisa de celular');
+      if (a.produto) return falha('produto já publicado');
+      const h = clamp(Number(p.horas) || 3, 1, 6);
+      a.produtoHoras += h; gastarEnergia(a, 3 * h);
+      if (a.produtoHoras >= pv('horasProduto')) {
+        a.produto = { preco: pv('precoProduto'), publicadoDia: w.dia, vendas: 0 };
+        negocioDoServico(w, 'produto_digital');
+        lembrar(w, 'Publicou o produto digital por ' + brl(pv('precoProduto')) + ' na Kiwify.');
+        return { ok: true, horas: h, resultado: 'produto publicado' };
+      }
+      return { ok: true, horas: h, resultado: 'produto ' + a.produtoHoras + '/' + pv('horasProduto') + 'h' };
+    },
+    DESCANSAR(w, a, p) {
+      const h = clamp(Number(p.horas) || 2, 1, 8);
+      a.necessidades.energia = clamp(a.necessidades.energia + 4 * h, 0, 100);
+      return { ok: true, horas: h, resultado: 'descansou' };
+    },
+    DORMIR(w, a, p) {
+      const onde = p.onde;
+      if (onde === 'quarto') { if (!a.quarto) return falha('sem quarto'); a.noite = 'quarto'; return { ok: true, horas: 0, resultado: 'quarto' }; }
+      if (onde === 'albergue') {
+        if (!a.registros.centroPop) return falha('albergue exige encaminhamento');
+        if (rChance(w, pv('probVagaAlbergue'))) { a.noite = 'albergue'; a.local = 'albergue'; return { ok: true, horas: 0, resultado: 'vaga no albergue' }; }
+        a.noite = 'rua'; a.local = 'rua'; return { ok: false, horas: 0, resultado: 'sem vaga no albergue; dormiu na rua' };
+      }
+      if (onde === 'pensao') {
+        if (!pagar(w, 'DESPESA', pv('pensaoNoite'), 'MERCADO:pensao', 'Pernoite em pensão')) { a.noite = 'rua'; return falha('sem dinheiro para pensão; dormiu na rua'); }
+        a.noite = 'pensao'; return { ok: true, horas: 0, resultado: 'pensão' };
+      }
+      a.noite = 'rua'; if (!a.quarto) a.local = 'rua';
+      return { ok: true, horas: 0, resultado: 'rua' };
+    },
+  };
+
+  function concluirAvulso(w, c) {
+    const a = w.agente;
+    c.status = 'concluido';
+    a.portfolio++;
+    if (c.plataforma) {
+      const nota = rChance(w, 0.85) ? 5 : 4;
+      a.plataforma.avaliacoes++; a.plataforma.somaNotas += nota;
+      agendar(w, w.dia + pv('liberacaoPlataforma'), 'liberacao_freela', { contratoId: c.id });
+      lembrar(w, 'Entregou ' + c.id + ' na plataforma (nota ' + nota + '). Pagamento liberado em ' + pv('liberacaoPlataforma') + ' dias.');
+      return;
+    }
+    if (c.servico === 'ugc') {
+      agendar(w, w.dia + pv('pagamentoUGC'), 'pagamento_ugc', { contratoId: c.id });
+      lembrar(w, 'Entregou o vídeo UGC ' + c.id + '. A marca paga em ' + pv('pagamentoUGC') + ' dias.');
+      return;
+    }
+    const neg = a.negocios.find((x) => x.servico === c.servico);
+    const aPagar = c.valor - c.pago;
+    if (aPagar > 0) {
+      if (rChance(w, pv('probCalote'))) {
+        evento(w, 'CALOTE', 'Cliente ' + c.clienteId + ' não pagou ' + brl(aPagar));
+        lembrar(w, 'Calote de ' + brl(aPagar) + ' em ' + c.servico + '.');
+      } else {
+        receber(w, 'RECEITA', aPagar, 'CLIENTE:' + c.clienteId, 'Entrega de ' + c.servico + ' (' + c.id + ')');
+        registrarReceitaMemoria(w, c.servico, aPagar, c.frente); c.pago += aPagar; if (neg) neg.receita += aPagar;
+        lembrar(w, 'Entregou ' + c.servico + ' para ' + c.clienteId + ' e recebeu ' + brl(aPagar) + '.');
+      }
+    }
+  }
+
+  // ------------------------------------------------------------ agenda: resolução
+  function resolverAgenda(w) {
+    const a = w.agente;
+    const hoje = w.oculto.agenda.filter((e) => e.dia === w.dia);
+    w.oculto.agenda = w.oculto.agenda.filter((e) => e.dia !== w.dia);
+    for (const e of hoje) {
+      const d = e.dados;
+      switch (e.tipo) {
+        case 'rg_pronto':
+          a.docs.rg = true; a.docs.rgPedido = false; a.pendencias = a.pendencias.filter((p) => p.tipo !== 'rg');
+          evento(w, 'RG_PRONTO', 'RG pronto'); lembrar(w, 'RG ficou pronto.'); break;
+        case 'analise_bf': {
+          a.pendencias = a.pendencias.filter((p) => p.tipo !== 'bolsa_familia');
+          const renda = renda30(w);
+          if (renda <= pv('bolsaFamiliaLimite')) {
+            a.beneficios.bf = 'ativo';
+            receber(w, 'BENEFICIO', pv('bolsaFamilia'), 'GOVERNO:bolsa_familia', 'Bolsa Família (renda dos últimos 30 dias: ' + brl(renda) + ')');
+            registrarReceitaMemoria(w, 'bolsa_familia', pv('bolsaFamilia'));
+            agendar(w, w.dia + 30, 'pagamento_bf'); evento(w, 'BF_APROVADO', 'Bolsa Família aprovado'); lembrar(w, 'Bolsa Família aprovado.');
+          } else { a.beneficios.bf = 'negado'; evento(w, 'BF_NEGADO', 'Renda acima do limite'); lembrar(w, 'Bolsa Família negado: renda de ' + brl(renda) + ' em 30 dias.'); }
+          break;
+        }
+        case 'pagamento_bf':
+          if (a.beneficios.bf !== 'ativo') break;
+          if (renda30(w) > pv('meioSalarioMinimo')) { a.beneficios.bf = 'encerrado'; evento(w, 'BF_ENCERRADO', 'Renda passou de meio salário mínimo'); lembrar(w, 'Bolsa Família encerrado: renda subiu.'); break; }
+          receber(w, 'BENEFICIO', pv('bolsaFamilia'), 'GOVERNO:bolsa_familia', 'Bolsa Família'); registrarReceitaMemoria(w, 'bolsa_familia', pv('bolsaFamilia'));
+          agendar(w, w.dia + 30, 'pagamento_bf'); break;
+        case 'resposta_proposta': resolverProposta(w, d); break;
+        case 'resultado_candidatura': resolverCandidatura(w, d); break;
+        case 'salario': {
+          if (!a.emprego || a.emprego.id !== d.empregoId) break;
+          const prop = Math.min(a.emprego.diasCiclo / 26, 1);
+          const valor = Math.round(a.emprego.salario * pv('liquidoCLT') * prop);
+          if (valor > 0) { receber(w, 'RECEITA', valor, 'EMPREGADOR:' + a.emprego.vagaId, 'Salário líquido (' + a.emprego.diasCiclo + ' dias)'); registrarReceitaMemoria(w, 'salario', valor); lembrar(w, 'Recebeu salário de ' + brl(valor) + '.'); }
+          a.emprego.diasCiclo = 0; agendar(w, w.dia + 30, 'salario', d); break;
+        }
+        case 'pagamento_clipping': {
+          a.pendencias = a.pendencias.filter((p) => !(p.tipo === 'clipping' && p.desde === d.diaPost));
+          let views = 0;
+          const habil = (a.skills.marketing + a.skills.tecnologia) / 20;
+          for (let i = 0; i < d.posts; i++) { if (rChance(w, 0.35)) continue; views += Math.round(Math.exp(5.5 + 1.5 * habil + 1.2 * rNormal(w))); }
+          const porMil = digital(w) ? Math.round(pv('clippingUSDporMil') * pv('usdBrl')) : pv('clippingPorMil');
+          const valor = Math.round(views / 1000 * porMil);
+          if (valor > 0) { receber(w, 'RECEITA', valor, 'PLATAFORMA:clipping', 'Clipping: ' + views + ' views em ' + d.posts + ' cortes'); registrarReceitaMemoria(w, 'clipping', valor, digital(w) ? 'clipping' : undefined); const n = negocioDoServico(w, 'clipping'); n.receita += valor; }
+          lembrar(w, 'Cortes do dia ' + d.diaPost + ': ' + views + ' views, ' + brl(valor) + '.');
+          break;
+        }
+        case 'ciclo_contrato': resolverCicloContrato(w, d); break;
+        case 'aluguel':
+          if (!a.quarto) break;
+          if (pagar(w, 'DESPESA', pv('quartoMes'), 'LOCADOR:quarto', 'Aluguel mensal')) { a.quarto.proximoVencimento = w.dia + 30; agendar(w, w.dia + 30, 'aluguel'); }
+          else { evento(w, 'DESPEJO', 'Sem dinheiro para o aluguel'); lembrar(w, 'Despejado: não tinha o aluguel. Caução retida.'); a.quarto = null; a.local = 'rua'; a.ativos = a.ativos.filter((x) => x.item !== 'caucao'); }
+          break;
+        case 'plano_celular':
+          if (!a.itens.chip) break;
+          if (pagar(w, 'DESPESA', pv('planoCelular'), 'OPERADORA', 'Recarga de dados')) agendar(w, w.dia + 30, 'plano_celular');
+          else { lembrar(w, 'Sem recarga: só internet no Wi-Fi BH.'); agendar(w, w.dia + 30, 'plano_celular'); }
+          break;
+        case 'das':
+          if (!a.mei) break;
+          if (!pagar(w, 'IMPOSTO', pv('dasMei'), 'RECEITA_FEDERAL:DAS', 'DAS MEI')) {
+            a.dividas.push({ id: 'D' + w.dia, credor: 'RECEITA_FEDERAL:DAS', descricao: 'DAS MEI em atraso (dia ' + w.dia + ')', saldo: pv('dasMei'), desde: w.dia });
+            lembrar(w, 'DAS não pago: virou dívida.');
+          }
+          agendar(w, w.dia + 30, 'das'); break;
+        case 'resultado_freela': resolverFreela(w, d); break;
+        case 'resultado_ugc': resolverUGC(w, d); break;
+        case 'liberacao_freela': {
+          const c = a.contratos.find((x) => x.id === d.contratoId);
+          const taxa = Math.round(c.valor * pv('taxaWorkana'));
+          receberBrutoComTaxa(w, c.valor, taxa, 'PLATAFORMA:freela', 'PLATAFORMA:taxa_freela', 'Projeto ' + c.projetoId, 'freela', c.frente);
+          c.pago = c.valor; const neg = a.negocios.find((x) => x.servico === 'freela'); if (neg) neg.receita += c.valor - taxa;
+          lembrar(w, 'Plataforma liberou ' + brl(c.valor - taxa) + ' líquidos do projeto ' + c.projetoId + '.');
+          break;
+        }
+        case 'pagamento_ugc': {
+          const c = a.contratos.find((x) => x.id === d.contratoId);
+          if (rChance(w, pv('probCalote'))) { evento(w, 'CALOTE', 'Marca não pagou o UGC ' + c.id); lembrar(w, 'A marca não pagou o UGC ' + c.id + '.'); break; }
+          receber(w, 'RECEITA', c.valor, 'MARCA:' + c.clienteId, 'Vídeo UGC (' + c.id + ')'); registrarReceitaMemoria(w, 'ugc', c.valor, c.frente);
+          c.pago = c.valor; const neg = a.negocios.find((x) => x.servico === 'ugc'); if (neg) neg.receita += c.valor;
+          lembrar(w, 'Recebeu ' + brl(c.valor) + ' do UGC ' + c.id + '.');
+          break;
+        }
+        case 'pagamento_afiliado': {
+          const v = a.pendenteAfiliado;
+          if (v > 0) { receber(w, 'RECEITA', v, 'PLATAFORMA:shopee_afiliados', 'Comissões de afiliado do mês'); registrarReceitaMemoria(w, 'afiliado', v, 'afiliado'); a.pendenteAfiliado = 0; const neg = a.negocios.find((x) => x.servico === 'afiliado'); if (neg) neg.receita += v; }
+          lembrar(w, 'Fechamento de afiliado: ' + brl(v) + '.');
+          agendar(w, w.dia + 30, 'pagamento_afiliado'); break;
+        }
+        case 'pagamento_produto': {
+          { const desde = w.dia - pv('pagamentoKiwify'); const i = a.pendencias.findIndex((p) => p.tipo === 'saque_produto' && p.desde === desde && p.vendas === d.vendas); if (i >= 0) a.pendencias.splice(i, 1); }
+          const bruto = d.vendas * a.produto.preco;
+          const taxa = d.vendas * (Math.round(a.produto.preco * pv('kiwifyPct')) + pv('kiwifyFixa')) + pv('kiwifySaque');
+          receberBrutoComTaxa(w, bruto, taxa, 'PLATAFORMA:kiwify', 'PLATAFORMA:taxa_kiwify', d.vendas + ' venda(s) do produto digital', 'produto_digital', 'produto');
+          a.produto.vendas += d.vendas; const neg = a.negocios.find((x) => x.servico === 'produto_digital'); if (neg) neg.receita += bruto - taxa;
+          lembrar(w, 'Saque de ' + d.vendas + ' venda(s) do produto: ' + brl(bruto - taxa) + ' líquidos.');
+          break;
+        }
+        default: throw new Error('evento de agenda desconhecido: ' + e.tipo);
+      }
+    }
+  }
+
+  function renda30(w) {
+    return w.ledger.tx.filter((t) => t.tipo === 'RECEITA' && t.dia > w.dia - 30).reduce((s, t) => s + t.valor, 0);
+  }
+
+  function resolverProposta(w, d) {
+    const a = w.agente;
+    a.pendencias = a.pendencias.filter((p) => p.propostaId !== d.propostaId);
+    const lead = a.memoria.leads[d.leadId];
+    const prop = lead.propostas.find((x) => x.id === d.propostaId);
+    const pub = negocioPorId(w, d.leadId);
+    const hid = w.oculto.negocios[d.leadId];
+    const need = { perfil_google: pub.temPerfilGoogle ? 0.15 : 0.9, social_media: pub.instagramAtivo ? 0.3 : 0.7, site: 0.25, trafego_pago: 0.5 }[prop.servico];
+    const orc = { perfil_google: hid.orcamento * 0.5, social_media: hid.orcamento, site: hid.orcamento * 1.2, trafego_pago: hid.orcamento * 0.8 }[prop.servico];
+    const fatorPreco = clamp(orc / prop.preco, 0, 1.5);
+    const habil = (a.skills.marketing + a.skills.tecnologia + a.skills.negocios) / 30;
+    const prova = Math.min(a.portfolio, 6) / 6;
+    const p = orc < prop.preco * 0.6 ? 0 : clamp(pv('fatorAceite') * need * hid.abertura * (0.35 + 0.4 * habil + 0.25 * prova) * Math.pow(fatorPreco, 1.5) * (a.mei && prop.servico !== 'perfil_google' ? 1.1 : 1), 0, 0.5);
+    const crencas = a.memoria.crencas.propostas;
+    if (!rChance(w, p)) {
+      prop.resultado = 'recusada'; crencas.recusadas++; a.memoria.crencas.rejeicoesSeguidas++;
+      lembrar(w, lead.nome + ' recusou ' + prop.servico + ' a ' + brl(prop.preco) + '.');
+      return;
+    }
+    prop.resultado = 'aceita'; crencas.aceitas++; a.memoria.crencas.rejeicoesSeguidas = 0;
+    const s = SERVICOS[prop.servico];
+    const c = { id: 'C' + (++w.contadores.ctr), clienteId: lead.id, servico: prop.servico, valor: prop.preco, pago: 0, horasFeitas: 0, horasNecessarias: s.horas, inicioDia: w.dia, prazoDia: w.dia + s.prazo, mensal: s.mensal, status: 'ativo', ciclos: 0 };
+    if (prop.frente) c.frente = prop.frente;
+    a.contratos.push(c);
+    const neg = negocioDoServico(w, prop.servico); neg.contratos++;
+    evento(w, 'CONTRATO', lead.nome + ' fechou ' + prop.servico + ' por ' + brl(prop.preco), { contrato: c.id });
+    lembrar(w, lead.nome + ' aceitou ' + prop.servico + ' por ' + brl(prop.preco) + '.');
+    if (s.mensal) {
+      receber(w, 'RECEITA', c.valor, 'CLIENTE:' + lead.id, '1º mês adiantado de ' + prop.servico + ' (' + c.id + ')');
+      registrarReceitaMemoria(w, prop.servico, c.valor, c.frente); c.pago += c.valor; neg.receita += c.valor;
+      agendar(w, w.dia + 30, 'ciclo_contrato', { contratoId: c.id });
+    } else if (prop.servico === 'site') {
+      const sinal = Math.round(c.valor / 2);
+      receber(w, 'RECEITA', sinal, 'CLIENTE:' + lead.id, 'Sinal de 50% do site (' + c.id + ')');
+      registrarReceitaMemoria(w, 'site', sinal, c.frente); c.pago += sinal; neg.receita += sinal;
+    }
+  }
+
+  function resolverCicloContrato(w, d) {
+    const a = w.agente;
+    const c = a.contratos.find((x) => x.id === d.contratoId);
+    if (!c || c.status !== 'ativo') return;
+    const entregou = c.horasFeitas >= c.horasNecessarias * 0.8;
+    const churn = pv('churnMensal') + (entregou ? 0 : 0.35);
+    c.ciclos++;
+    if (rChance(w, churn)) {
+      c.status = 'cancelado'; a.reputacaoQuedas = (a.reputacaoQuedas || 0) + (entregou ? 0 : 1);
+      evento(w, 'CANCELAMENTO', 'Cliente ' + c.clienteId + ' cancelou ' + c.servico);
+      lembrar(w, 'Cliente ' + c.clienteId + ' cancelou ' + c.servico + (entregou ? '.' : ' (entrega abaixo do combinado).'));
+      return;
+    }
+    if (entregou) a.portfolio++;
+    c.horasFeitas = 0; c.prazoDia = w.dia + 30;
+    if (rChance(w, pv('probCalote'))) { lembrar(w, 'Cliente ' + c.clienteId + ' atrasou a mensalidade e não pagou.'); evento(w, 'CALOTE', 'Mensalidade não paga ' + c.id); }
+    else {
+      receber(w, 'RECEITA', c.valor, 'CLIENTE:' + c.clienteId, 'Mensalidade de ' + c.servico + ' (' + c.id + ')');
+      registrarReceitaMemoria(w, c.servico, c.valor, c.frente); c.pago += c.valor;
+      const neg = a.negocios.find((x) => x.servico === c.servico); if (neg) neg.receita += c.valor;
+    }
+    agendar(w, w.dia + 30, 'ciclo_contrato', d);
+  }
+
+  function resolverCandidatura(w, d) {
+    const a = w.agente;
+    a.pendencias = a.pendencias.filter((p) => !(p.tipo === 'candidatura' && p.vagaId === d.vagaId));
+    const v = w.mundo.vagas.find((x) => x.id === d.vagaId);
+    const conc = w.oculto.vagas[d.vagaId].concorrentes;
+    if (a.emprego || v.preenchida) { lembrar(w, 'Vaga ' + d.vagaId + ': processo encerrado.'); return; }
+    const p = clamp((0.9 / (1 + conc / 10)) * (0.7 + 0.075 * a.skills.negocios), 0.03, 0.6);
+    if (!rChance(w, p)) { lembrar(w, 'Não foi aprovado na vaga ' + d.vagaId + ' (' + v.cargo + ').'); return; }
+    v.preenchida = true;
+    a.emprego = { id: 'E' + w.dia, vagaId: v.id, cargo: v.cargo, salario: v.salario, inicio: w.dia + 2, faltas: 0, diasCiclo: 0, trabalhouDia: 0 };
+    agendar(w, w.dia + 2 + 30, 'salario', { empregoId: a.emprego.id });
+    evento(w, 'CONTRATADO', 'Contratado como ' + v.cargo + ' (' + brl(v.salario) + ')');
+    lembrar(w, 'Aprovado como ' + v.cargo + ', salário ' + brl(v.salario) + '. Começa no dia ' + a.emprego.inicio + '.');
+  }
+
+  function resolverFreela(w, d) {
+    const a = w.agente;
+    a.pendencias = a.pendencias.filter((p) => !(p.tipo === 'proposta_freela' && p.projetoId === d.projetoId));
+    const m = a.memoria.projetos[d.projetoId];
+    const pj = w.mundo.projetos.find((x) => x.id === d.projetoId) || { fechado: true };
+    if (pj.fechado) { m.proposta.resultado = 'perdida'; lembrar(w, 'Projeto ' + d.projetoId + ' fechou com outra pessoa.'); return; }
+    const cat = CATEGORIAS_FREELA.find((c) => c[0] === pj.categoria);
+    const habil = a.skills[cat[5]] / 10;
+    const aval = Math.min(a.plataforma.avaliacoes, 10) / 10;
+    const conc = w.oculto.projetos[d.projetoId].concorrentes;
+    const fatorPreco = clamp(pj.orcamento / m.proposta.preco, 0, 1.3);
+    const p = clamp((1 / (1 + conc / 6)) * (0.3 + 0.5 * habil + 0.2 * aval) * Math.pow(fatorPreco, 1.5) * (a.plataforma.avaliacoes === 0 ? 0.6 : 1), 0, 0.5);
+    if (!rChance(w, p)) { m.proposta.resultado = 'perdida'; if (rChance(w, 0.5)) pj.fechado = true; lembrar(w, 'Não ganhou o projeto ' + pj.id + ' (' + pj.categoria + ').'); return; }
+    pj.fechado = true; m.proposta.resultado = 'ganha';
+    const c = { id: 'C' + (++w.contadores.ctr), clienteId: 'PLATAFORMA', projetoId: pj.id, servico: 'freela', categoria: pj.categoria, valor: m.proposta.preco, pago: 0, horasFeitas: 0, horasNecessarias: pj.horas, inicioDia: w.dia, prazoDia: w.dia + pj.prazo, mensal: false, status: 'ativo', ciclos: 0, plataforma: true, frente: m.proposta.frente };
+    a.contratos.push(c);
+    const neg = negocioDoServico(w, 'freela'); neg.contratos++;
+    evento(w, 'CONTRATO', 'Ganhou o projeto ' + pj.id + ' (' + pj.categoria + ') por ' + brl(c.valor), { contrato: c.id });
+    lembrar(w, 'Ganhou o projeto ' + pj.id + ' (' + pj.categoria + ') por ' + brl(c.valor) + '.');
+  }
+  function resolverUGC(w, d) {
+    const a = w.agente;
+    a.pendencias = a.pendencias.filter((p) => !(p.tipo === 'candidatura_ugc' && p.campanhaId === d.campanhaId));
+    const camp = w.mundo.campanhas.find((x) => x.id === d.campanhaId) || { fechada: true };
+    if (camp.fechada) { lembrar(w, 'Campanha ' + d.campanhaId + ' encerrada.'); return; }
+    const insc = w.oculto.campanhas[d.campanhaId].inscritos;
+    const p = clamp((1 / (1 + insc / 8)) * (0.4 + 0.12 * Math.min(a.portfolioUGC, 5)) * (0.5 + a.skills.marketing / 10), 0, 0.5);
+    if (!rChance(w, p)) { lembrar(w, 'Não foi escolhido na campanha de ' + camp.marca + '.'); return; }
+    camp.fechada = true;
+    const s = SERVICOS.ugc;
+    const c = { id: 'C' + (++w.contadores.ctr), clienteId: camp.id, servico: 'ugc', valor: camp.valor, pago: 0, horasFeitas: 0, horasNecessarias: s.horas, inicioDia: w.dia, prazoDia: w.dia + s.prazo, mensal: false, status: 'ativo', ciclos: 0, frente: 'ugc' };
+    a.contratos.push(c);
+    const neg = negocioDoServico(w, 'ugc'); neg.contratos++;
+    evento(w, 'CONTRATO', 'Selecionado para UGC de ' + camp.marca + ' por ' + brl(c.valor), { contrato: c.id });
+    lembrar(w, 'Selecionado para UGC de ' + camp.marca + ' (' + brl(c.valor) + ').');
+  }
+
+  // ------------------------------------------------------------ ciclo diário
+  function cicloDia(w, cerebro) {
+    w.dia++;
+    const a = w.agente, dia = w.dia;
+    const reg = { dia, data: dataVirtual(w.meta.dataInicio, dia), caixaInicio: w.ledger.saldo };
+    const txIni = w.ledger.tx.length, evIni = w.logs.eventos.length, resIni = w.logs.resultados.length;
+    a.refeicoesHoje = 0;
+    a.noite = 'rua';
+    resolverAgenda(w);
+    if (digital(w)) diaDigital(w);
+    else if (rChance(w, pv('probNovaVaga'))) novaVaga(w);
+    a.necessidades.fome = clamp(a.necessidades.fome + 35, 0, 100);
+    if (rChance(w, pv('probDoenca'))) { a.necessidades.saude = clamp(a.necessidades.saude - 30, 0, 100); evento(w, 'DOENCA', 'Adoeceu'); lembrar(w, 'Adoeceu.'); }
+
+    let decisaoSeq = null;
+    if (a.internadoAte >= dia) {
+      reg.internado = true; a.noite = 'hospital';
+    } else {
+      const obs = observar(w);
+      const d = cerebro.decidir(obs);
+      if (!d || !Array.isArray(d.plano)) throw new Error('cérebro devolveu decisão inválida');
+      const dec = {
+        seq: ++w.seq, dia, agente: w.meta.id, politica: cerebro.id, tipoCerebro: cerebro.tipo,
+        observacaoHash: fnv1a(JSON.stringify(obs)), sabia: resumoObs(obs),
+        alternativas: clone(d.alternativas || []), plano: clone(d.plano), novaEstrategia: d.novaEstrategia || null,
+      };
+      w.logs.decisoes.push(dec);
+      decisaoSeq = dec.seq;
+      if (dec.novaEstrategia && dec.novaEstrategia !== a.estrategia) {
+        a.memoria.mudancasEstrategia.push({ dia, de: a.estrategia, para: dec.novaEstrategia });
+        a.estrategia = dec.novaEstrategia;
+      }
+      let horas = 16;
+      for (const acao of dec.plano) {
+        const fn = ACOES[acao.tipo];
+        let r;
+        if (!fn) r = falha('ação inexistente');
+        else {
+          const custoMin = acao.tipo === 'DORMIR' ? 0 : 0.5;
+          if (digital(w) && ACOES_SO_CLASSICO.includes(acao.tipo)) r = falha('fora do cenário digital');
+          else r = horas < custoMin ? falha('sem horas no dia') : fn(w, a, acao);
+          if (r.horas > horas) { r = { ok: false, horas: 0, resultado: 'sem horas no dia' }; }
+        }
+        horas -= r.horas;
+        if (digital(w) && acao.frente && r.horas > 0) a.memoria.horasPorFrente[acao.frente] = (a.memoria.horasPorFrente[acao.frente] || 0) + r.horas;
+        w.metricas.acoes++;
+        w.logs.resultados.push({ seq: ++w.seq, dia, decisaoSeq, acao: acao.tipo, params: clone(acao), ok: r.ok, resultado: r.resultado, horas: r.horas });
+      }
+      if (trabalhaHoje(a, dia) && a.emprego.trabalhouDia !== dia) {
+        a.emprego.faltas++;
+        lembrar(w, 'Faltou ao trabalho (' + a.emprego.faltas + 'ª falta).');
+        if (a.emprego.faltas >= 3) { evento(w, 'DEMISSAO', 'Demitido por faltas'); lembrar(w, 'Demitido por faltas.'); a.emprego = null; }
+      }
+    }
+    fimDoDia(w);
+    reg.decisaoSeq = decisaoSeq;
+    reg.caixaFim = w.ledger.saldo;
+    reg.txIds = w.ledger.tx.slice(txIni).map((t) => t.id);
+    reg.eventoSeqs = w.logs.eventos.slice(evIni).map((e) => e.seq);
+    reg.resultadoSeqs = w.logs.resultados.slice(resIni).map((r) => r.seq);
+    reg.necessidades = clone(a.necessidades);
+    reg.local = a.local; reg.noite = a.noite;
+    reg.estrategia = a.estrategia;
+    reg.patrimonio = financeiro(w).patrimonio;
+    w.historico.push(reg);
+    w.metricas.ciclos++;
+    const aud = auditar(w);
+    if (!aud.ok) throw new Error('auditoria falhou no dia ' + dia + ': ' + aud.erros.join('; '));
+  }
+
+  function fimDoDia(w) {
+    const a = w.agente, n = a.necessidades, dia = w.dia;
+    // contratos avulsos atrasados
+    for (const c of a.contratos) {
+      if (c.status === 'ativo' && !c.mensal && dia > c.prazoDia) {
+        c.status = 'perdido'; evento(w, 'CONTRATO_PERDIDO', 'Prazo estourado em ' + c.id); lembrar(w, 'Perdeu o contrato ' + c.id + ' por atraso.');
+      }
+    }
+    // negócios sem receita em 45 dias = fracassados
+    for (const neg of a.negocios) {
+      if (neg.status === 'ativo' && neg.receita === 0 && dia - neg.lancadoDia >= 45) { neg.status = 'fracassado'; evento(w, 'NEGOCIO_FRACASSADO', neg.servico + ' sem receita em 45 dias'); lembrar(w, 'O serviço ' + neg.servico + ' não deu receita em 45 dias.'); }
+    }
+    // furto na rua
+    if (a.noite === 'rua' && w.ledger.saldo >= 200 && rChance(w, pv('probFurtoRua'))) {
+      const perda = Math.floor(w.ledger.saldo / 2);
+      pagar(w, 'PERDA', perda, 'FURTO', 'Furto enquanto dormia na rua');
+      a.furtos++; evento(w, 'FURTO', 'Perdeu ' + brl(perda)); lembrar(w, 'Foi furtado dormindo na rua: perdeu ' + brl(perda) + '.');
+    }
+    const rec = { quarto: 60, albergue: 50, pensao: 50, hospital: 45, rua: 30 }[a.noite] || 30;
+    n.energia = clamp(n.energia + rec, 0, 100);
+    if (n.fome >= 100) n.saude -= 20; else if (n.fome >= 85) n.saude -= 8;
+    if (n.energia <= 10) n.saude -= 5;
+    if (n.fome < 60 && n.energia > 30) n.saude += 3;
+    n.saude = clamp(n.saude, 0, 100);
+    if (n.saude <= 0 && a.internadoAte < dia) {
+      a.colapsos++; a.internadoAte = dia + 3; n.saude = 50; n.fome = 30;
+      evento(w, 'INTERNACAO', 'Colapso de saúde: internado no SUS por 3 dias'); lembrar(w, 'Passou mal e ficou internado 3 dias.');
+    }
+  }
+
+  // ------------------------------------------------------------ API de execução
+  function avancarDia(w, cerebro) {
+    const snap = JSON.stringify(w);
+    const t0 = Date.now();
+    try {
+      cicloDia(w, cerebro);
+    } catch (e) {
+      const r = JSON.parse(snap);
+      for (const k of Object.keys(w)) delete w[k];
+      Object.assign(w, r);
+      return { ok: false, erro: String((e && e.message) || e) };
+    }
+    w.metricas.ms += Date.now() - t0;
+    return { ok: true, dia: w.dia };
+  }
+  function avancar(w, cerebro, n) {
+    for (let i = 0; i < n; i++) { const r = avancarDia(w, cerebro); if (!r.ok) return r; }
+    return { ok: true, dia: w.dia };
+  }
+  function hashMundo(w) {
+    const c = clone(w); delete c.metricas.ms;
+    return fnv1a(JSON.stringify(c));
+  }
+  const serializar = (w) => JSON.stringify(w);
+  const desserializar = (s) => JSON.parse(s);
+
+  // ------------------------------------------------------------ indicadores
+  function financeiro(w) {
+    const tx = w.ledger.tx, soma = (f) => tx.filter(f).reduce((s, t) => s + t.valor, 0);
+    const receita = soma((t) => t.tipo === 'RECEITA');
+    const beneficios = soma((t) => t.tipo === 'BENEFICIO');
+    const despesas = soma((t) => t.tipo === 'DESPESA' || t.tipo === 'IMPOSTO');
+    const perdas = soma((t) => t.tipo === 'PERDA');
+    const ativos = w.agente.ativos.reduce((s, x) => s + x.valorContabil, 0);
+    const dividas = w.agente.dividas.reduce((s, x) => s + x.saldo, 0);
+    const patrimonio = w.ledger.saldo + ativos - dividas;
+    const ganho = patrimonio - w.meta.capitalInicial;
+    return {
+      capitalInicial: w.meta.capitalInicial, saldo: w.ledger.saldo, receita, beneficios, despesas, perdas,
+      lucro: receita + beneficios - despesas - perdas, ativos, dividas, patrimonio, ganhoLiquido: ganho,
+      roi: w.meta.capitalInicial > 0 ? ganho / w.meta.capitalInicial : 'não aplicável',
+    };
+  }
+
+  function diaRegistrado(w, dia) {
+    if (dia < 1 || dia > w.dia) return { status: 'NÃO SIMULADO', dia };
+    const h = w.historico[dia - 1];
+    const dec = w.logs.decisoes.find((d) => d.seq === h.decisaoSeq) || null;
+    return {
+      status: 'SIMULADO', dia, data: h.data, caixaInicio: h.caixaInicio, caixaFim: h.caixaFim, patrimonio: h.patrimonio,
+      necessidades: h.necessidades, local: h.local, noite: h.noite, internado: !!h.internado, estrategia: h.estrategia,
+      sabia: dec ? dec.sabia : null, alternativas: dec ? dec.alternativas : [], plano: dec ? dec.plano : [],
+      resultados: w.logs.resultados.filter((r) => h.resultadoSeqs.includes(r.seq)),
+      eventos: w.logs.eventos.filter((e) => h.eventoSeqs.includes(e.seq)),
+      transacoes: w.ledger.tx.filter((t) => h.txIds.includes(t.id)),
+    };
+  }
+
+  const ZW = {
+    VERSAO_MOTOR, PARAMETROS, SERVICOS, CHAVES_PROIBIDAS,
+    criarMundo, avancarDia, avancar, auditar, financeiro, diaRegistrado, observar,
+    hashMundo, serializar, desserializar, hashSeed, fnv1a, brl, lancar, CATEGORIAS_FREELA,
+  };
+  if (typeof module === 'object' && module.exports) module.exports = ZW; else g.ZW = ZW;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+<script>/*
+ * ZERO WORLD — Agent Brain do cenário digital
+ *
+ * POLÍTICA PROGRAMADA v2-digital. NÃO é um modelo de IA: são regras fixas,
+ * determinísticas. Cada agente tem uma carreira digital de foco. Se a carreira
+ * não gerar receita até o dia 45, a política abre uma segunda frente.
+ * A carreira "adaptativo" testa frentes e escolhe pelas próprias medições
+ * (receita por hora investida, só com o que o agente viveu).
+ * A política só PROPÕE ações; o World Engine valida e decide os resultados.
+ */
+(function (g) {
+  'use strict';
+
+  const ID = 'politica-programada-v2-digital';
+  const RESERVA = 5000;
+  const CARREIRAS = {
+    social_local: 'Social media para comércio local (visitas presenciais)',
+    google_local: 'Perfil da Empresa no Google para comércio local',
+    sites: 'Sites para comércios e profissionais',
+    freela: 'Freelancer em plataforma (estilo Workana/99Freelas)',
+    clipping: 'Editor de cortes (clipping)',
+    ugc: 'Criador de vídeos UGC para marcas',
+    afiliado: 'Afiliado Shopee com conteúdo próprio',
+    produto: 'Produto digital (kit de posts) + audiência',
+    online: 'Prospecção online (WhatsApp/DM) de serviços digitais',
+    adaptativo: 'Generalista adaptativo (testa frentes e fica com as melhores)',
+  };
+  const SKILL_DA_FRENTE = { social_local: 'marketing', google_local: 'marketing', sites: 'programacao', freela: 'tecnologia', clipping: 'tecnologia', ugc: 'marketing', afiliado: 'marketing', produto: 'marketing', online: 'negocios' };
+  const FRENTES_ADAPTATIVO = ['google_local', 'online', 'social_local', 'freela', 'clipping', 'ugc', 'afiliado'];
+
+  const soma = (arr, f) => arr.filter(f).reduce((s, r) => s + r.valor, 0);
+
+  function decidir(o) {
+    const a = o.agente, m = o.memoria, P = o.precos, dia = o.dia;
+    const plano = [], alternativas = [];
+    let horas = o.horasDisponiveis, caixa = a.caixa;
+    const usar = (acao, h, motivo, custo) => {
+      if (h > horas) { alternativas.push({ acao: acao.tipo, escolhida: false, motivo: 'sem horas: ' + motivo }); return false; }
+      if ((custo || 0) > caixa) { alternativas.push({ acao: acao.tipo, escolhida: false, motivo: 'sem dinheiro: ' + motivo }); return false; }
+      plano.push(Object.assign({}, acao, { motivo })); horas -= h; caixa -= custo || 0; return true;
+    };
+
+    // ---- necessidades básicas (iguais para todas as carreiras)
+    const rpGratis = a.registros.centroPop && (a.local === 'rua' || a.local === 'albergue');
+    const refeicoes = a.necessidades.fome >= 70 ? 2 : a.necessidades.fome >= 35 ? 1 : 0;
+    for (let i = 0; i < refeicoes; i++) {
+      if (rpGratis) usar({ tipo: 'COMER', opcao: 'popular' }, 2, 'Restaurante Popular gratuito para quem está na rua');
+      else if (caixa >= P.restPopRefeicao) usar({ tipo: 'COMER', opcao: 'popular' }, 2, 'Restaurante Popular, R$3', P.restPopRefeicao);
+      else alternativas.push({ acao: 'COMER', escolhida: false, motivo: 'sem dinheiro e sem gratuidade' });
+    }
+    if (!a.registros.centroPop) usar({ tipo: 'REGISTRAR_CENTRO_POP' }, 3, 'endereço de referência, albergue e comida gratuita');
+    else if (!a.docs.rg && !a.docs.rgPedido) usar({ tipo: 'PEDIR_RG' }, 3, 'documento para alugar e formalizar');
+    else if (!a.registros.cadunico) usar({ tipo: 'CADUNICO' }, 3, 'renda baixa no começo');
+    if (!a.itens.celular) {
+      if (caixa >= P.celularUsado + P.chip) { usar({ tipo: 'COMPRAR', item: 'celular' }, 2, 'ferramenta de trabalho de toda carreira digital', P.celularUsado); usar({ tipo: 'COMPRAR', item: 'chip' }, 0, 'contato com clientes', P.chip); }
+      else alternativas.push({ acao: 'COMPRAR celular', escolhida: false, motivo: 'sem dinheiro: cenário digital fica limitado ao telecentro' });
+    }
+
+    // ---- entregas primeiro
+    const pend = a.contratos.reduce((s, c) => s + Math.max(0, c.horasNecessarias - c.horasFeitas), 0);
+    const viagemTelecentro = !a.itens.notebook && a.contratos.some((c) => c.servico === 'site' && c.horasFeitas < c.horasNecessarias) ? 1 : 0;
+    if (pend > 0) { const h = Math.min(pend + viagemTelecentro, 7, horas); usar({ tipo: 'TRABALHAR_CONTRATOS', horas: h, frente: 'entregas' }, h, viagemTelecentro ? 'entregar no prazo (inclui ida ao telecentro)' : 'entregar no prazo'); }
+
+    // ---- escolha das frentes
+    const receitaFrente = (f, desde) => soma(m.receitas, (r) => r.frente === f && r.dia > desde);
+    let frentes, estrategia;
+    if (o.carreira === 'adaptativo') {
+      const n = FRENTES_ADAPTATIVO.length;
+      if (dia <= 28) { frentes = [FRENTES_ADAPTATIVO[(dia - 1) % n]]; estrategia = 'EXPLORANDO (rodízio de frentes)'; alternativas.push({ acao: 'FRENTE ' + frentes[0], escolhida: true, motivo: 'fase de teste: uma frente por dia' }); }
+      else {
+        const hp = m.horasPorFrente || {};
+        const nota = FRENTES_ADAPTATIVO.map((f) => ({ f, rh: (hp[f] || 0) > 0 ? receitaFrente(f, 0) / hp[f] : 0, h: hp[f] || 0 }));
+        nota.forEach((x) => alternativas.push({ acao: 'FRENTE ' + x.f, valorEsperadoPorHora: Math.round(x.rh), escolhida: false, motivo: 'medido em ' + x.h + 'h investidas' }));
+        nota.sort((x, y) => y.rh - x.rh || x.h - y.h);
+        frentes = dia % 10 === 0 ? [nota[0].f, nota.slice().sort((x, y) => x.h - y.h)[0].f] : [nota[0].f, nota[1].f];
+        frentes.forEach((f) => { const alt = alternativas.find((x) => x.acao === 'FRENTE ' + f); if (alt) alt.escolhida = true; });
+        estrategia = 'FOCO: ' + frentes.join(' + ');
+      }
+    } else {
+      frentes = [o.carreira];
+      estrategia = 'CARREIRA: ' + o.carreira;
+      const digitalTotal45 = soma(m.receitas, (r) => r.dia > dia - 45 && r.frente);
+      const jaPivotou = m.mudancasEstrategia.some((x) => x.para.includes('PIVÔ'));
+      if (jaPivotou || (dia >= 45 && receitaFrente(o.carreira, dia - 45) === 0 && digitalTotal45 === 0)) {
+        const segunda = o.carreira === 'online' ? 'freela' : 'online';
+        frentes.push(segunda); estrategia = 'CARREIRA: ' + o.carreira + ' + PIVÔ ' + segunda;
+        if (!jaPivotou) alternativas.push({ acao: 'PIVÔ para ' + segunda, escolhida: true, motivo: '45 dias sem receita na carreira' });
+      }
+    }
+
+    // ---- preços aprendidos com recusas
+    const cp = m.crencas.propostas;
+    const fator = Math.max(0.6, Math.pow(0.85, Math.floor(m.crencas.rejeicoesSeguidas / 6))) * (a.portfolio >= 5 ? 1.3 : 1);
+    const preco = (v) => Math.round((v * fator) / 1000) * 1000;
+
+    // ---- rotinas de cada frente
+    const candidatos = (filtro) => Object.values(m.leads).filter((l) => !l.propostas.some((p) => p.resultado === 'pendente') && !a.contratos.some((c) => c.clienteId === l.id) && filtro(l));
+    const propor = (frente, lista, escolher, max) => {
+      let n = 0;
+      for (const l of lista) {
+        if (n >= max || horas < 1) break;
+        const sv = escolher(l); if (!sv) continue;
+        if (usar({ tipo: 'PROPOR', leadId: l.id, servico: sv[0], preco: sv[1], frente }, 1, sv[0] + ' para ' + l.nome)) n++;
+      }
+      return n;
+    };
+    const ja = (l, s) => l.propostas.some((p) => p.servico === s);
+    const rotina = {
+      social_local(f) {
+        const lista = candidatos((l) => l.canal !== 'online' && !ja(l, 'social_media') && !l.instagramAtivo);
+        const n = propor(f, lista, () => ['social_media', preco(P.socialMediaMes)], 3);
+        if (lista.length - n < 3 && horas >= 3) usar({ tipo: 'PROSPECTAR', horas: 3, frente: f }, 3, 'visitar comércios sem Instagram ativo', 0);
+      },
+      google_local(f) {
+        const lista = candidatos((l) => l.canal !== 'online' && ((!l.temPerfilGoogle && !ja(l, 'perfil_google')) || (a.portfolio >= 3 && !l.instagramAtivo && !ja(l, 'social_media'))));
+        const n = propor(f, lista, (l) => (!l.temPerfilGoogle && !ja(l, 'perfil_google')) ? ['perfil_google', preco(P.perfilGoogle)] : ['social_media', preco(P.socialMediaMes)], 3);
+        if (lista.length - n < 3 && horas >= 3) usar({ tipo: 'PROSPECTAR', horas: 3, frente: f }, 3, 'visitar comércios sem Perfil no Google', 0);
+      },
+      sites(f) {
+        const lista = candidatos((l) => !ja(l, 'site'));
+        const n = propor(f, lista, () => ['site', preco(P.siteSimples)], 3);
+        if (lista.length - n < 3 && horas >= 3) usar({ tipo: 'PROSPECTAR', horas: 3, frente: f }, 3, 'achar comércios para oferecer site', 0);
+      },
+      online(f) {
+        const lista = candidatos((l) => l.canal === 'online' && ((!l.temPerfilGoogle && !ja(l, 'perfil_google')) || (!l.instagramAtivo && !ja(l, 'social_media'))));
+        propor(f, lista, (l) => (!l.temPerfilGoogle && !ja(l, 'perfil_google')) ? ['perfil_google', preco(P.perfilGoogle)] : ['social_media', preco(P.socialMediaMes)], 4);
+        if (horas >= 3) usar({ tipo: 'PROSPECTAR_ONLINE', mensagens: 45, frente: f }, 3, 'mensagens para negócios da Grande BH');
+      },
+      freela(f) {
+        usar({ tipo: 'BUSCAR_FREELAS', frente: f }, 0.5, 'ver projetos novos');
+        const aval = a.plataforma ? a.plataforma.avaliacoes : 0;
+        const abertos = Object.values(m.projetos || {}).filter((p) => !p.proposta && p.abertoAte >= dia && (p.categoria !== 'site' || a.skills.programacao >= 5)).sort((x, y) => x.propostasQuandoViu - y.propostasQuandoViu || (x.id < y.id ? -1 : 1));
+        let n = 0;
+        for (const pj of abertos) { if (n >= 6 || horas < 0.5) break; if (usar({ tipo: 'PROPOR_FREELA', projetoId: pj.id, preco: Math.round((pj.orcamento * (aval >= 3 ? 0.95 : 0.8)) / 1000) * 1000, frente: f }, 0.5, pj.categoria + ' com ' + pj.propostasQuandoViu + ' propostas quando viu')) n++; }
+      },
+      clipping(f) { if (a.itens.celular) usar({ tipo: 'CLIPPING', posts: 4, frente: f }, 4, 'cortes pagos por mil views'); },
+      ugc(f) {
+        if (!a.itens.celular) return;
+        if (a.portfolioUGC < 3) usar({ tipo: 'PRODUZIR_PORTFOLIO_UGC', frente: f }, 3, 'marcas pedem portfólio');
+        usar({ tipo: 'BUSCAR_CAMPANHAS', frente: f }, 0.5, 'ver campanhas abertas');
+        if (a.portfolioUGC >= 2) {
+          const camps = Object.values(m.campanhas || {}).filter((c) => !c.candidatado && c.abertaAte >= dia).sort((x, y) => y.valor - x.valor);
+          for (const c of camps.slice(0, 4)) usar({ tipo: 'CANDIDATAR_UGC', campanhaId: c.id, frente: f }, 0.5, c.marca + ' ' + c.valor);
+        }
+      },
+      afiliado(f) {
+        if (!a.itens.celular) return;
+        if (!a.afiliado) usar({ tipo: 'ATIVAR_AFILIADO', frente: f }, 1, 'cadastro no programa de afiliados');
+        usar({ tipo: 'POSTAR_CONTEUDO', posts: 4, frente: f }, 4, 'audiência gera cliques de afiliado');
+      },
+      produto(f) {
+        if (!a.itens.celular) return;
+        if (!a.produto) usar({ tipo: 'CRIAR_PRODUTO', horas: 4, frente: f }, 4, 'kit de posts editáveis');
+        usar({ tipo: 'POSTAR_CONTEUDO', posts: a.produto ? 4 : 2, frente: f }, a.produto ? 4 : 2, 'audiência compra o produto');
+      },
+    };
+    for (const f of frentes) if (rotina[f]) rotina[f](f);
+
+    // ---- tráfego pago como serviço extra para cliente de social media
+    if (a.skills.marketing >= 6) {
+      const clientes = a.contratos.filter((c) => c.servico === 'social_media').map((c) => c.clienteId);
+      for (const id of clientes) {
+        const l = m.leads[id];
+        if (l && !ja(l, 'trafego_pago') && !a.contratos.some((c) => c.clienteId === id && c.servico === 'trafego_pago') && !l.propostas.some((p) => p.resultado === 'pendente')) {
+          usar({ tipo: 'PROPOR', leadId: id, servico: 'trafego_pago', preco: P.trafegoMes, frente: 'trafego' }, 1, 'oferecer tráfego para cliente atual'); break;
+        }
+      }
+    }
+
+    // ---- estudo com o que sobra
+    const sk = SKILL_DA_FRENTE[frentes[0]] || 'marketing';
+    if (horas >= 3 && a.necessidades.energia >= 15 && a.skills[sk] < 9) usar({ tipo: 'ESTUDAR', area: sk }, a.itens.celular ? 3 : 4, 'curso gratuito ligado à carreira');
+
+    // ---- formalização, equipamento, moradia
+    const receita30 = soma(m.receitas, (r) => r.dia > dia - 30 && r.fonte !== 'bolsa_familia');
+    if (!a.mei && a.contratos.length >= 2 && a.itens.celular) usar({ tipo: 'ABRIR_MEI' }, 1, '2+ clientes: formalizar (enquadramento depende da ocupação)');
+    const precisaPC = frentes.includes('sites') || frentes.includes('freela') || a.contratos.some((c) => c.servico === 'site');
+    if (!a.itens.notebook && precisaPC && caixa >= P.notebookUsado + 2 * P.quartoMes + RESERVA) usar({ tipo: 'COMPRAR', item: 'notebook' }, 2, 'parar de depender do telecentro', P.notebookUsado);
+    for (const d of a.dividas.filter((x) => x.saldo > 0)) if (caixa >= d.saldo + RESERVA) usar({ tipo: 'PAGAR_DIVIDA', dividaId: d.id }, 0.5, 'quitar ' + d.descricao, d.saldo);
+    if (!a.quarto && a.docs.rg && caixa >= 2 * P.quartoMes + 20000 && receita30 >= 1.3 * P.quartoMes) usar({ tipo: 'ALUGAR_QUARTO' }, 3, 'renda dos últimos 30 dias cobre o aluguel', 2 * P.quartoMes);
+    if (a.necessidades.energia < 25 && horas >= 2) usar({ tipo: 'DESCANSAR', horas: Math.min(4, horas) }, Math.min(4, horas), 'energia baixa');
+
+    const temQuarto = !!a.quarto || plano.some((p) => p.tipo === 'ALUGAR_QUARTO');
+    if (temQuarto) usar({ tipo: 'DORMIR', onde: 'quarto' }, 0, 'quarto alugado');
+    else if (a.registros.centroPop || plano.some((p) => p.tipo === 'REGISTRAR_CENTRO_POP')) usar({ tipo: 'DORMIR', onde: 'albergue' }, 0, 'albergue gratuito');
+    else usar({ tipo: 'DORMIR', onde: 'rua' }, 0, 'sem alternativa gratuita');
+
+    return { plano, alternativas, novaEstrategia: estrategia };
+  }
+
+  const Politica = { id: ID, tipo: 'POLÍTICA PROGRAMADA v2-digital (regras fixas, não é IA)', decidir, CARREIRAS };
+  if (typeof module === 'object' && module.exports) module.exports = Politica; else g.ZWPoliticaDigital = Politica;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+<script>/*
+ * ZERO WORLD — Experimento: 10 vidas independentes, rodadas, métricas e análise.
+ * Cada vida é um mundo separado (estado, RNG, NPCs e memória próprios).
+ * Nada é compartilhado entre mundos durante a rodada.
+ */
+(function (g) {
+  'use strict';
+  const ZW = typeof require === 'function' ? require('./engine.js') : g.ZW;
+
+  const AGENTES = [
+    ['ZERO-01', 0], ['ZERO-02', 0], ['ZERO-03', 0], ['ZERO-04', 0],
+    ['ZERO-05', 50000], ['ZERO-06', 50000], ['ZERO-07', 50000],
+    ['ZERO-08', 100000], ['ZERO-09', 100000], ['ZERO-10', 100000],
+  ];
+
+  // semente de cada mundo derivada da semente da rodada (registrada no resultado)
+  const sementeMundo = (sementeRodada, id) => ZW.hashSeed('RODADA:' + sementeRodada + ':' + id);
+  // namespace separado para cenários de avaliação protegidos (não usados para ajustar políticas)
+  const sementeAvaliacao = (base, i) => ZW.hashSeed('AVALIACAO:' + base + ':' + i);
+
+  function criarRodada(sementeRodada, opcoes) {
+    const o = opcoes || {};
+    return AGENTES.map(([id, capital]) => ZW.criarMundo({ id, capitalInicial: capital, seed: sementeMundo(sementeRodada, id), dataInicio: o.dataInicio }));
+  }
+
+  // Rodada digital: 10 carreiras diferentes, mesmo capital (R$500), mundos independentes.
+  const CARREIRAS_DIGITAIS = ['social_local', 'google_local', 'sites', 'freela', 'clipping', 'ugc', 'afiliado', 'produto', 'online', 'adaptativo'];
+  const AGENTES_DIGITAIS = CARREIRAS_DIGITAIS.map((c, i) => ['DIGI-' + String(i + 1).padStart(2, '0'), 50000, c]);
+  function criarRodadaDigital(sementeRodada, opcoes) {
+    const o = opcoes || {};
+    return AGENTES_DIGITAIS.map(([id, capital, carreira]) => ZW.criarMundo({ id, capitalInicial: capital, seed: ZW.hashSeed('DIGITAL:' + sementeRodada + ':' + id), dataInicio: o.dataInicio, cenario: 'digital', carreira }));
+  }
+
+  function executar(mundos, cerebro, dias) {
+    const erros = [];
+    for (const w of mundos) { const r = ZW.avancar(w, cerebro, dias); if (!r.ok) erros.push({ id: w.meta.id, dia: w.dia + 1, erro: r.erro }); }
+    return erros;
+  }
+
+  function serieDiaria(w) {
+    // reconstrói, só a partir do livro e do histórico, renda e despesa móveis de 30 dias
+    const recPorDia = new Array(w.dia + 1).fill(0), despPorDia = new Array(w.dia + 1).fill(0);
+    for (const t of w.ledger.tx) {
+      if (t.dia < 1) continue;
+      if (t.tipo === 'RECEITA') recPorDia[t.dia] += t.valor;
+      if (t.tipo === 'DESPESA' || t.tipo === 'IMPOSTO') despPorDia[t.dia] += t.valor;
+    }
+    const out = [];
+    let r30 = 0, d30 = 0;
+    for (let d = 1; d <= w.dia; d++) {
+      r30 += recPorDia[d]; d30 += despPorDia[d];
+      if (d > 30) { r30 -= recPorDia[d - 30]; d30 -= despPorDia[d - 30]; }
+      const h = w.historico[d - 1];
+      out.push({ dia: d, caixa: h.caixaFim, patrimonio: h.patrimonio, renda30: r30, despesa30: d30, internado: !!h.internado });
+    }
+    return out;
+  }
+
+  function metricas(w) {
+    const f = ZW.financeiro(w);
+    const serie = serieDiaria(w);
+    const primeiraReceita = w.ledger.tx.find((t) => t.tipo === 'RECEITA');
+    const estavel = serie.find((s) => s.dia >= 30 && s.renda30 >= ZW.PARAMETROS.salarioMinimo.v && s.caixa >= ZW.PARAMETROS.quartoMes.v);
+    const a = w.agente;
+    const res = w.logs.resultados;
+    return {
+      id: w.meta.id, seed: w.meta.seed, capitalInicial: f.capitalInicial, diasSimulados: w.dia,
+      saldo: f.saldo, patrimonio: f.patrimonio, receita: f.receita, beneficios: f.beneficios, despesas: f.despesas, perdas: f.perdas,
+      lucro: f.lucro, dividas: f.dividas, ganhoLiquido: f.ganhoLiquido, roi: f.roi,
+      diasSobrevividos: serie.filter((s) => !s.internado).length, colapsos: a.colapsos, furtos: a.furtos,
+      diaPrimeiraReceita: primeiraReceita ? primeiraReceita.dia : null,
+      diaEstabilidade: estavel ? estavel.dia : null,
+      negociosCriados: a.negocios.length, negociosFracassados: a.negocios.filter((n) => n.status === 'fracassado').length,
+      mudancasEstrategia: a.memoria.mudancasEstrategia.length, estrategiaFinal: a.estrategia,
+      emprego: a.emprego ? a.emprego.cargo : null, moradia: a.quarto ? 'quarto' : a.local,
+      carreira: w.carreira || null, seguidores: a.audiencia ? a.audiencia.seguidores : null,
+      receitaPorFonte: w.ledger.tx.filter((t) => t.tipo === 'RECEITA').reduce((acc, t) => { const k = t.origem.split(':')[0] === 'CLIENTE' ? 'clientes' : t.origem; acc[k] = (acc[k] || 0) + t.valor; return acc; }, {}),
+      risco: { menorCaixa: Math.min(w.meta.capitalInicial, ...serie.map((s) => s.caixa)), diasCaixaAbaixoDe50: serie.filter((s) => s.caixa < 5000).length },
+      custo: { ms: w.metricas.ms, ciclos: w.metricas.ciclos, decisoes: w.logs.decisoes.length, acoes: w.metricas.acoes, transacoes: w.ledger.tx.length, bytesEstado: ZW.serializar(w).length },
+      hash: ZW.hashMundo(w),
+      auditoria: ZW.auditar(w).ok,
+    };
+  }
+
+  const mediana = (xs) => { const v = xs.filter((x) => x !== null).sort((a, b) => a - b); if (!v.length) return null; const m = Math.floor(v.length / 2); return v.length % 2 ? v[m] : Math.round((v[m - 1] + v[m]) / 2); };
+
+  // Só pode rodar depois que todos os mundos chegaram ao mesmo dia final.
+  function analisar(mundos, diasEsperados) {
+    if (!mundos.every((w) => w.dia === diasEsperados)) throw new Error('rodada não concluída: análise coletiva bloqueada');
+    const ms = mundos.map(metricas);
+    const porCapital = {};
+    for (const m of ms) (porCapital[m.capitalInicial] = porCapital[m.capitalInicial] || []).push(m);
+    const efeitoCapital = Object.keys(porCapital).map(Number).sort((a, b) => a - b).map((c) => {
+      const g2 = porCapital[c];
+      return { capitalInicial: c, n: g2.length, medianaGanhoLiquido: mediana(g2.map((x) => x.ganhoLiquido)), medianaPatrimonio: mediana(g2.map((x) => x.patrimonio)), medianaDiaPrimeiraReceita: mediana(g2.map((x) => x.diaPrimeiraReceita)), medianaDiaEstabilidade: mediana(g2.map((x) => x.diaEstabilidade)), semEstabilidade: g2.filter((x) => x.diaEstabilidade === null).length };
+    });
+    const servicos = {};
+    for (const w of mundos) {
+      for (const n of w.agente.negocios) { const s = (servicos[n.servico] = servicos[n.servico] || { servico: n.servico, lancados: 0, fracassados: 0, receita: 0, propostas: 0, aceitas: 0 }); s.lancados++; if (n.status === 'fracassado') s.fracassados++; s.receita += n.receita; }
+      for (const l of Object.values(w.agente.memoria.leads)) for (const p of l.propostas) { const s = servicos[p.servico]; if (!s) continue; s.propostas++; if (p.resultado === 'aceita') s.aceitas++; }
+    }
+    const falhas = {};
+    for (const w of mundos) for (const r of w.logs.resultados) if (!r.ok) { const k = r.acao + ': ' + r.resultado; falhas[k] = (falhas[k] || 0) + 1; }
+    const errosRecorrentes = Object.entries(falhas).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([motivo, vezes]) => ({ motivo, vezes }));
+    const tempoEmEstrategia = {};
+    for (const w of mundos) for (const h of w.historico) tempoEmEstrategia[h.estrategia] = (tempoEmEstrategia[h.estrategia] || 0) + 1;
+    const eventos = {};
+    for (const w of mundos) for (const e of w.logs.eventos) eventos[e.tipo] = (eventos[e.tipo] || 0) + 1;
+    return {
+      dias: diasEsperados, mundos: ms.length, metricas: ms, efeitoCapital,
+      negocios: Object.values(servicos).map((s) => Object.assign(s, { taxaAceite: s.propostas ? Math.round((1000 * s.aceitas) / s.propostas) / 10 : null })),
+      errosRecorrentes, tempoEmEstrategia, eventos,
+      adaptacao: ms.map((m) => ({ id: m.id, mudancasEstrategia: m.mudancasEstrategia, furtos: m.furtos, colapsos: m.colapsos })),
+      aviso: 'Resultados de RESULTADO SIMULADO sob regras SINTÉTICAS e uma POLÍTICA PROGRAMADA (não é IA). Não são previsões do mundo real.',
+    };
+  }
+
+  function rodadas(sementes, cerebro, dias) {
+    const porRodada = [];
+    for (const s of sementes) {
+      const mundos = criarRodada(s);
+      const erros = executar(mundos, cerebro, dias);
+      porRodada.push({ semente: s, erros, analise: erros.length ? null : analisar(mundos, dias) });
+    }
+    const agregado = {};
+    for (const r of porRodada) if (r.analise) for (const e of r.analise.efeitoCapital) (agregado[e.capitalInicial] = agregado[e.capitalInicial] || []).push(e);
+    return {
+      sementes, dias, politica: cerebro.id, porRodada,
+      agregado: Object.keys(agregado).map(Number).map((c) => ({ capitalInicial: c, rodadas: agregado[c].length, medianaGanhoLiquido: mediana(agregado[c].map((x) => x.medianaGanhoLiquido)), medianaDiaPrimeiraReceita: mediana(agregado[c].map((x) => x.medianaDiaPrimeiraReceita)), medianaDiaEstabilidade: mediana(agregado[c].map((x) => x.medianaDiaEstabilidade)) })),
+    };
+  }
+
+  // Aprendizados gerais para uma geração futura (não usados pela política v1).
+  function aprendizados(analise) {
+    const neg = analise.negocios.slice().sort((a, b) => b.receita - a.receita);
+    return {
+      geradoApos: 'rodada concluída de ' + analise.dias + ' dias',
+      servicosPorReceita: neg.map((n) => ({ servico: n.servico, receita: n.receita, taxaAceite: n.taxaAceite })),
+      errosMaisComuns: analise.errosRecorrentes.slice(0, 5),
+      regraDeUso: 'Pode orientar a política da próxima geração; avaliar sempre em sementes do namespace AVALIACAO, nunca nas sementes usadas aqui.',
+    };
+  }
+
+  const ZWExp = { AGENTES, AGENTES_DIGITAIS, CARREIRAS_DIGITAIS, criarRodadaDigital, sementeMundo, sementeAvaliacao, criarRodada, executar, metricas, serieDiaria, analisar, rodadas, aprendizados };
+  if (typeof module === 'object' && module.exports) module.exports = ZWExp; else g.ZWExp = ZWExp;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+<script>
+const REF = {"semente":20261104,"dias":240,"hashes":{"DIGI-01":"510c18d0","DIGI-02":"dde8e5e6","DIGI-03":"cd068cb5","DIGI-04":"02f49554","DIGI-05":"7987e708","DIGI-06":"8b939db7","DIGI-07":"676e1954","DIGI-08":"1d1cd043","DIGI-09":"7f782484","DIGI-10":"37960d2e"}};
+const AO_VIVO = {"semente":20261103,"inicioReal":"2026-11-03T17:00:00Z","dataInicioVirtual":"2026-11-04","horizonte":365};
+(function(){
+'use strict';
+const $=s=>document.querySelector(s), brl=ZW.brl, P=ZWPoliticaDigital;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tag=(t)=>`<span class="chip tag-${t}">${({REAL:'DADO REAL',ESTIMATIVA:'ESTIMATIVA',SINTETICA:'REGRA SINTÉTICA',SIM:'RESULTADO SIMULADO'}[t])}</span>`;
+const S={modo:'aovivo',semente:AO_VIVO.semente,mundos:[],hoje:[],sel:'DIGI-01',dia:null,tab:'agora',ocupado:false,concluida:false,multi:null};
+const INICIO=Date.parse(AO_VIVO.inicioReal);
+function status(t){$('#status').textContent=t} function prog(p){$('#progBar').style.width=(p*100).toFixed(1)+'%'}
+$('#chipsTopo').innerHTML=[`<span class="chip">${ZW.VERSAO_MOTOR}</span>`,`<span class="chip">cérebro: ${esc(P.tipo)}</span>`,tag('REAL'),tag('ESTIMATIVA'),tag('SINTETICA'),tag('SIM')].join('');
+function diaRelogio(){const t=Date.now()-INICIO; if(t<0)return 0; return Math.min(AO_VIVO.horizonte,Math.floor(t/3600000)+1)}
+function horaVirtual(){const t=Date.now()-INICIO; if(t<0)return null; if(Math.floor(t/3600000)+1>AO_VIVO.horizonte)return 24; return ((t%3600000)/3600000)*24}
+const hhmm=h=>String(Math.floor(h)).padStart(2,'0')+':'+String(Math.floor((h%1)*60)).padStart(2,'0');
+const dataDe=(dia)=>{const d=new Date(AO_VIVO.dataInicioVirtual+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+dia-1);return d.toISOString().slice(0,10).split('-').reverse().join('/')};
+
+// -------------------------------------------------- execução
+function novos(semente){return ZWExp.criarRodadaDigital(semente,{dataInicio:AO_VIVO.dataInicioVirtual})}
+function rodar(mundos,n,fim){
+  S.ocupado=true; botoes(); let k=0; const erros=[];
+  (function lote(){
+    const t0=performance.now();
+    while(k<n&&performance.now()-t0<40){for(const w of mundos){const r=ZW.avancarDia(w,P);if(!r.ok)erros.push(w.meta.id+': '+r.erro)}k++;if(erros.length)break}
+    prog(n?k/n:1); status(`processando dia ${mundos[0].dia} · 10 mundos`);
+    if(k<n&&!erros.length){setTimeout(lote,0);return}
+    S.ocupado=false; botoes(); if(erros.length)status('ERRO: '+erros[0]); fim(erros);
+  })();
+}
+function prepararHoje(){ // o dia em andamento é calculado num clone e revelado aos poucos
+  S.hoje=S.mundos.map(w=>{const c=ZW.desserializar(ZW.serializar(w));ZW.avancarDia(c,P);return c});
+}
+function iniciarAoVivo(){
+  S.semente=AO_VIVO.semente; S.mundos=novos(S.semente); S.concluida=false; S.hoje=[];
+  const d=diaRelogio();
+  if(d===0){status('a rodada ao vivo começa em '+new Date(INICIO).toLocaleString('pt-BR'));render();return}
+  rodar(S.mundos,d-1,()=>{prepararHoje();S.dia=S.mundos[0].dia||null;statusVivo();render()});
+}
+function tickVivo(){
+  if(S.modo!=='aovivo'||S.ocupado)return;
+  const d=diaRelogio();
+  if(d===0){status('começa em '+Math.ceil((INICIO-Date.now())/60000)+' min');relogio();return}
+  const feitos=S.mundos[0]?S.mundos[0].dia:0;
+  if(d-1>feitos){ // virou o dia: o dia que estava em andamento vira dia concluído
+    if(S.hoje.length&&S.hoje[0].dia===feitos+1&&d-1===feitos+1){S.mundos=S.hoje;prepararHoje();S.dia=S.mundos[0].dia;render();}
+    else {rodar(S.mundos,d-1-feitos,()=>{prepararHoje();S.dia=S.mundos[0].dia;render()});return}
+  } else if(!S.hoje.length) prepararHoje();
+  relogio(); statusVivo(); if(S.tab==='agora')rAgora();
+}
+function relogio(){const h=horaVirtual();const d=diaRelogio();$('#relogio').textContent=d?`D${d} · ${dataDe(d)} · ${hhmm(h)}`:'aguardando início'}
+function statusVivo(){const t=Date.now()-INICIO; if(t<0)return; const prox=3600000-(t%3600000); status(`1 hora real = 1 dia virtual · ${S.mundos[0].dia} dia(s) concluído(s) · próximo dia em ${Math.ceil(prox/60000)} min · só avança com a página aberta (ou com o comando 24x)`)}
+setInterval(tickVivo,15000);
+
+function botoes(){document.querySelectorAll('#ctlLab button').forEach(b=>b.disabled=S.ocupado)}
+$('#modo').onchange=e=>{S.modo=e.target.value;$('#ctlLive').hidden=S.modo!=='aovivo';$('#ctlLab').hidden=S.modo!=='lab';
+  if(S.modo==='aovivo')iniciarAoVivo(); else {S.semente=+$('#semente').value;S.mundos=novos(S.semente);S.hoje=[];S.concluida=false;status('laboratório · semente '+S.semente+' · dia 0');render()}};
+$('#btnNova').onclick=()=>{S.semente=+$('#semente').value;S.mundos=novos(S.semente);S.hoje=[];S.concluida=false;render()};
+const lab=n=>{if(S.ocupado)return;rodar(S.mundos,n,(er)=>{S.concluida=!er.length;S.dia=S.mundos[0].dia;status(`laboratório · semente ${S.semente} · dia ${S.mundos[0].dia}`);render()})};
+$('#btnVida').onclick=()=>lab(1); document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>lab(+b.dataset.t));
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{S.tab=b.dataset.tab;document.querySelectorAll('#tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));document.querySelectorAll('section.panel').forEach(p=>p.hidden=p.id!=='tab-'+S.tab);render()});
+
+// -------------------------------------------------- utilidades de exibição
+const mundo=id=>S.mundos.find(w=>w.meta.id===id);
+function med(xs){const v=xs.filter(x=>x!==null).sort((a,b)=>a-b);if(!v.length)return null;const m=Math.floor(v.length/2);return v.length%2?v[m]:Math.round((v[m-1]+v[m])/2)}
+function niceStep(r){const p=Math.pow(10,Math.floor(Math.log10(r||1)));for(const m of [1,2,2.5,5,10])if(m*p>=r)return m*p;return 10*p}
+function grafico(el,series,opt){
+  const W=760,H=opt.h||260,L=72,R=16,T=12,B=28;
+  const dias=Math.max(2,...series.map(s=>s.pts.length?s.pts[s.pts.length-1][0]:1));
+  let max=Math.max(1,...series.flatMap(s=>s.pts.map(p=>p[1]))),min=Math.min(0,...series.flatMap(s=>s.pts.map(p=>p[1])));
+  const passo=niceStep((max-min)/4);max=Math.ceil(max/passo)*passo;min=Math.floor(min/passo)*passo;
+  const x=d=>L+(W-L-R)*(d-1)/(dias-1),y=v=>T+(H-T-B)*(1-(v-min)/(max-min||1));
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.aria)}">`;
+  for(let v=min;v<=max+1;v+=passo)s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${y(v)+3}" text-anchor="end">${(v/100).toLocaleString('pt-BR',{maximumFractionDigits:0})}</text>`;
+  [1,Math.round(dias/4),Math.round(dias/2),Math.round(3*dias/4),dias].filter((v,i,a)=>v>=1&&a.indexOf(v)===i).forEach(d=>s+=`<text x="${x(d)}" y="${H-8}" text-anchor="middle">D${d}</text>`);
+  for(const se of series.filter(z=>!z.top).concat(series.filter(z=>z.top))){if(!se.pts.length)continue;s+=`<path d="${se.pts.map((p,i)=>(i?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[1]).toFixed(1)).join('')}" fill="none" stroke="${se.cor}" stroke-width="${se.w||2}" ${se.dash?'stroke-dasharray="5 4"':''} stroke-linejoin="round"/>`}
+  if(opt.marca)s+=`<line x1="${x(opt.marca)}" x2="${x(opt.marca)}" y1="${T}" y2="${H-B}" stroke="var(--ink)" stroke-dasharray="2 3"/>`;
+  s+=`<line class="cx" x1="0" x2="0" y1="${T}" y2="${H-B}" stroke="var(--muted)" visibility="hidden"/></svg><div class="tip" hidden></div>`;
+  el.innerHTML=s; const svg=el.querySelector('svg'),tip=el.querySelector('.tip'),cx=el.querySelector('.cx');
+  const diaDe=ev=>{const r=svg.getBoundingClientRect();return Math.max(1,Math.min(dias,Math.round(1+((ev.clientX-r.left)*W/r.width-L)/(W-L-R)*(dias-1))))};
+  svg.addEventListener('mousemove',ev=>{const d=diaDe(ev);cx.setAttribute('x1',x(d));cx.setAttribute('x2',x(d));cx.setAttribute('visibility','visible');tip.hidden=false;
+    tip.innerHTML=`<b>D${d}</b><br>`+series.filter(z=>z.rotulo).map(z=>{const p=z.pts[d-1];return p?`<span class="dot" style="background:${z.cor}"></span>${esc(z.rotulo)} ${brl(p[1])}`:''}).join('<br>');
+    const r=el.getBoundingClientRect();let lx=ev.clientX-r.left+12;if(lx>r.width-230)lx=ev.clientX-r.left-230;tip.style.left=Math.max(0,lx)+'px';tip.style.top='8px'});
+  svg.addEventListener('mouseleave',()=>{tip.hidden=true;cx.setAttribute('visibility','hidden')});
+  if(opt.clique)svg.addEventListener('click',ev=>opt.clique(diaDe(ev)));
+}
+const nomeCarreira=c=>P.CARREIRAS[c]||c;
+
+// agenda do dia: ações em sequência a partir das 07:00; pagamentos do motor ocorrem de madrugada
+function agendaDoDia(w,dia){
+  const d=ZW.diaRegistrado(w,dia); if(d.status!=='SIMULADO')return null;
+  let t=7; const itens=[];
+  const decSeq=d.plano.length?w.logs.decisoes.find(x=>x.dia===dia).seq:Infinity;
+  for(const tx of d.transacoes.filter(x=>x.seq<decSeq))itens.push({ini:0,fim:6,txt:(tx.direcao==='ENTRADA'?'+':'−')+brl(tx.valor)+' · '+tx.justificativa,tx:[tx]});
+  for(const e of d.eventos.filter(x=>x.seq<decSeq))itens.push({ini:0,fim:6,txt:e.texto,tx:[]});
+  let ultimoSeq=decSeq;
+  for(const r of d.resultados){
+    const ini=r.acao==='DORMIR'?Math.max(t,22):t, fim=r.acao==='DORMIR'?24:t+r.horas;
+    const txs=d.transacoes.filter(x=>x.seq>ultimoSeq&&x.seq<r.seq); ultimoSeq=r.seq;
+    itens.push({ini,fim,txt:(r.ok?'':'✗ ')+r.acao.replace(/_/g,' ').toLowerCase()+' — '+r.resultado,tx:txs});
+    if(r.acao!=='DORMIR')t+=r.horas;
+  }
+  const resto=d.transacoes.filter(x=>x.seq>ultimoSeq); if(resto.length)itens.push({ini:23.9,fim:24,txt:resto.map(x=>(x.direcao==='ENTRADA'?'+':'−')+brl(x.valor)+' '+x.justificativa).join('; '),tx:resto});
+  return {d,itens};
+}
+
+// -------------------------------------------------- abas
+function render(){ if(!S.mundos.length)return; ({agora:rAgora,geral:rGeral,agente:rAgente,comparar:rComparar,auditoria:rAuditoria,params:rParams})[S.tab]() }
+
+function rAgora(){
+  const el=$('#tab-agora');
+  const vivo=S.modo==='aovivo';
+  if(vivo&&diaRelogio()===0){el.innerHTML=`<div class="card"><h2>Começa em ${new Date(INICIO).toLocaleString('pt-BR')}</h2><p>A partir desse instante, cada hora real é um dia na vida dos 10 agentes. Volte a esta aba para ver o que cada um está fazendo na hora virtual atual.</p></div>`;return}
+  const fonte=vivo?S.hoje:S.mundos; if(!fonte.length||!fonte[0].dia){el.innerHTML='<div class="card"><p>Nenhum dia simulado ainda.</p></div>';return}
+  const dia=fonte[0].dia, h=vivo?horaVirtual():24;
+  el.innerHTML=`<div class="card"><h2>${vivo?'Agora':'Último dia simulado'}: D${dia} · ${dataDe(dia)} · ${hhmm(Math.min(h,23.99))}</h2><p class="note">${vivo?'O motor já resolveu o dia inteiro quando ele começou, mas aqui só aparece o que já aconteceu até a hora virtual atual. O resto fica oculto até chegar a hora.':'No laboratório o dia aparece inteiro.'} Clique num agente para abrir o histórico dele.</p></div>
+  <div class="agentes">${fonte.map(w=>{
+    const ag=agendaDoDia(w,dia); const base=mundo(w.meta.id)||w;
+    const feitos=ag?ag.itens.filter(i=>i.fim<=h):[]; const atual=ag?ag.itens.find(i=>i.ini<=h&&i.fim>h):null;
+    const caixa=(vivo?base.ledger.saldo:ag.d.caixaInicio)+feitos.flatMap(i=>i.tx).reduce((s,t)=>s+(t.direcao==='ENTRADA'?t.valor:-t.valor),0);
+    return `<div class="ag click${w.meta.id===S.sel?' sel':''}" data-id="${w.meta.id}" role="button" tabindex="0"><h3><span>${w.meta.id}</span><span class="mono">${brl(caixa)}</span></h3><div class="note">${esc(nomeCarreira(w.carreira))}</div>
+      <div class="agora">${atual?`<b>${hhmm(atual.ini)}</b> ${esc(atual.txt.split(' — ')[0])} <span class="muted">(em andamento)</span>`:'<span class="muted">entre atividades</span>'}</div>
+      <ol>${feitos.slice(-6).map(i=>`<li><span>${hhmm(i.ini)}</span><span>${esc(i.txt)}</span></li>`).join('')}${ag&&ag.itens.length>feitos.length+(atual?1:0)?`<li><span>…</span><span class="fut">${ag.itens.length-feitos.length-(atual?1:0)} atividade(s) ainda não aconteceram</span></li>`:''}</ol></div>`}).join('')}</div>`;
+  el.querySelectorAll('.ag').forEach(c=>{const go=()=>{S.sel=c.dataset.id;S.dia=null;document.querySelector('[data-tab=agente]').click()};c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter')go()}});
+}
+
+function vazio(){return !S.mundos[0]||S.mundos[0].dia===0}
+function rGeral(){
+  const el=$('#tab-geral');
+  if(vazio()){el.innerHTML='<div class="card"><p>Nenhum dia concluído ainda.</p></div>';return}
+  const ms=S.mundos.map(w=>Object.assign(ZWExp.metricas(w),{w}));
+  el.innerHTML=`<div class="card"><h2>Visão geral · ${S.mundos[0].dia} dia(s) concluído(s)</h2><p class="note">Todos começaram com R$500 e só podem ganhar dinheiro com trabalho digital. O ganho líquido desconta os R$500 iniciais. "Estável" é o primeiro dia em que a receita dos últimos 30 dias chegou a um salário mínimo e o caixa cobria um mês de quarto. ${tag('SIM')}</p>
+  <div class="tbl"><table><thead><tr><th>Agente</th><th>Carreira</th><th class="n">Patrimônio</th><th class="n">Ganho líquido</th><th class="n">ROI</th><th class="n">Receita</th><th class="n">Lucro</th><th class="n">Dívidas</th><th class="n">1ª receita</th><th class="n">Estável</th><th class="n">Clientes ativos</th><th class="n">Seguidores</th><th class="n">Negócios / fracassos</th><th>Moradia</th><th>Estratégia</th><th class="n">Menor caixa</th><th class="n">Custo</th></tr></thead><tbody>
+  ${ms.map(m=>`<tr class="click${m.id===S.sel?' sel':''}" data-id="${m.id}"><td>${m.id}</td><td>${esc(m.carreira)}</td><td class="n">${brl(m.patrimonio)}</td><td class="n">${brl(m.ganhoLiquido)}</td><td class="n">${typeof m.roi==='number'?(m.roi*100).toFixed(0)+'%':m.roi}</td><td class="n">${brl(m.receita)}</td><td class="n">${brl(m.lucro)}</td><td class="n">${brl(m.dividas)}</td><td class="n">${m.diaPrimeiraReceita?'D'+m.diaPrimeiraReceita:'ainda não'}</td><td class="n">${m.diaEstabilidade?'D'+m.diaEstabilidade:'ainda não'}</td><td class="n">${m.w.agente.contratos.filter(c=>c.status==='ativo').length}</td><td class="n">${m.seguidores||0}</td><td class="n">${m.negociosCriados} / ${m.negociosFracassados}</td><td>${esc(m.moradia)}</td><td>${esc(m.estrategiaFinal)}</td><td class="n">${brl(m.risco.menorCaixa)}</td><td class="n">${m.custo.ms} ms</td></tr>`).join('')}</tbody></table></div></div>`;
+  el.querySelectorAll('tr.click').forEach(tr=>tr.onclick=()=>{S.sel=tr.dataset.id;S.dia=null;document.querySelector('[data-tab=agente]').click()});
+}
+
+function rAgente(){
+  const el=$('#tab-agente'),w=mundo(S.sel);
+  const sel=`<select id="selAg" aria-label="Agente">${S.mundos.map(x=>`<option value="${x.meta.id}" ${x.meta.id===S.sel?'selected':''}>${x.meta.id} · ${esc(x.carreira)}</option>`).join('')}</select>`;
+  if(vazio()){el.innerHTML=`<div class="card"><h2>${sel}</h2><p>Nenhum dia concluído ainda.</p></div>`;$('#selAg').onchange=e=>{S.sel=e.target.value;render()};return}
+  if(!S.dia||S.dia>w.dia)S.dia=w.dia;
+  const d=ZW.diaRegistrado(w,S.dia),f=ZW.financeiro(w),sab=d.sabia;
+  el.innerHTML=`<div class="card"><h2>${sel}</h2><p class="note">${esc(nomeCarreira(w.carreira))} · semente <span class="mono">${w.meta.seed}</span> · ${tag('SIM')}</p>
+   <div class="legend"><span><span class="dot" style="background:var(--accent)"></span>patrimônio</span><span><span class="dot" style="background:var(--muted)"></span>caixa (tracejado)</span><span>clique no gráfico para abrir o dia</span></div>
+   <div class="chart" id="gAg"></div><label class="note" for="rng">Replay: dia <b class="mono">${S.dia}</b> de ${w.dia} (${dataDe(S.dia)})</label><input type="range" id="rng" min="1" max="${w.dia}" value="${S.dia}"></div>
+  <div class="cols"><div class="card"><h3>Dia ${d.dia}${d.internado?' · INTERNADO':''}</h3><dl class="kv"><dt>Caixa</dt><dd>${brl(d.caixaInicio)} → ${brl(d.caixaFim)}</dd><dt>Patrimônio</dt><dd>${brl(d.patrimonio)}</dd><dt>Dormiu</dt><dd>${esc(d.noite)}</dd><dt>Necessidades</dt><dd>fome ${d.necessidades.fome} · energia ${d.necessidades.energia} · saúde ${d.necessidades.saude}</dd><dt>Estratégia</dt><dd>${esc(d.estrategia)}</dd></dl>
+   <h3>O que sabia ao decidir</h3>${sab?`<dl class="kv"><dt>Caixa</dt><dd>${brl(sab.caixa)}</dd><dt>Onde estava</dt><dd>${esc(sab.local)}</dd><dt>Itens</dt><dd>${Object.entries(sab.itens).filter(e=>e[1]).map(e=>e[0]).join(', ')||'nenhum'}</dd><dt>Contratos ativos</dt><dd>${sab.contratosAtivos}</dd><dt>Pendências</dt><dd>${sab.pendencias}</dd><dt>Contatos conhecidos</dt><dd>${sab.leadsConhecidos}</dd></dl><ul class="plain">${sab.ultimosFatos.map(x=>`<li class="muted">D${x.dia}: ${esc(x.texto)}</li>`).join('')}</ul>`:'<p class="muted">sem decisão</p>'}</div>
+   <div class="card"><h3>Alternativas consideradas</h3><ul class="plain">${d.alternativas.map(a=>`<li>${a.escolhida?'✓':'✗'} <b>${esc(a.acao)}</b>${a.valorEsperadoPorHora!==undefined?` <span class="mono">(${brl(a.valorEsperadoPorHora)}/h medido)</span>`:''} <span class="muted">${esc(a.motivo||'')}</span></li>`).join('')||'<li class="muted">nenhuma registrada</li>'}</ul>
+   <h3>Agenda do dia</h3><ul class="plain">${agendaDoDia(w,S.dia).itens.map(i=>`<li><span class="mono">${hhmm(i.ini)}</span> ${esc(i.txt)}</li>`).join('')}</ul></div></div>
+  <div class="card"><h3>Transações do dia</h3>${d.transacoes.length?`<div class="tbl"><table><thead><tr><th>ID</th><th>Tipo</th><th class="n">Valor</th><th class="n">Antes</th><th class="n">Depois</th><th>Origem → destino</th><th>Justificativa</th></tr></thead><tbody>${d.transacoes.map(t=>`<tr><td class="mono">${t.id}</td><td>${t.tipo}</td><td class="n ${t.direcao==='ENTRADA'?'okc':''}">${t.direcao==='ENTRADA'?'+':'−'}${brl(t.valor)}</td><td class="n">${brl(t.saldoAnterior)}</td><td class="n">${brl(t.saldoPosterior)}</td><td>${esc(t.origem)} → ${esc(t.destino)}</td><td class="wrap">${esc(t.justificativa)}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Nenhuma transação: o saldo não mudou.</p>'}</div>
+  <div class="cols"><div class="card"><h3>Linha do tempo</h3><div class="tbl tall"><table><tbody>${w.logs.eventos.slice().reverse().map(e=>`<tr class="click" data-dia="${e.dia}"><td class="mono">D${e.dia}</td><td>${esc(e.tipo)}</td><td class="wrap">${esc(e.texto)}</td></tr>`).join('')||'<tr><td class="muted">sem eventos</td></tr>'}</tbody></table></div></div>
+   <div class="card"><h3>Negócios e números</h3>${w.agente.negocios.length?`<div class="tbl"><table><thead><tr><th>Negócio</th><th class="n">Lançado</th><th class="n">Contratos</th><th class="n">Receita</th><th>Status</th></tr></thead><tbody>${w.agente.negocios.map(n=>`<tr><td>${esc(n.servico)}</td><td class="n">D${n.lancadoDia}</td><td class="n">${n.contratos}</td><td class="n">${brl(n.receita)}</td><td class="${n.status==='fracassado'?'badc':''}">${n.status}</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">nenhum</p>'}
+   <dl class="kv"><dt>Receita</dt><dd>${brl(f.receita)}</dd><dt>Despesas (inclui taxas)</dt><dd>${brl(f.despesas)}</dd><dt>Ativos</dt><dd>${brl(f.ativos)}</dd><dt>Dívidas</dt><dd>${brl(f.dividas)}</dd><dt>Seguidores</dt><dd>${w.agente.audiencia?w.agente.audiencia.seguidores:0}</dd><dt>Avaliações na plataforma</dt><dd>${w.agente.plataforma?w.agente.plataforma.avaliacoes:0}</dd></dl></div></div>
+  <div class="card"><h3>Livro-caixa completo (${w.ledger.tx.length} transações)</h3><div class="tbl tall"><table><thead><tr><th>ID</th><th class="n">Dia</th><th>Tipo</th><th class="n">Valor</th><th>Origem → destino</th><th class="n">Saldo</th><th>Justificativa</th></tr></thead><tbody>${w.ledger.tx.slice().reverse().map(t=>`<tr class="click" data-dia="${t.dia}"><td class="mono">${t.id}</td><td class="n">${t.dia}</td><td>${t.tipo}</td><td class="n ${t.direcao==='ENTRADA'?'okc':''}">${t.direcao==='ENTRADA'?'+':'−'}${brl(t.valor)}</td><td>${esc(t.origem)} → ${esc(t.destino)}</td><td class="n">${brl(t.saldoPosterior)}</td><td class="wrap">${esc(t.justificativa)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  $('#selAg').onchange=e=>{S.sel=e.target.value;S.dia=null;render()};
+  $('#rng').oninput=e=>{S.dia=+e.target.value;render()};
+  el.querySelectorAll('tr[data-dia]').forEach(tr=>tr.onclick=()=>{const v=+tr.dataset.dia;if(v>=1){S.dia=v;render();window.scrollTo({top:0})}});
+  grafico($('#gAg'),[{pts:w.historico.map(h=>[h.dia,h.patrimonio]),cor:'var(--accent)',rotulo:'patrimônio',top:true},{pts:w.historico.map(h=>[h.dia,h.caixaFim]),cor:'var(--muted)',dash:true,w:1.5,rotulo:'caixa'}],{aria:'Patrimônio e caixa de '+w.meta.id,marca:S.dia,clique:dd=>{S.dia=dd;render()}});
+}
+
+function rComparar(){
+  const el=$('#tab-comparar');
+  if(vazio()){el.innerHTML='<div class="card"><p>Nenhum dia concluído ainda.</p></div>';return}
+  const ms=S.mundos.map(w=>Object.assign(ZWExp.metricas(w),{w})).sort((a,b)=>b.ganhoLiquido-a.ganhoLiquido);
+  const fim=S.modo==='lab'?S.concluida:S.mundos[0].dia>=AO_VIVO.horizonte;
+  let rel='<div class="card"><p class="muted">O relatório coletivo aparece só quando a rodada termina'+(S.modo==='aovivo'?` (dia ${AO_VIVO.horizonte} da rodada ao vivo)`:' (depois de uma execução Turbo)')+'. Durante a rodada nenhum agente vê dados dos outros.</p></div>';
+  if(fim){const a=ZWExp.analisar(S.mundos,S.mundos[0].dia);rel=`<div class="card"><h2>Relatório coletivo · rodada concluída no dia ${a.dias}</h2><p class="note">${esc(a.aviso)}</p><div class="cols"><div><h3>Negócios</h3><div class="tbl"><table><thead><tr><th>Negócio</th><th class="n">Lançado por</th><th class="n">Fracassou</th><th class="n">Propostas</th><th class="n">Aceite</th><th class="n">Receita</th></tr></thead><tbody>${a.negocios.map(n=>`<tr><td>${esc(n.servico)}</td><td class="n">${n.lancados}</td><td class="n">${n.fracassados}</td><td class="n">${n.propostas||'—'}</td><td class="n">${n.taxaAceite===null?'—':n.taxaAceite+'%'}</td><td class="n">${brl(n.receita)}</td></tr>`).join('')}</tbody></table></div></div><div><h3>Ações recusadas pelo motor</h3><div class="tbl"><table><tbody>${a.errosRecorrentes.map(e=>`<tr><td class="wrap">${esc(e.motivo)}</td><td class="n">${e.vezes}</td></tr>`).join('')}</tbody></table></div><h3>Eventos</h3><div class="tbl"><table><tbody>${Object.entries(a.eventos).map(([k,v])=>`<tr><td>${esc(k)}</td><td class="n">${v}</td></tr>`).join('')}</tbody></table></div></div></div></div>`}
+  el.innerHTML=`<div class="card"><h2>Patrimônio por carreira</h2><div class="grp"><label for="selCmp" class="note">Destacar</label><select id="selCmp">${S.mundos.map(x=>`<option value="${x.meta.id}" ${x.meta.id===S.sel?'selected':''}>${x.meta.id} · ${esc(x.carreira)}</option>`).join('')}</select></div>
+   <div class="legend"><span><span class="dot" style="background:var(--accent)"></span>${S.sel} (destacado)</span><span><span class="dot" style="background:var(--line)"></span>os outros 9</span></div><div class="chart" id="gCmp"></div>
+   <h3>Ranking pelo ganho líquido</h3><div class="tbl"><table><thead><tr><th class="n">#</th><th>Agente</th><th>Carreira</th><th class="n">Ganho líquido</th><th class="n">1ª receita</th><th class="n">Estável</th><th class="n">Menor caixa</th></tr></thead><tbody>${ms.map((m,i)=>`<tr class="${m.id===S.sel?'sel':''}"><td class="n">${i+1}</td><td>${m.id}</td><td>${esc(m.carreira)}</td><td class="n">${brl(m.ganhoLiquido)}</td><td class="n">${m.diaPrimeiraReceita?'D'+m.diaPrimeiraReceita:'—'}</td><td class="n">${m.diaEstabilidade?'D'+m.diaEstabilidade:'—'}</td><td class="n">${brl(m.risco.menorCaixa)}</td></tr>`).join('')}</tbody></table></div><p class="note">Uma rodada é uma amostra só. O ranking de uma semente pode virar na outra: use "Várias rodadas" abaixo antes de concluir algo.</p></div>
+  ${rel}
+  <div class="card"><h2>Várias rodadas</h2><p>Roda as 10 carreiras em 5 sementes novas por 240 dias, sem mexer na rodada atual, e compara as medianas por carreira.</p><div class="grp"><button id="btnMulti">Rodar 5 rodadas × 240 dias</button><span class="status" id="stMulti"></span></div>
+  ${S.multi?`<div class="tbl"><table><thead><tr><th>Carreira</th><th class="n">Mediana do ganho</th><th class="n">Pior</th><th class="n">Melhor</th><th class="n">Mediana 1ª receita</th><th class="n">Estáveis</th></tr></thead><tbody>${S.multi.map(r=>`<tr><td>${esc(r.carreira)}</td><td class="n">${brl(r.med)}</td><td class="n">${brl(r.min)}</td><td class="n">${brl(r.max)}</td><td class="n">${r.pr===null?'—':'D'+r.pr}</td><td class="n">${r.est}/5</td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Ainda não executado.</p>'}</div>`;
+  const desenhar=()=>grafico($('#gCmp'),S.mundos.map(w=>({pts:w.historico.map(h=>[h.dia,h.patrimonio]),cor:w.meta.id===S.sel?'var(--accent)':'var(--line)',w:w.meta.id===S.sel?2.5:1.2,rotulo:w.meta.id+' '+w.carreira,top:w.meta.id===S.sel})),{aria:'Patrimônio das 10 carreiras',h:300});
+  desenhar(); $('#selCmp').onchange=e=>{S.sel=e.target.value;render()}; $('#btnMulti').onclick=multi;
+}
+function multi(){
+  if(S.ocupado)return; S.ocupado=true; botoes(); const sementes=[0,1,2,3,4].map(i=>S.semente+5000+i),dias=240,res={};let i=0,ms=null,k=0;
+  (function passo(){const t0=performance.now();
+    while(performance.now()-t0<40){if(!ms){ms=novos(sementes[i]);k=0}for(const w of ms)ZW.avancarDia(w,P);k++;
+      if(k>=dias){for(const w of ms){const m=ZWExp.metricas(w);(res[w.carreira]=res[w.carreira]||[]).push(m)}ms=null;i++;if(i>=sementes.length)break}}
+    prog((i*dias+k)/(sementes.length*dias));$('#stMulti').textContent=`rodada ${Math.min(i+1,5)} de 5`;
+    if(i<sementes.length){setTimeout(passo,0);return}
+    S.multi=Object.entries(res).map(([c,xs])=>({carreira:c,med:med(xs.map(x=>x.ganhoLiquido)),min:Math.min(...xs.map(x=>x.ganhoLiquido)),max:Math.max(...xs.map(x=>x.ganhoLiquido)),pr:med(xs.map(x=>x.diaPrimeiraReceita)),est:xs.filter(x=>x.diaEstabilidade).length})).sort((a,b)=>b.med-a.med);
+    S.ocupado=false;botoes();prog(1);render()})();
+}
+
+function rAuditoria(){
+  const el=$('#tab-auditoria'),d0=S.mundos[0].dia,ref=S.modo==='lab'&&S.semente===REF.semente&&d0===REF.dias;
+  el.innerHTML=`<div class="card"><h2>Auditoria financeira · dia ${d0}</h2><p class="note">SALDO_FINAL = SALDO_INICIAL + ENTRADAS − SAÍDAS, recalculado transação por transação. O motor confere isso ao fim de cada dia e desfaz o dia inteiro se falhar.</p>
+  <div class="tbl"><table><thead><tr><th>Mundo</th><th>Auditoria</th><th class="n">Inicial</th><th class="n">Entradas</th><th class="n">Saídas</th><th class="n">Final</th><th class="n">Transações</th><th>Hash</th><th>Node (lab, semente ${REF.semente}, ${REF.dias} dias)</th></tr></thead><tbody>${S.mundos.map(w=>{const a=ZW.auditar(w),h=ZW.hashMundo(w),e=ref?REF.hashes[w.meta.id]:null;return `<tr><td>${w.meta.id}</td><td class="${a.ok?'okc':'badc'}">${a.ok?'OK':'FALHOU'}</td><td class="n">${brl(a.saldoInicial)}</td><td class="n">+${brl(a.entradasSemCapital)}</td><td class="n">−${brl(a.saidas)}</td><td class="n">${brl(a.saldo)}</td><td class="n">${w.ledger.tx.length}</td><td class="mono">${h}</td><td>${e?(e===h?'<span class="okc">igual ao Node ✓</span>':'<span class="badc">diferente</span>'):'<span class="muted">sem referência</span>'}</td></tr>`}).join('')}</tbody></table></div>
+  <p class="note">Para comparar com a execução em Node: modo Laboratório, semente ${REF.semente}, Turbo 240.</p></div>
+  <div class="card"><h2>Testes no navegador</h2><div class="grp"><button id="btnT">Rodar testes</button></div><ul class="plain" id="resT"></ul><p class="note">A bateria completa (15 testes) roda com <span class="mono">node --test zero-world/test.js</span>.</p></div>
+  <div class="card"><h2>O que é real e o que não é</h2><ul class="plain">
+   <li><b>Cérebro:</b> regras fixas escritas à mão, não é IA. As carreiras, o pivô depois de 45 dias sem receita e a escolha do adaptativo são todos regras.</li>
+   <li><b>Ao vivo 24x:</b> o dia virtual vem do relógio real (início ${new Date(INICIO).toLocaleString('pt-BR')}). A página só processa enquanto está aberta. Ao reabrir, ela reproduz todos os dias passados a partir da semente, com o mesmo resultado. Nada roda em segundo plano no Artifact.</li>
+   <li><b>Comércios, projetos de freela, campanhas UGC e seguidores</b> são sintéticos. Preços, taxas de plataforma, ônibus, salário mínimo, Bolsa Família, DAS e dólar vêm de fontes reais (aba Dados e regras).</li>
+   <li><b>Os agentes não fazem nada no mundo real:</b> não enviam mensagens, não abrem contas e não movimentam dinheiro de verdade.</li></ul></div>`;
+  $('#btnT').onclick=()=>{const out=$('#resT');out.innerHTML='<li class="muted">rodando…</li>';setTimeout(()=>{const r=[],ok=(n,c,x)=>r.push(`<li>${c?'<span class="okc">✓</span>':'<span class="badc">✗</span>'} ${n}${x?' <span class="muted">'+esc(x)+'</span>':''}</li>`);
+    const mk=()=>ZW.criarMundo({id:'T',capitalInicial:50000,seed:9,cenario:'digital',carreira:'freela'});
+    const a=mk();ZW.avancar(a,P,60);let b=mk();for(let i=0;i<60;i++){b=ZW.desserializar(ZW.serializar(b));ZW.avancarDia(b,P)}
+    ok('Turbo = Vida (60 dias, com recarga a cada dia)',ZW.hashMundo(a)===ZW.hashMundo(b),ZW.hashMundo(a)+' / '+ZW.hashMundo(b));
+    ok('Livro-caixa fecha',ZW.auditar(a).ok);
+    const x=ZW.desserializar(ZW.serializar(a));x.ledger.saldo+=1;ok('Adulteração detectada',!ZW.auditar(x).ok);
+    const c=mk();ZW.avancar(c,{id:'b',tipo:'t',decidir:()=>({plano:[{tipo:'DIARIA_BRACAL'}],alternativas:[]})},2);ok('Trabalho braçal recusado no cenário digital',c.logs.resultados.every(r=>!r.ok&&r.resultado==='fora do cenário digital'));
+    let vaz=false;const e=mk();ZW.avancar(e,{id:'e',tipo:'t',decidir(o){const j=JSON.stringify(o);if(ZW.CHAVES_PROIBIDAS.some(k=>j.includes('"'+k+'"')))vaz=true;return P.decidir(o)}},40);ok('O agente não vê dados ocultos',!vaz);
+    ok('Dia não simulado não é inventado',ZW.diaRegistrado(a,61).status==='NÃO SIMULADO');
+    out.innerHTML=r.join('')},20)};
+}
+
+function rParams(){
+  const rows=Object.entries(ZW.PARAMETROS).map(([k,p])=>`<tr><td>${esc(p.desc)}</td><td class="n mono">${esc(String(p.v))}</td><td>${tag(p.tag)}</td><td class="wrap">${p.fonte?`<a href="${esc(p.fonte)}" target="_blank" rel="noopener">fonte</a> `:''}${esc(p.nota||'')}</td></tr>`).join('');
+  $('#tab-params').innerHTML=`<div class="card"><h2>As 10 carreiras</h2><div class="tbl"><table><tbody>${ZWExp.AGENTES_DIGITAIS.map(([id,cap,c])=>`<tr><td>${id}</td><td>${esc(c)}</td><td class="wrap">${esc(nomeCarreira(c))}</td><td class="n">${brl(cap)}</td></tr>`).join('')}</tbody></table></div><p class="note">Todos têm 30 anos, as mesmas habilidades iniciais (negócios, tecnologia, marketing e programação), nenhum cliente e R$500. Se a carreira não render nada em 45 dias, a política abre uma segunda frente. O adaptativo testa 7 frentes por 28 dias e depois fica com as 2 que renderam mais por hora, segundo o que ele mesmo mediu.</p></div>
+  <div class="card"><h2>Parâmetros do motor</h2><p class="note">${tag('REAL')} vem de fonte pública pesquisada em 03/11/2026, conferida no resultado de busca e não na fonte primária. ${tag('ESTIMATIVA')} é uma faixa de mercado ou suposição. ${tag('SINTETICA')} é uma regra inventada para o simulador funcionar. Valores em centavos quando forem dinheiro.</p><div class="tbl"><table><thead><tr><th>Parâmetro</th><th class="n">Valor</th><th>Tipo</th><th>Fonte / nota</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+
+iniciarAoVivo(); relogio();
+})();
+</script>
