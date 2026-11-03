@@ -1,38 +1,50 @@
 {
- "inicio_real": "2026-11-03T05:32:55.915256+00:00",
+ "inicio_real": "2026-11-02T19:32:55+00:00",
  "cidade": "Belo Horizonte, MG",
- "ultimo_dia_registrado": 0,
- "saldo": 492.0,
- "dinheiro_onde": "R$400 no tênis, R$80 no bolso da frente, R$12 na mão",
+ "ultimo_dia_registrado": 10,
+ "saldo": 475,
+ "dinheiro_onde": "R$250 na conta digital, R$200 escondidos no quarto da pensão, R$25 no bolso",
  "corpo": {
-  "fome": 6,
+  "fome": 4,
   "cansaco": 7,
-  "moral": 3,
-  "seguranca": 5
+  "moral": 6,
+  "seguranca": 7
  },
- "onde_dorme": "rodoviária",
+ "onde_dorme": "pensão no Centro, quarto dividido, pago até o D13",
  "itens": [
   "roupa do corpo",
-  "mochila"
+  "mochila",
+  "celular usado com chip"
  ],
  "documentos": {
-  "CPF": "sabe de cabeça",
-  "RG": "perdido",
-  "CadUnico": "não",
-  "conta": "não",
-  "celular": "não"
+  "CPF": "ok",
+  "RG": "2ª via pedida na UAI (gratuidade), aguardando",
+  "CadUnico": "entrevista feita no D8, aguardando",
+  "conta": "conta digital aberta",
+  "celular": "sim"
  },
- "contatos": [],
- "rendas_testadas": {},
- "renda_total": 0.0,
- "metas": [
-  "Centro POP (banho, endereço de referência, CadÚnico, RG)",
-  "almoço no Restaurante Popular",
-  "vaga em albergue",
-  "como pegar serviço na CeasaMinas"
+ "contatos": [
+  "Seu Geraldo (chefe de equipe na CeasaMinas, me chama no zap)",
+  "técnica do Centro POP",
+  "barraqueiro da Feira Hippie"
  ],
- "historico": [],
+ "rendas_testadas": {
+  "Ceasa carga/descarga": "R$60–110 por madrugada, a melhor até agora",
+  "Feira Hippie montar/desmontar": "R$80 no domingo"
+ },
+ "renda_total": 570,
+ "metas": [
+  "entrevista p/ ajudante de carga CLT no atacadista (D12)",
+  "cobrar os R$30 do Geraldo",
+  "renovar pensão no D14",
+  "retirar RG quando sair"
+ ],
+ "historico": [
+  "Sem 1 (D1–D7): +R$400, -R$533 (inclui celular R$235 e pensão R$180), saldo R$359; endereço de referência no Centro POP, perdeu vaga no albergue por causa do horário da Ceasa, conseguiu celular e conta digital. Ceasa paga mais que qualquer outra coisa."
+ ],
  "dias_detalhe": [
-  "D1 00h: chegou na rodoviária, decidiu não pagar pensão. -R$8 (café+pão de queijo). Saldo R$492"
+  "D8: Ceasa com o Geraldo +R$110; entrevista do CadÚnico no CRAS. Saldo R$447",
+  "D9: UAI, pedido da 2ª via do RG grátis; descanso, ombro doendo -R$10. Saldo R$437",
+  "D10: Ceasa, combinado R$90 e recebeu R$60; SINE marcou entrevista no D12. Saldo R$475"
  ]
 }
