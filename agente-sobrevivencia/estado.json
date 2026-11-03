@@ -1,6 +1,38 @@
 {
-  "inicio_real": "2026-11-03T05:32:55.915256+00:00",
-  "cidade": "Belo Horizonte, MG",
-  "ultimo_dia_registrado": 0,
-  "saldo": 492.0
+ "inicio_real": "2026-11-03T05:32:55.915256+00:00",
+ "cidade": "Belo Horizonte, MG",
+ "ultimo_dia_registrado": 0,
+ "saldo": 492.0,
+ "dinheiro_onde": "R$400 no tênis, R$80 no bolso da frente, R$12 na mão",
+ "corpo": {
+  "fome": 6,
+  "cansaco": 7,
+  "moral": 3,
+  "seguranca": 5
+ },
+ "onde_dorme": "rodoviária",
+ "itens": [
+  "roupa do corpo",
+  "mochila"
+ ],
+ "documentos": {
+  "CPF": "sabe de cabeça",
+  "RG": "perdido",
+  "CadUnico": "não",
+  "conta": "não",
+  "celular": "não"
+ },
+ "contatos": [],
+ "rendas_testadas": {},
+ "renda_total": 0.0,
+ "metas": [
+  "Centro POP (banho, endereço de referência, CadÚnico, RG)",
+  "almoço no Restaurante Popular",
+  "vaga em albergue",
+  "como pegar serviço na CeasaMinas"
+ ],
+ "historico": [],
+ "dias_detalhe": [
+  "D1 00h: chegou na rodoviária, decidiu não pagar pensão. -R$8 (café+pão de queijo). Saldo R$492"
+ ]
 }

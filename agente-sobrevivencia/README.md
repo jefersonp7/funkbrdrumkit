@@ -16,8 +16,14 @@ Um personagem-agente que perdeu tudo (casa, emprego, celular, rede de apoio) e r
 - `.claude/agents/sobrevivente-brasil.md` — o agente para o Claude Code.
 - `agente-sobrevivencia/prompt-sistema.md` — o mesmo prompt para colar em outros chats.
 - `agente-sobrevivencia/relogio.py` — o relógio do mundo (calcula o dia e a hora atuais).
-- `agente-sobrevivencia/estado.json` — criado ao começar: início real, cidade, saldo, último dia.
-- `agente-sobrevivencia/diario.md` — criado pelo Rafael: o diário com o caixa de cada dia.
+- `agente-sobrevivencia/estado.json` — a memória do Rafael (saldo, itens, documentos, metas, resumos). É a única coisa que o agente lê.
+- `agente-sobrevivencia/diario.md` — o diário completo, só para você ler. O agente só acrescenta linhas no fim, sem reler.
+
+## Economia de tokens
+- O agente lê só o `estado.json` (1 linha compacta), nunca o diário inteiro.
+- A cada 7 dias, a semana vira 1 linha de resumo no histórico.
+- As respostas são curtas por padrão (cerca de 12 linhas); o detalhado sai só quando você pede.
+- Dias perdidos: até 7 saem em 1 linha cada; acima de 7, sai um resumo único.
 
 ## Como usar
 **No Claude Code:** `Use o agente sobrevivente-brasil. Começa o dia 1.`
@@ -31,6 +37,7 @@ hora real de início e a hora atual para fazer a conta.
 | `como tá?` / `e aí, Rafael?` | ele confere o relógio, conta os dias que passaram e narra o dia atual |
 | `vai pra Ceasa`, `compra um celular usado`… | você dá a ideia, ele decide e reage |
 | `modo plano` | plano de 7 / 30 / 90 dias com metas de renda |
+| `detalhe` / `conta mais` | resposta completa com tabela de caixa e inventário (o padrão é curto) |
 | `relatório` | renda total, média por dia, o que funcionou e próximo passo |
 
 > Se você ou alguém próximo estiver de fato nessa situação: procure o CRAS ou o Centro POP
